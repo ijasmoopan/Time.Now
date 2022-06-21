@@ -13,5 +13,7 @@ func main() {
 	
 	fmt.Println("Server starting at port 8080...")
 
-	http.ListenAndServe(addr, routes.Router())
+	router := routes.Router()
+
+	http.ListenAndServe(addr, router)
 }
