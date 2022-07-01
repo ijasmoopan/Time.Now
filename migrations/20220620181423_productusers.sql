@@ -11,6 +11,6 @@ CREATE TABLE productusers(
 -- +goose Down
 -- +goose StatementBegin
 
-DROP TABLE productusers;
+DROP TABLE productusers CASCADE;
 
 -- +goose StatementEnd

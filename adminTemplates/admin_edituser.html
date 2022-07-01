@@ -503,7 +503,7 @@
                                                 <div class="card">
                                                     <h5 class="card-header">Edit User Details</h5>
                                                     <div class="card-body">
-                                                        <form action="/admin/userlist/{{.user_id}}/editing" method="post" id="form" data-parsley-validate="" novalidate="">
+                                                        <form action="/admin/home/userlist/{{.user_id}}/editinguser" method="post" id="form" data-parsley-validate="" novalidate="">
                                                             <div class="form-group row">
                                                                 <label class="col-3 col-lg-2 col-form-label text-right">First Name</label>
                                                                 <div class="col-9 col-lg-10">
@@ -519,13 +519,19 @@
                                                             <div class="form-group row">
                                                                 <label class="col-3 col-lg-2 col-form-label text-right">E-mail</label>
                                                                 <div class="col-9 col-lg-10">
-                                                                    <input id="inputEmail2" value="{{.user_email}}" name="email" type="text" required="" placeholder="E-mail" class="form-control">
+                                                                    <input id="inputEmail2" value="{{.user_email}}" name="email" type="email" required="" placeholder="E-mail" class="form-control">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
                                                                 <label class="col-3 col-lg-2 col-form-label text-right">Phone</label>
                                                                 <div class="col-9 col-lg-10">
                                                                     <input id="inputEmail2" value="{{.user_phone}}" name="phone" type="text" required="" placeholder="Phone" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-3 col-lg-2 col-form-label text-right">Referral</label>
+                                                                <div class="col-9 col-lg-10">
+                                                                    <input id="inputEmail2" value="{{.user_referral}}" name="referral" type="text" required="" placeholder="Referral" class="form-control">
                                                                 </div>
                                                             </div>
                                                             
@@ -535,8 +541,8 @@
                                                                 </div>
                                                                 <div class="col-sm-6 pl-0">
                                                                     
-                                                                        <input type="submit" class="btn btn-space btn-primary" value="Save">
-                                                                        <a href="/admin/userlist/{{.user_id}}/delete" class="btn btn-space btn-primary">Delete</a>
+                                                                        <input type="submit" class="btn btn-space btn-primary" value="Save" style="width: 100px;">
+                                                                        <a href="/admin/home/userlist/{{.user_id}}/deleteuser" class="btn btn-space btn-primary" style="width: 100px;">Delete</a>
 
                                                                 </div>
                                                             </div>

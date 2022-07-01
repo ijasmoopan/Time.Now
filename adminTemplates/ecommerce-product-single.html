@@ -440,8 +440,7 @@
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="page-header">
-                                <h2 class="pageheader-title">E-commerce Product Single </h2>
-                                <p class="pageheader-text">Nulla euismod urna eros, sit amet scelerisque torton lectus vel mauris facilisis faucibus at enim quis massa lobortis rutrum.</p>
+                                <h2 class="pageheader-title">Product Single </h2>
                                 <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
@@ -503,34 +502,70 @@
                                             </div>
                                             <h3 class="mb-0 text-primary">${{.Product_price}}</h3>
                                         </div>
-                                        <div class="product-colors border-bottom">
-                                            <h4>{{.Product_color}}</h4>
-                                            <input type="radio" class="radio" id="radio-1" name="group" />
+                                        <!-- <div class="product-colors border-bottom">
+                                            <h4>Available colours</h4>
+                                        </div>   -->
+                                            <!-- <input type="radio" class="radio" id="radio-1" name="group" />
                                             <label for="radio-1"></label>
                                             <input type="radio" class="radio" id="radio-2" name="group" />
                                             <label for="radio-2"></label>
                                             <input type="radio" class="radio" id="radio-3" name="group" />
-                                            <label for="radio-3"></label>
-                                        </div>
-                                        <div class="product-size border-bottom">
-                                            <h4>Size</h4>
-                                            <div class="btn-group" role="group" aria-label="First group">
-                                                <button type="button" class="btn btn-outline-light">SM</button>
-                                                <button type="button" class="btn btn-outline-light">L</button>
-                                                <button type="button" class="btn btn-outline-light">XL</button>
-                                                <button type="button" class="btn btn-outline-light">XXl</button>
+                                            <label for="radio-3"></label> -->
+
+                                            <!-- --------------------------------------------------------- -->
+
+                                            <h4>Available Colours</h4>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+
+                                                {{range .Product_colors}}
+                                                <label class="btn btn-light">
+                                                    <input type="radio" name="radio_color"> {{.Color}}
+                                                </label>
+                                                {{end}}
+
+                                            <!-- <label class="btn btn-light">
+                                                <input type="radio" name="radio_color"> Silver
+                                            </label>
+                                            <label class="btn btn-light">
+                                                <input type="radio" name="radio_color" > Gray
+                                            </label>
+                                            <label class="btn btn-light active">
+                                                <input type="radio" name="radio_color checked"> Gold
+                                            </label>
+                                            <label class="btn btn-light">
+                                                <input type="radio" name="radio_color"> Black
+                                            </label> -->
                                             </div>
+                                            <div class="border-bottom"></div>
+
+                                            <!-- ----------------------------------------------------------- -->
+                                       
+                                        <div class="product-size border-bottom">
+                                            <h4>In Stock</h4>
+                                            <!-- <div class="btn-group" role="group" aria-label="First group"> -->
+                                                <button type="button" class="btn btn-outline-light">{{.Product_quantity}}</button>
+                                                <!-- <button type="button" class="btn btn-outline-light">L</button>
+                                                <button type="button" class="btn btn-outline-light">XL</button>
+                                                <button type="button" class="btn btn-outline-light">XXl</button> -->
+                                            <!-- </div> -->
                                             <div class="product-qty">
-                                                <h4>Quantity</h4>
+                                                <!-- <h4>Quantity</h4>
                                                 <div class="quantity">
                                                     <input type="number" min="1" max="9" step="1" value="1">
-                                                </div>
+                                                </div> -->
                                             </div>       
                                         </div>
                                         <div class="product-description">
+                                            <h4 class="mb-1">Brand</h4>
+                                            <p>{{.Product_brand}}</p>
+                                            <h4 class="mb-1">Category</h4>
+                                            <p>{{.Product_category}}</p>
+                                            <h4 class="mb-1">Sub Category</h4>
+                                            <p>{{.Product_subcategory}}</p>
                                             <h4 class="mb-1">Descriptions</h4>
                                             <p>{{.Product_desc}}</p>
-                                            <a href="/admin/productlist/{{.Product_id}}/edit" class="btn btn-primary btn-block btn-lg">Edit Product</a>
+                                            <a href="/admin/home/productlist/{{.Product_id}}/editproduct" class="btn btn-primary btn-block btn-lg">Edit Product</a>
+                                            <a href="" class="btn btn-primary btn-block btn-lg">Delete Product</a>
                                         </div>
                                     </div>
                                 </div>

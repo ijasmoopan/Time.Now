@@ -529,16 +529,12 @@
                                         </div> -->
                                         <div class="product-description">
                                             <h4 class="mb-1">E-mail: {{.user_email}}</h4>
-                                            <!-- <p>Phone: {{.user}}</p> -->
+                                            <p></p>
                                             <p>Phone: {{.user_phone}}</p>
                                             <p>Gender: {{.user_gender}}</p>
                                             <p>Referral: {{.user_referral}}</p>
-                                            <p>Created At: {{.user_createdat}}</p>
-                                            <p>Updated At: {{.user_updatedat}}</p>
-                                            <p>Deleted At: {{.user_deletedat}}</p>
-                                            <p>Status: {{.user_status}}</p>
-                                            <a href="/admin/userlist/{{.user_id}}/edit" class="btn btn-primary btn-block btn-lg">Edit</a>
-                                            <a href="/admin/userlist/{{.user_id}}/delete" class="btn btn-primary btn-block btn-lg">Delete</a>
+                                            <a href="/admin/home/userlist/{{.user_id}}/edituser" class="btn btn-primary btn-block btn-lg">Edit</a>
+                                            <a href="/admin/home/userlist/{{.user_id}}/deleteuser" class="btn btn-primary btn-block btn-lg">Delete</a>
                                         </div>
                                     </div>
                                 </div>

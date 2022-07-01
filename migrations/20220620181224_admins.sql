@@ -15,6 +15,6 @@ VALUES ('admin', '31323334d41d8cd98f00b204e9800998ecf8427e');
 -- +goose Down
 -- +goose StatementBegin
 
-DROP TABLE admins;
+DROP TABLE admins CASCADE;
 
 -- +goose StatementEnd

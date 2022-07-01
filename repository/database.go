@@ -1,28 +1,40 @@
 package repository
 
 import (
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
+	"database/sql"
+	"fmt"
+	"log"
+	"os"
+
+	"github.com/ijasmoopan/Time.Now/usecases"
+	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 )
 
-func ConnectDB() *gorm.DB {
+func ConnectDB() *sql.DB {
 
-	dbURL := "postgres://postgres:ijasmoopan@localhost:5432/timenow"
+	file := usecases.Logger()
+	log.SetOutput(file)
 
-	db, err := gorm.Open(postgres.Open(dbURL), &gorm.Config{})
+	err := godotenv.Load("./config/.env")
 	if err != nil {
-		panic(err)
+		log.Println("Can't open env file.")
 	}
+	driver := os.Getenv("DB_DRIVER")
+	host := os.Getenv("DB_HOST")
+	port := os.Getenv("DB_PORT")
+	user := os.Getenv("DB_USER")
+	dbname := os.Getenv("DB_NAME")
+	password := os.Getenv("DB_PASS")
+
+	connString := fmt.Sprint(driver,"://", user, ":", password, "@", host, ":", port, "/", dbname, "?sslmode=disable")
+
+	db, err := sql.Open(driver, connString)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("Database connected...")
+	// defer db.Close()
+
 	return db
-
-}
-
-func CloseDB(db *gorm.DB) {
-	
-	dbSQL, err := db.DB()
-	if err != nil {
-		panic(err)
-	}
-	dbSQL.Close()
-
 }

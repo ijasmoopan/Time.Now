@@ -1,12 +1,20 @@
 package admin
 
 import (
+	"os"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
+	"github.com/joho/godotenv"
 )
 
 func GeneratingToken(id string) string {
+
+	err := godotenv.Load("./config/.env")
+	if err != nil {
+		panic(err)
+	}
+	key := os.Getenv("SECRETKEY")
 
 	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
 		Issuer:    id,

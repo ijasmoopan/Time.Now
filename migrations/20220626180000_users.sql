@@ -1,7 +1,6 @@
 -- +goose Up
 -- +goose StatementBegin
 
-CREATE DOMAIN phone_number AS VARCHAR(10) CHECK(VALUE ~ '^[0-9]{10}$');
 CREATE DOMAIN email AS VARCHAR(255) CHECK(VALUE ~ '^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$');
 CREATE DOMAIN gender AS CHAR(1) CHECK(VALUE IN ('F', 'M', 'O'));
 
@@ -18,7 +17,8 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT NULL,
     deleted_at TIMESTAMP DEFAULT NULL,
-    user_image TEXT DEFAULT NULL
+    user_image TEXT DEFAULT NULL,
+    address_id BIGINT REFERENCES address(address_id)
 );
 
 ALTER TABLE users ADD CONSTRAINT unique_email UNIQUE(user_email);
@@ -39,9 +39,8 @@ VALUES ('rishal', 'p', '31323334d41d8cd98f00b204e9800998ecf8427e', '8136860910',
 
 ALTER TABLE users DROP CONSTRAINT unique_email;
 ALTER TABLE users DROP CONSTRAINT unique_phone;
-DROP TABLE users;
+DROP TABLE users CASCADE;
 DROP DOMAIN IF EXISTS gender CASCADE; 
-DROP DOMAIN IF EXISTS phone_number CASCADE;
 DROP DOMAIN IF EXISTS email CASCADE;
 
 -- +goose StatementEnd

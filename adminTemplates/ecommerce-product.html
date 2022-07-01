@@ -440,7 +440,11 @@
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="page-header">
                                 <h2 class="pageheader-title">Time.Now | All Products</h2>
-                                <p class="pageheader-text">Nulla euismod urna eros, sit amet scelerisque torton lectus vel mauris facilisis faucibus at enim quis massa lobortis rutrum.</p>
+                                
+                                <!-- Add product button -->
+                                
+                                <a href="/admin/home/{{.admin}}/productlist/addproduct" class="btn btn-primary" style="float: right; margin-right: 5rem;">Add Product</a>
+                                
                                 <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
@@ -467,7 +471,6 @@
                                         
                                         <div class="product-img-head">
                                             <div class="product-img">
-                                                <!-- <img src="{{.Product_image}}" alt="Not Accessible" class="img-fluid"></div> -->
                                                 <img src="/adminstyles/images/eco-product-img-2.png" alt="Not Accessible" class="img-fluid"></div>
                                             <div class="ribbons"></div>
                                             <div class="ribbons-text">New</div>
@@ -486,7 +489,7 @@
                                                 <div class="product-price">${{.Product_price}}</div>
                                             </div>
                                             <div class="product-btn">
-                                                <a href="/admin/productlist/{{.Product_id}}/view" class="btn btn-primary">Product Details</a>
+                                                <a href="/admin/home/productlist/{{.Product_id}}/viewproduct" class="btn btn-primary">Product Details</a>
                                                 <!-- <a href="/admin/productlist/{{.Product_id}}/view" class="btn btn-outline-light">Product Details</a> -->
                                                 <a href="#" class="btn btn-outline-light"><i class="fas fa-exchange-alt"></i></a>
                                             </div>

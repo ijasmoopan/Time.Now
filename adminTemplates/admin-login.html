@@ -34,15 +34,15 @@
     <!-- ============================================================== -->
     <div class="splash-container">
         <div class="card ">
-            <div class="card-header text-center"><a href="/index.html"><img class="logo-img" src="/adminstyles/images/logo.png" alt="logo"></a><span class="splash-description">Please enter your user information.</span></div>
+            <div class="card-header text-center"><a href="/admin"><img class="logo-img" src="/adminstyles/images/logo.png" alt="logo"></a><span class="splash-description">Please enter your user information.</span></div>
             <div class="card-body">
                 {{.msg}}
-                <form action="/adminvalidating" method="post">
+                <form action="/admin/validating" method="post">
                     <div class="form-group">
-                        <input class="form-control form-control-lg" id="username" name="adminname" type="text" placeholder="Adminname" autocomplete="off">
+                        <input class="form-control form-control-lg" id="username" name="admin_name" type="text" placeholder="Adminname" autocomplete="off">
                     </div>
                     <div class="form-group">
-                        <input class="form-control form-control-lg" id="password" name="adminpassword" type="password" placeholder="Password">
+                        <input class="form-control form-control-lg" id="password" name="admin_password" type="password" placeholder="Password">
                     </div>
                     <div class="form-group">
                         <label class="custom-control custom-checkbox">
