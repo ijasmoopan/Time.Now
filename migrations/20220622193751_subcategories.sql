@@ -1,5 +1,4 @@
 -- +goose Up
--- +goose StatementBegin
 
 CREATE TABLE subcategories(
     subcategory_id BIGSERIAL PRIMARY KEY,
@@ -9,9 +8,7 @@ CREATE TABLE subcategories(
     subcategory_updated_at TIMESTAMP DEFAULT NULL,
     subcategory_deleted_at TIMESTAMP DEFAULT NULL
 );
--- +goose StatementEnd
 
 -- +goose Down
--- +goose StatementBegin
+
 DROP TABLE subcategories CASCADE;
--- +goose StatementEnd

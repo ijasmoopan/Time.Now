@@ -5,116 +5,228 @@ import (
 	"time"
 )
 
+// Product describes details of products.
 type Product struct {
-	Product_id          int             `json:"product_id"`
-	Product_name        string          `json:"user_firstname"`
-	Product_desc        string          `json:"product_desc"`
-	Product_price       decimal.Decimal `json:"product_price"`
-	Product_created_at  time.Time       `json:"created_at"`
-	Product_updated_at  *time.Time      `json:"updated_at"`
-	Product_deleted_at  *time.Time      `json:"deleted_at"`
-	Product_image       Images          `json:"product_image"`
-	Product_brand       Brands          `json:"product_brand"`
-	Product_category    Categories      `json:"product_category"`
-	Product_subcategory Subcategories   `json:"product_subcategory"`
-	Product_inventory   Inventories     `json:"product_inventory"`
-	// Product_color    Colors          `json:"product_color"`
+	ID          int           `json:"productID"`
+	Name        string        `json:"productName"`
+	Description string        `json:"productDesc"`
+	Price       float64       `json:"productPrice"`
+	Status      bool          `json:"productStatus"`
+	Color       Colors        `json:"productColor"`
+	Image       Images        `json:"productImage"`
+	Brand       Brands        `json:"productBrand"`
+	Category    Categories    `json:"productCategory"`
+	Subcategory Subcategories `json:"productSubcategory"`
+	Inventory   Inventories   `json:"productInventory"`
 }
 
-type Inventories struct {
-	Inventory_id         int        `json:"inventory_id"`
-	Product_id           int        `json:"product_id"`
-	Product_color        string     `json:"product_color"`
-	Product_quantity     int        `json:"product_quantity"`
-	Inventory_created_at time.Time  `json:"inventory_created_at"`
-	Inventory_updated_at *time.Time `json:"inventory_updated_at"`
-	Inventory_deleted_at *time.Time `json:"inventory_deleted_at"`
+// ProductWithInventory describes details of products.
+type ProductWithInventory struct {
+	ID          int           `json:"productID"`
+	Name        string        `json:"productName"`
+	Description string        `json:"productDesc"`
+	Price       float64       `json:"productPrice"`
+	Status      bool          `json:"productStatus"`
+	Color       []Colors      `json:"productColor"`
+	Image       Images        `json:"productImage"`
+	Brand       Brands        `json:"productBrand"`
+	Category    Categories    `json:"productCategory"`
+	Subcategory Subcategories `json:"productSubcategory"`
+	Inventory   []Inventories `json:"productInventory"`
 }
 
+// ProductDeleteRequest struct for deleting a product or its inventory
+type ProductDeleteRequest struct {
+	ID          *int `json:"productID"`
+	ColorID     *int `json:"colorID"`
+	InventoryID *int `json:"inventoryID"`
+	ImageID     *int `json:"imageID"`
+}
+
+// ProductWithColor describes details of products.
+type ProductWithColor struct {
+	ID          int           `json:"productID"`
+	Name        string        `json:"productName"`
+	Description string        `json:"productDesc"`
+	Price       float64       `json:"productPrice"`
+	Status      bool          `json:"productStatus"`
+	Color       []Colors      `json:"productColor"`
+	Image       Images        `json:"productImage"`
+	Brand       Brands        `json:"productBrand"`
+	Category    Categories    `json:"productCategory"`
+	Subcategory Subcategories `json:"productSubcategory"`
+}
+
+// ProductInDetail describes details of products.
 type ProductInDetail struct {
-	Product_id               int
-	Product_name             string
-	Product_desc             string
-	Product_price            decimal.Decimal
-	Product_brand         int
-	Product_brand_name       string
-	Product_category_id      int
-	Product_category_name    string
-	Product_subcategory_id   int
-	Product_subcategory_name string
-	Product_inventory_id     int
-	Product_quantity         int
-	Color_id                 int
-	Color                    string
+	ID          int           `json:"product_id"`
+	Name        string        `json:"product_name"`
+	Description string        `json:"product_desc"`
+	Price       float64       `json:"product_price"`
+	Status      bool          `json:"product_status"`
+	CreatedAt   time.Time     `json:"created_at"`
+	UpdatedAt   *time.Time    `json:"updated_at"`
+	DeletedAt   *time.Time    `json:"deleted_at"`
+	Color       Colors        `json:"product_color"`
+	Image       Images        `json:"product_image"`
+	Brand       Brands        `json:"product_brand"`
+	Category    Categories    `json:"product_category"`
+	Subcategory Subcategories `json:"product_subcategory"`
+	Inventory   Inventories   `json:"product_inventory"`
 }
 
+// HomeProduct describes product when printing details in front-end.
+type HomeProduct struct {
+	ID          int           `json:"product_id"`
+	Name        string        `json:"product_name"`
+	Description string        `json:"product_desc"`
+	Price       float64       `json:"product_price"`
+	Status      bool          `json:"product_status"`
+	CreatedAt   time.Time     `json:"created_at"`
+	UpdatedAt   *time.Time    `json:"updated_at"`
+	DeletedAt   *time.Time    `json:"deleted_at"`
+	Color       Colors        `json:"product_color"`
+	Image       Images        `json:"product_image"`
+	Brand       Brands        `json:"product_brand"`
+	Category    Categories    `json:"product_category"`
+	Subcategory Subcategories `json:"product_subcategory"`
+}
+
+// Colors struct describes colors of product.
+type Colors struct {
+	ID    *int    `json:"colorID"`
+	Color *string `json:"color"`
+}
+
+// Inventories struct describes inventory details of products.
+type Inventories struct {
+	ID        int    `json:"inventoryID"`
+	ProductID int    `json:"productID"`
+	Color     Colors `json:"productColor"`
+	Quantity  int    `json:"productQuantity"`
+}
+
+// InventoriesInDetail struct describes inventory details of products.
+type InventoriesInDetail struct {
+	ID        int        `json:"inventoryID"`
+	ProductID int        `json:"productID"`
+	Color     Colors     `json:"productColorID"`
+	Quantity  int        `json:"productQuantity"`
+	CreatedAt time.Time  `json:"inventory_created_at"`
+	UpdatedAt *time.Time `json:"inventory_updated_at"`
+	DeletedAt *time.Time `json:"inventory_deleted_at"`
+}
+
+// ProductInDetails struct for describing detailed details about products.
+type ProductInDetails struct {
+	ID              int
+	Name            string
+	Description     string
+	Price           float64
+	Status          bool
+	BrandID         int
+	BrandName       string
+	CategoryID      int
+	CategoryName    string
+	SubcategoryID   int
+	SubcategoryName string
+	InventoryID     int
+	Quantity        int
+	ColorID         int
+	Color           string
+}
+
+// ListProduct struct for listing some details of products.
 type ListProduct struct {
-	Product_id          int
-	Product_name        string
-	Product_desc        string
-	Product_price       decimal.Decimal
-	Product_inventory   Inventories
-	Product_brand       Brands
-	Product_category    Categories
-	Product_subcategory Subcategories
+	ID          int
+	Name        string
+	Description string
+	Price       float64
+	Status      bool
+	Inventory   Inventories
+	Brand       Brands
+	Category    Categories
+	Subcategory Subcategories
 	// Product_color       Colors
 }
 
+// AddProduct struct for adding a product.
 type AddProduct struct {
-	Product_id             int
-	Product_name           string
-	Product_category_id    int
-	Product_brand_id       int
-	Product_subcategory_id int
-	Product_price          decimal.Decimal
-	Product_desc           string
-	Product_quantity       int
-	Product_color          string
+	ID            int
+	Name          string
+	CategoryID    int
+	BrandID       int
+	SubcategoryID int
+	Price         float64
+	Description   string
+	Status        bool
+	Quantity      int
+	Color         string
 }
 
+// SampleProduct struct describing basic details of products.
 type SampleProduct struct {
-	Product_id    int
-	Product_name  string
-	Product_desc  string
-	Product_price decimal.Decimal
+	ID          int
+	Name        string
+	Description string
+	Status      bool
+	Price       decimal.Decimal
 }
 
-// type Colors struct {
-// 	Color_id   int    `json:"color_id"`
-// 	Color      string `json:"color"`
-// 	Product_id int    `json:"product_id"`
-// }
-
+// Images struct for describing images of products.
 type Images struct {
-	Image_id      int    `json:"image_id"`
-	Product_id    int    `json:"product_id"`
-	Product_image string `json:"product_image"`
+	ID        int    `json:"imageID"`
+	ProductID int    `json:"productID"`
+	Image     string `json:"productImage"`
 }
 
+// Brands struct for describing brands of products.
 type Brands struct {
-	Brand_id         int        `json:"brand_id"`
-	Brand_name       string     `json:"brand_name"`
-	Brand_desc       string     `json:"brand_desc"`
-	Brand_created_at time.Time  `json:"brand_created_at"`
-	Brand_updated_at *time.Time `json:"brand_updated_at"`
-	Brand_deleted_at *time.Time `json:"brand_deleted_at"`
+	ID          int    `json:"brandID"`
+	Name        string `json:"brandName"`
+	Description string `json:"brandDesc"`
 }
 
+// BrandsInDetail struct for describing brands of products.
+type BrandsInDetail struct {
+	ID          int        `json:"brandID"`
+	Name        string     `json:"brandName"`
+	Description string     `json:"brandDesc"`
+	CreatedAt   time.Time  `json:"brand_created_at"`
+	UpdatedAt   *time.Time `json:"brand_updated_at"`
+	DeletedAt   *time.Time `json:"brand_deleted_at"`
+}
+
+// Categories struct for describing categories of products.
 type Categories struct {
-	Category_id         int        `json:"category_id"`
-	Category_name       string     `json:"category_name"`
-	Category_desc       string     `json:"category_desc"`
-	Category_created_at time.Time  `json:"category_created_at"`
-	Category_updated_at *time.Time `json:"category_updated_at"`
-	Category_deleted_at *time.Time `json:"category_deleted_at"`
+	ID          int    `json:"categoryID"`
+	Name        string `json:"categoryName"`
+	Description string `json:"categoryDesc"`
 }
 
+// CategoriesInDetail struct for describing categories of products.
+type CategoriesInDetail struct {
+	ID          int        `json:"category_id"`
+	Name        string     `json:"category_name"`
+	Description string     `json:"category_desc"`
+	CreatedAt   time.Time  `json:"category_created_at"`
+	UpdatedAt   *time.Time `json:"category_updated_at"`
+	DeletedAt   *time.Time `json:"category_deleted_at"`
+}
+
+// Subcategories struct for describing subcategories of products.
 type Subcategories struct {
-	Subcategory_id         int        `json:"subcategory_id"`
-	Subcategory_name       string     `json:"subcategory_name"`
-	Subcategory_desc       string     `json:"subcategory_desc"`
-	Subcategory_created_at time.Time  `json:"subcategory_created_at"`
-	Subcategory_updated_at *time.Time `json:"subcategory_updated_at"`
-	Subcategory_deleted_at *time.Time `json:"subcategory_deleted_at"`
+	ID          int    `json:"subcategoryID"`
+	Name        string `json:"subcategoryName"`
+	Description string `json:"subcategoryDesc"`
 }
 
+// SubcategoriesInDetail struct for describing subcategories of products.
+type SubcategoriesInDetail struct {
+	ID          int        `json:"subcategory_id"`
+	Name        string     `json:"subcategory_name"`
+	Description string     `json:"subcategory_desc"`
+	CreatedAt   time.Time  `json:"subcategory_created_at"`
+	UpdatedAt   *time.Time `json:"subcategory_updated_at"`
+	DeletedAt   *time.Time `json:"subcategory_deleted_at"`
+}

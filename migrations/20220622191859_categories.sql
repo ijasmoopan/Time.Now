@@ -1,6 +1,4 @@
 -- +goose Up
--- +goose StatementBegin
-
 CREATE TABLE categories (
     category_id BIGSERIAL PRIMARY KEY,
     category_name VARCHAR(100) NOT NULL,
@@ -10,10 +8,5 @@ CREATE TABLE categories (
     category_deleted_at TIMESTAMP DEFAULT NULL
 );
 
-
--- +goose StatementEnd
-
 -- +goose Down
--- +goose StatementBegin
 DROP TABLE categories CASCADE;
--- +goose StatementEnd

@@ -2,53 +2,87 @@ package models
 
 import (
 	"time"
+
+	"github.com/google/uuid"
 )
 
-type User struct {
-	User_id         int        `json:"user_id"`
-	User_firstname  string     `json:"user_firstname"`
-	User_secondname string     `json:"user_secondname"`
-	User_email      string     `json:"user_email"`
-	User_password   string     `json:"user_password"`
-	User_phone      string     `json:"user_phone"`
-	User_gender     string     `json:"user_gender"`
-	User_status     bool       `json:"status"`
-	User_referral   string     `json:"user_referral"`
-	Created_at      time.Time  `json:"created_at"`
-	Updated_at      *time.Time `json:"updated_at"`
-	Deleted_at      *time.Time `json:"deleted_at"`
-	Address_id      Address    `json:"address_id"`
-}
-
+// Address is a model struct used to describing address of users.
 type Address struct {
-	address_id         int        `json:"address_id"`
-	address_name       string     `json:"address_name"`
-	address_phone      string     `json:"addess_phone"`
-	address_pincode    string     `json:"addess_pincode"`
-	address_housename  string     `json:"addess_housename"`
-	address_streetname string     `json:"addess_streetname"`
-	address_city       string     `json:"addess_city"`
-	address_state      string     `json:"addess_state"`
-	address_desc       string     `json:"addess_desc"`
-	address_created_at time.Time  `json:"addess_created_at"`
-	address_updated_at *time.Time `json:"addess_updated_at"`
-	address_deleted_at *time.Time `json:"addess_deleted_at"`
+	ID          int        `json:"addressID"`
+	UserID      int        `json:"userID"`
+	Name        string     `json:"Name"`
+	Phone       string     `json:"Phone"`
+	Pincode     string     `json:"Pincode"`
+	HouseName   string     `json:"Housename"`
+	StreetName  string     `json:"Street"`
+	City        string     `json:"City"`
+	State       string     `json:"State"`
+	Description string     `json:"Description"`
 }
 
+// AddressInDetail for detailed details about address.
+type AddressInDetail struct {
+	ID          int        `json:"addressID"`
+	UserID      int        `json:"userID"`
+	Name        string     `json:"Name"`
+	Phone       string     `json:"Phone"`
+	Pincode     string     `json:"Pincode"`
+	HouseName   string     `json:"Housename"`
+	StreetName  string     `json:"Streetname"`
+	City        string     `json:"City"`
+	State       string     `json:"State"`
+	Description string     `json:"Desc"`
+	CreatedAt   time.Time  `json:"CreatedAt"`
+	UpdatedAt   *time.Time `json:"UpdatedAt"`
+	DeletedAt   *time.Time `json:"DeletedAt"`
+}
+
+// User model is for describing struct for user.
+type User struct {
+	ID         int        `json:"userID"`
+	FirstName  string     `json:"firstname"`
+	SecondName string     `json:"secondname"`
+	Email      string     `json:"email"`
+	Phone      string     `json:"phone"`
+	Gender     string     `json:"gender"`
+	Status     bool       `json:"status"`
+	Referral   string     `json:"referral"`
+	Image      string     `json:"image"`
+}
+
+// UserInDetail for detailed details of user.
+type UserInDetail struct {
+	ID         int        `json:"userID"`
+	FirstName  string     `json:"firstname"`
+	SecondName string     `json:"secondname"`
+	Email      string     `json:"email"`
+	Phone      string     `json:"phone"`
+	Gender     string     `json:"gender"`
+	Status     bool       `json:"status"`
+	Referral   string     `json:"referral"`
+	Address    Address    `json:"address"`
+	Image      string     `json:"image"`
+	CreatedAt  time.Time  `json:"createdAt"`
+	UpdatedAt  *time.Time `json:"updatedAt"`
+	DeletedAt  *time.Time `json:"deletedAt"`
+}
+
+// UserLogin is a struct model for describing user when logging time.
 type UserLogin struct {
-	User_id       int
-	User_email    string
-	User_password string
+	ID       int    `json:"userID"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
 }
 
+// UserRegister is a struct model used for describing user while registration.
 type UserRegister struct {
-	User_id         int
-	User_firstname  string
-	User_secondname string
-	User_email      string
-	User_gender     string
-	User_phone      string
-	User_referral   string
-	User_password   string
-	User_confirm    string
+	ID              int        `json:"userID"`
+	FirstName       string     `json:"firstname"`
+	SecondName      string     `json:"secondname"`
+	Email           string     `json:"email"`
+	Gender          string     `json:"gender"`
+	Phone           string     `json:"phone"`
+	Referral        *uuid.UUID `json:"referral"`
+	Password        string     `json:"password"`
+	ConfirmPassword string     `json:"confirm"`
 }

@@ -3,87 +3,105 @@ package admin
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"log"
 	"time"
 
 	"github.com/ijasmoopan/Time.Now/models"
-	"github.com/ijasmoopan/Time.Now/usecases"
+	// "github.com/ijasmoopan/Time.Now/usecases"
 )
 
-type AdminModel struct {
+// Model for implementing db connection.
+type Model struct {
 	DB *sql.DB
 }
 
+// DBGetAdmin for accessing admin.
+func (admin Model) DBGetAdmin(adminForm models.Admin) (models.Admin, error) {
 
-
-func (a AdminModel) DBGetAdmin(adminForm models.Admin) (models.Admin, error) {
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	var admin models.Admin
-
-	row := a.DB.QueryRow(`SELECT admin_id,
-								admin_name,
-								admin_password
-							FROM   admins
-							WHERE  admin_name = $1 `, adminForm.Admin_name)
-
-	row.Scan(&admin.Admin_id, &admin.Admin_name, &admin.Admin_password)
-	log.Println("Output from database: ", admin)
-
-	if admin.Admin_password != adminForm.Admin_password {
-		return admin, errors.New("Incorrect Password")
-	}
-
-	log.Println("Output from database: ", admin)
-	return admin, nil
-}
-
-func (a AdminModel) DBGetAdminByName(admin_name string) (models.Admin, error) {
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	var admin models.Admin
-
-	row := a.DB.QueryRow("SELECT admin_id, admin_name FROM admins WHERE admin_id=$1", admin_name)
-	err := row.Scan(&admin.Admin_id, &admin.Admin_name)
+	var adminData models.Admin
+	row := admin.DB.QueryRow(`SELECT admin_id,
+									admin_name,
+									admin_password
+								FROM   admins
+								WHERE  admin_name = $1 `, adminForm.Name)
+	err := row.Scan(&adminData.ID,
+		&adminData.Name,
+		&adminData.Password)
 	if err != nil {
-		log.Println("DBGetAdminByName, error: ", err)
+		log.Println(err)
+		return adminData, err
 	}
-	return admin, nil
+	if adminData.Password != adminForm.Password {
+		return adminData, errors.New("Incorrect Password")
+	}
+	return adminData, nil
 }
 
-func (a AdminModel) DBGetAdminById(admin_id string) (models.Admin, error) {
+// DBGetAdminByID for accessing admin by id.
+func (admin Model) DBGetAdminByID(ID string) (models.Admin, error) {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	var admin models.Admin
-	row := a.DB.QueryRow("SELECT admin_id, admin_name, admin_password FROM admins WHERE admin_id = $1", admin_id)
-	err := row.Scan(&admin.Admin_id, &admin.Admin_name, &admin.Admin_password)
-
+	var adminData models.Admin
+	row := admin.DB.QueryRow(`SELECT admin_id, 
+								admin_name, 
+								admin_password 
+							FROM admins 
+							WHERE admin_id = $1`, ID)
+	err := row.Scan(&adminData.ID,
+		&adminData.Name,
+		&adminData.Password)
 	if err != nil {
-		log.Println("Redirecting to admin... ", admin, err)
-		return admin, err
+		log.Println(err)
+		return adminData, err
 	}
-	return admin, nil
+	return adminData, nil
 }
-
-
-
-
 
 // ----------------------------User Database------------------------------
 
-func (a AdminModel) DBGetUsers() ([]models.User, error) {
+// DBGetUsers for giving users to admin.
+func (admin Model) DBGetUsers(request models.UserRequest) ([]models.User, error) {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
 	var users []models.User
+	var sqlCondition string
+	var param interface{}
+	var rows *sql.Rows
+	var err error
 
-	rows, err := a.DB.Query("SELECT user_id, user_firstname, user_secondname, user_email, user_phone, user_status, user_gender, deleted_at FROM users")
+	sqlString := `SELECT user_id, 
+						user_firstname, 
+						user_secondname, 
+						user_email, 
+						user_phone, 
+						user_status, 
+						user_gender
+					FROM users `
+
+	if request.UserID != nil {
+		param = request.UserID
+		sqlCondition = `WHERE user_id = $1;`
+
+	} else if request.Email != nil {
+		param = request.Email
+		sqlCondition = `WHERE user_email = $1;`
+
+	} else if request.Gender != nil {
+		param = request.Gender
+		sqlCondition = `WHERE user_gender = $1;`
+
+	} else if request.Status != nil {
+		param = request.Status
+		sqlCondition = `WHERE user_status = $1;`
+
+	} else {
+		sqlCondition = `;`
+	}
+
+	if param != nil {
+		rows, err = admin.DB.Query(fmt.Sprint(sqlString, sqlCondition), param)
+	} else {
+		rows, err = admin.DB.Query(fmt.Sprint(sqlString, sqlCondition))
+	}
 	if err != nil {
 		log.Println("Query wrote...", err)
 		return nil, err
@@ -92,7 +110,14 @@ func (a AdminModel) DBGetUsers() ([]models.User, error) {
 
 	for rows.Next() {
 		var user models.User
-		err := rows.Scan(&user.User_id, &user.User_firstname, &user.User_secondname, &user.User_email, &user.User_phone, &user.User_status, &user.User_gender, &user.Deleted_at)
+		err := rows.Scan(&user.ID,
+			&user.FirstName,
+			&user.SecondName,
+			&user.Email,
+			&user.Phone,
+			&user.Status,
+			&user.Gender,
+		)
 		if err != nil {
 			log.Println("User: ", user, "Error: ", err)
 			return users, nil
@@ -100,51 +125,34 @@ func (a AdminModel) DBGetUsers() ([]models.User, error) {
 		log.Println("User: ", user)
 		users = append(users, user)
 	}
-
-	log.Println("Processing user list...")
 	return users, nil
 }
 
-func (a AdminModel) DBGetUser(user_id string) (models.User, error) {
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	var user models.User
-	log.Println("DBGetUser, user_id:", user_id)
-
-	row := a.DB.QueryRow("SELECT user_id, user_firstname, user_secondname, user_email, user_phone, user_referral, user_status, user_gender, deleted_at FROM users WHERE user_id=$1", user_id)
-
-	err := row.Scan(&user.User_id, &user.User_firstname, &user.User_secondname, &user.User_email, &user.User_phone, &user.User_referral, &user.User_status, &user.User_gender, &user.Deleted_at)
-	if err != nil {
-		log.Println("User: ", user, "Error: ", err)
-		return user, err
-	}
-
-	log.Println("Database User: ", user)
-	return user, nil
-}
-
-func (a AdminModel) DBGetUserStatus(user_id string) error {
-
-	file := usecases.Logger()
-	log.SetOutput(file)
+// DBUpdateUserStatus for accessing users by it is active or not.
+func (admin Model) DBUpdateUserStatus(userID int) error {
 
 	var user models.User
 
-	row := a.DB.QueryRow("SELECT user_status FROM users WHERE user_id=$1", user_id)
-	err := row.Scan(&user.User_status)
+	row := admin.DB.QueryRow(`SELECT user_status 
+								FROM users 
+								WHERE user_id = $1`, userID)
+
+	err := row.Scan(&user.Status)
 	if err != nil {
 		log.Println(err)
 		return err
 	}
 	var status bool
-	if user.User_status {
+	if user.Status {
 		status = false
 	} else {
 		status = true
 	}
-	_, err = a.DB.Exec("UPDATE users SET user_status=$1 WHERE user_id=$2", status, user_id)
+	_, err = admin.DB.Exec(`UPDATE users 
+							SET user_status = $1 
+							WHERE user_id = $2`, status,
+		userID)
+
 	if err != nil {
 		log.Println(err)
 		return err
@@ -152,28 +160,35 @@ func (a AdminModel) DBGetUserStatus(user_id string) error {
 	return nil
 }
 
-func (a AdminModel) DBUpdatingUser(user_id string, newUser models.User) error {
+// DBUpdateUser for updating user details.
+func (admin Model) DBUpdateUser(user models.User) error {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	log.Println("Updating user:", user_id)
-	result, err := a.DB.Exec("UPDATE users SET user_firstname=$1, user_secondname=$2, user_email=$3, user_phone=$4, user_referral=$5 WHERE user_id=$6", newUser.User_firstname, newUser.User_secondname, newUser.User_email, newUser.User_phone, newUser.User_referral, user_id)
+	_, err := admin.DB.Exec(`UPDATE users 
+									SET user_firstname = $1, 
+										user_secondname = $2, 
+										user_email = $3, 
+										user_phone = $4 
+									WHERE user_id = $5;`, user.FirstName,
+		user.SecondName,
+		user.Email,
+		user.Phone,
+		user.ID,
+	)
 	if err != nil {
 		log.Println(err)
 		return err
 	}
-	log.Println("Updated result:", result)
-
 	return nil
 }
 
-func (a AdminModel) DBDeleteUser(user_id string) error {
+// DBDeleteUser for deleting a user.
+func (admin Model) DBDeleteUser(userID int) error {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	result, err := a.DB.Exec("UPDATE users SET deleted_at=$1 WHERE user_id=$2", time.Now(), user_id)
+	result, err := admin.DB.Exec(`UPDATE users 
+									SET deleted_at = $1 
+									WHERE user_id = $2`, time.Now(),
+		userID,
+	)
 	if err != nil {
 		log.Println(err)
 		return err
@@ -182,201 +197,488 @@ func (a AdminModel) DBDeleteUser(user_id string) error {
 	return nil
 }
 
-
-
-
-
 // --------------------------------Product Database--------------------------
 
-func (a AdminModel) DBGetAllProducts() ([]models.SampleProduct, error) {
+// DBUpdateProductStatus method for updating product status from database.
+func (admin Model) DBUpdateProductStatus(product models.Product) error {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
+	row := admin.DB.QueryRow(`SELECT product_status
+								WHERE product_id = $1`, product.ID)
+	err := row.Scan(&product.Status)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	var status bool
+	if product.Status {
+		status = false
+	} else {
+		status = true
+	}
+	_, err = admin.DB.Exec(`UPDATE products 
+								SET product_status = $1
+								WHERE product_id = $2`, status,
+		product.ID)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	return nil
+}
 
-	var products []models.SampleProduct
+// DBDeleteProducts method for deleting product from database.
+func (admin Model) DBDeleteProducts(product models.ProductDeleteRequest) error {
 
-	rows, err := a.DB.Query("SELECT product_id, product_name, product_price, product_desc FROM products")
+	if product.ID != nil {
+		_, err := admin.DB.Exec(`UPDATE products
+									SET product_deleted_at = $1
+									WHERE product_id = $2`, time.Now(),
+			product.ID)
+		if err != nil {
+			log.Println(err)
+			return err
+		}
+		_, err = admin.DB.Exec(`UPDATE inventories 
+									SET inventory_deleted_at = $1
+									WHERE product_id = $2`, time.Now(),
+			product.ID)
+		if err != nil {
+			log.Println(err)
+			return err
+		}
+	}
+	if product.ImageID != nil {
+		_, err := admin.DB.Exec(`DELETE FROM images 
+									WHERE image_id = $1;`, product.ImageID)
+		if err != nil {
+			log.Println(err)
+			return err
+		}
+	}
+	if product.InventoryID != nil {
+		_, err := admin.DB.Exec(`UPDATE inventories 
+									SET inventory_deleted_at = $1
+									WHERE inventory_id = $2`, time.Now(),
+			product.InventoryID)
+		if err != nil {
+			log.Println(err)
+			return err
+		}
+	}
+	return nil
+}
+
+// ----------------------- DB Get Product Full Details --------------------------
+
+// DBGetProducts for accessing products with respect to reqeust params.
+func (admin Model) DBGetProducts(request models.AdminProductRequest) ([]models.ProductWithInventory, error) {
+
+	var products []models.ProductWithInventory
+	var filter []interface{}
+	count := 1
+	var sqlCondition string
+	var rows *sql.Rows
+	var err error
+
+	sqlString := `SELECT p.product_id,
+						p.product_name,
+						p.product_price,
+						p.product_desc,
+						p.product_status,
+						p.product_brand_id,
+						p.product_category_id,
+						p.product_subcategory_id,
+						i.image_id,
+						i.product_image,
+						c.category_name,
+						c.category_desc,
+						s.subcategory_name,
+						s.subcategory_desc,
+						b.brand_name,
+						b.brand_desc
+					FROM   products p
+						INNER JOIN categories c
+								ON p.product_category_id = c.category_id
+						INNER JOIN subcategories s
+								ON p.product_subcategory_id = s.subcategory_id
+						INNER JOIN brands b
+								ON p.product_brand_id = b.brand_id
+						LEFT JOIN images i
+								ON p.product_id = i.product_id
+					WHERE  p.product_deleted_at IS NULL `
+
+	if request.Product != nil {
+		filter = append(filter, *request.Product)
+		sqlCondition = fmt.Sprint(` AND p.product_name = $`, count)
+		count++
+	}
+	if request.Category != nil {
+		filter = append(filter, *request.Category)
+		sqlCondition = fmt.Sprint(sqlCondition, ` AND c.category_name = $`, count)
+		count++
+	}
+	if request.Subcategory != nil {
+		filter = append(filter, *request.Subcategory)
+		sqlCondition = fmt.Sprint(sqlCondition, ` AND s.subcategory_name = $`, count)
+		count++
+	}
+	if request.Brand != nil {
+		filter = append(filter, *request.Brand)
+		sqlCondition = fmt.Sprint(sqlCondition, ` AND b.brand_name = $`, count)
+		count++
+	}
+	if request.PriceMin != nil {
+		filter = append(filter, *request.PriceMin)
+		sqlCondition = fmt.Sprint(sqlCondition, ` AND p.product_price > $`, count)
+		count++
+	}
+	if request.PriceMax != nil {
+		filter = append(filter, *request.PriceMax)
+		sqlCondition = fmt.Sprint(sqlCondition, ` AND p.product_price < $`, count)
+		count++
+	}
+	if request.Status != nil {
+		filter = append(filter, *request.Status)
+		sqlCondition = fmt.Sprint(sqlCondition, ` AND p.product_status = $`, count)
+		count++
+	}
+	log.Println("sqlCondition:", sqlCondition)
+	log.Println("filter:", filter)
+
+	if count == 8 {
+		rows, err = admin.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter[0], filter[1], filter[2], filter[3], filter[4], filter[5], filter[6])
+	} else if count == 7 {
+		rows, err = admin.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter[0], filter[1], filter[2], filter[3], filter[4], filter[5])
+	} else if count == 6 {
+		rows, err = admin.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter[0], filter[1], filter[2], filter[3], filter[4])
+	} else if count == 5 {
+		rows, err = admin.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter[0], filter[1], filter[2], filter[3])
+	} else if count == 4 {
+		rows, err = admin.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter[0], filter[1], filter[2])
+	} else if count == 3 {
+		rows, err = admin.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter[0], filter[1])
+	} else if count == 2 {
+		rows, err = admin.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter[0])
+	} else {
+		rows, err = admin.DB.Query(sqlString)
+	}
+
+	// rows, err = admin.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter...)
+
+	log.Println("Rows:", rows)
 	if err != nil {
 		log.Println(err)
 		return products, err
 	}
 	defer rows.Close()
 	for rows.Next() {
-		var product models.SampleProduct
-		err := rows.Scan(&product.Product_id, &product.Product_name, &product.Product_price, &product.Product_desc)
+		var product models.ProductWithInventory
+		var imageID sql.NullInt32
+		var image sql.NullString
+		err := rows.Scan(&product.ID,
+			&product.Name,
+			&product.Price,
+			&product.Description,
+			&product.Status,
+			&product.Brand.ID,
+			&product.Category.ID,
+			&product.Subcategory.ID,
+			&imageID,
+			&image,
+			&product.Category.Name,
+			&product.Category.Description,
+			&product.Subcategory.Name,
+			&product.Subcategory.Description,
+			&product.Brand.Name,
+			&product.Brand.Description,
+		)
+		if imageID.Valid {
+			product.Image.ID = int(imageID.Int32)
+			product.Image.ProductID = product.ID
+		}
+		if image.Valid {
+			product.Image.Image = image.String
+		}
 		if err != nil {
 			log.Println("Error while getting products", err)
 			return products, err
 		}
-		log.Println("DB Product:", product)
+		log.Println("Product half:", product)
+
+		var colors []models.Colors
+		var inventories []models.Inventories
+		count2 := 1
+		var filter2 []interface{}
+		var sqlCondition2 string
+
+		sqlString2 := `SELECT i.inventory_id, 
+							i.product_id, 
+							c.color_id,
+							c.color, 
+							i.product_quantity 
+						FROM inventories i
+						INNER JOIN colors c
+							ON i.color_id = c.color_id
+						WHERE i.inventory_deleted_at IS NULL
+							AND i.product_id = $1`
+
+		if request.Quantity != nil {
+			count2++
+			filter2 = append(filter2, *request.Quantity)
+			sqlCondition2 = fmt.Sprint(` AND i.product_quantity = $`, count2)
+		}
+		if request.Color != nil {
+			count2++
+			filter2 = append(filter2, *request.Color)
+			sqlCondition2 = fmt.Sprint(sqlCondition2, ` AND c.color = $`, count2)
+		}
+		log.Println("SQL Condition:", sqlCondition2)
+		log.Println("Filter 2:", filter2)
+		log.Println("Product ID:", product.ID)
+		var inventoryRows *sql.Rows
+		var err2 error
+		if count2 == 3 {
+			inventoryRows, err2 = admin.DB.Query(fmt.Sprint(sqlString2, sqlCondition2), product.ID, filter2[0], filter2[1])
+		} else if count2 == 2 {
+			inventoryRows, err2 = admin.DB.Query(fmt.Sprint(sqlString2, sqlCondition2), product.ID, filter2[0])
+		} else {
+			inventoryRows, err2 = admin.DB.Query(sqlString2, product.ID)
+		}
+		// inventoryRows, err2 = admin.DB.Query(fmt.Sprint(sqlString2, sqlCondition2), product.ID, filter2[0])
+		log.Println("InventoryRows:", inventoryRows)
+		if err2 == sql.ErrNoRows {
+			log.Println("No rows returned", err2)
+		}
+		if err2 != nil {
+			log.Println("Error2:", err2)
+			return nil, err2
+		}
+		defer inventoryRows.Close()
+		log.Println("For loop starting")
+
+		if inventoryRows.Next() {
+			var inventory models.Inventories
+			var color models.Colors
+			log.Println("If started")
+			err = inventoryRows.Scan(&inventory.ID,
+				&inventory.ProductID,
+				&inventory.Color.ID,
+				&inventory.Color.Color,
+				&inventory.Quantity)
+			if err != nil {
+				log.Println("for loop:", err)
+				return products, err
+			}
+			log.Println("Color:", inventory)
+			color.ID = inventory.Color.ID
+			color.Color = inventory.Color.Color
+			colors = append(colors, color)
+			inventories = append(inventories, inventory)
+
+			for inventoryRows.Next() {
+				// var inventory models.Inventories
+				// var color models.Colors
+				log.Println("For loop started")
+				err = inventoryRows.Scan(&inventory.ID,
+					&inventory.ProductID,
+					&inventory.Color.ID,
+					&inventory.Color.Color,
+					&inventory.Quantity)
+				if err != nil {
+					log.Println("for loop:", err)
+					return products, err
+				}
+				log.Println("Color:", inventory)
+				color.ID = inventory.Color.ID
+				color.Color = inventory.Color.Color
+				colors = append(colors, color)
+				inventories = append(inventories, inventory)
+			}
+		} else {
+			// rows empty
+			log.Println("Rows empty")
+			continue
+		}
+		product.Inventory = inventories
+		product.Color = colors
+
 		products = append(products, product)
 	}
-
-	log.Println("Products:", products)
 	return products, nil
 }
 
-func (a AdminModel) DBGetProduct(product_id string) (models.ListProduct, error) {
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	var product models.ListProduct
-
-	row := a.DB.QueryRow(`SELECT products.product_id,
-								products.product_name,
-								products.product_price,
-								products.product_desc,
-								products.product_brand_id,
-								brands.brand_name,
-								products.product_category_id,
-								categories.category_name,
-								products.product_subcategory_id,
-								subcategories.subcategory_name,
-								products.product_inventory_id,
-								inventories.product_quantity,
-								inventories.product_color
-							FROM   products
-								inner join brands
-										ON products.product_brand_id = brands.brand_id
-								inner join categories
-										ON products.product_category_id = categories.category_id
-								inner join subcategories
-										ON products.product_subcategory_id = subcategories.subcategory_id
-								inner join inventories
-										ON products.product_inventory_id = inventories.inventory_id
-							WHERE  products.product_id = $1`, product_id)
-							
-	err := row.Scan(&product.Product_id, &product.Product_name, &product.Product_price, &product.Product_desc, &product.Product_brand.Brand_id, &product.Product_brand.Brand_name, &product.Product_category.Category_id, &product.Product_category.Category_name, &product.Product_subcategory.Subcategory_id, &product.Product_subcategory.Subcategory_name, &product.Product_inventory.Inventory_id, &product.Product_inventory.Product_quantity, &product.Product_inventory.Product_color)
-	if err != nil {
-		log.Println("Error in DB", err)
-		log.Println(err)
-		return product, err
-	}
-	log.Println("Product in detail:", product)
-	return product, nil
-}
-
-func (a AdminModel) DBGetProductColors(product_id string) ([]models.Inventories, error) {
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	var colors []models.Inventories
-	rows, err := a.DB.Query("SELECT * FROM colors WHERE product_id = $1", product_id)
+// DBAddProducts for adding product to database
+func (admin Model) DBAddProducts(product models.ProductWithInventory) error {
+	row := admin.DB.QueryRow(`INSERT INTO products (product_name,
+												product_price,
+												product_desc,
+												product_created_at,
+												product_brand_id,
+												product_category_id,
+												product_subcategory_id,
+												product_status)
+										VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING product_id;`, product.Name,
+		product.Price,
+		product.Description,
+		time.Now(),
+		product.Brand.ID,
+		product.Category.ID,
+		product.Subcategory.ID,
+		true)
+	err := row.Scan(&product.ID)
 	if err != nil {
 		log.Println(err)
-		return nil, err
+		return err
 	}
-	defer rows.Close()
-	for rows.Next(){
-		var color models.Inventories
-		err = rows.Scan(&color.Inventory_id, &color.Product_color, &color.Product_id)
-		if err != nil {
-			log.Println(err)
-			return colors, err
+	log.Println("ProductID:", product.ID)
+
+	if len(product.Color) == len(product.Inventory) {
+
+		for idx, value := range product.Color {
+
+			if value.Color != nil && value.ID == nil {
+				row = admin.DB.QueryRow(`INSERT INTO colors (color)
+												VALUES ($1)
+												RETURNING color_id;`, value.Color)
+				err = row.Scan(&value.ID)
+				log.Println("Color:", *value.ID, value.Color)
+				if err != nil {
+					log.Println(err)
+					return err
+				}
+			}
+			log.Println("Color:", *value.ID, value.Color)
+			_, err = admin.DB.Exec(`INSERT INTO inventories (product_id,
+															color_id,
+															product_quantity,
+															inventory_created_at)
+													VALUES ($1, $2, $3, $4);`, product.ID,
+				*value.ID,
+				product.Inventory[idx].Quantity,
+				time.Now(),
+			)
+			log.Println("Color:", *value.ID, value.Color)
+			if err != nil {
+				log.Println(err)
+				return err
+			}
+
 		}
-		log.Println("Color:", color)
-		colors = append(colors, color)
 	}
-	return colors, nil
-}
 
-func (a AdminModel) DBAddProduct(product models.ListProduct) error {
+	// for _, value := range product.Inventory {
+	// 	_, err = admin.DB.Exec(`INSERT INTO inventories (product_id,
+	// 													color_id,
+	// 													product_quantity,
+	// 													inventory_created_at)
+	// 											VALUES ($1, $2, $3, $4);`, product.ID,
+	// 		value.Color.ID,
+	// 		value.Quantity,
+	// 		time.Now())
+	// 	if err != nil {
+	// 		log.Println(err)
+	// 		return err
+	// 	}
+	// }
 
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	log.Println("In DBAddProduct..")
-
-	var inventory_id int
-	err := a.DB.QueryRow("INSERT INTO inventories (product_quantity, product_color, inventory_created_at) VALUES ($1, $2, $3) RETURNING inventory_id", product.Product_inventory.Product_quantity, product.Product_inventory.Product_color, time.Now()).Scan(&inventory_id)
+	log.Println("Before, Image:", product.Image.Image)
+	_, err = admin.DB.Exec(`INSERT INTO images (product_id,
+												product_image)
+										VALUES ($1, $2);`, product.ID,
+		product.Image.Image)
 	if err != nil {
-		log.Println("Error in inventories")
 		log.Println(err)
 		return err
 	}
-	err = a.DB.QueryRow("INSERT INTO products (product_name, product_desc, product_price, product_brand_id, product_category_id, product_subcategory_id, product_inventory_id, product_created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING product_id", product.Product_name, product.Product_desc, product.Product_price, product.Product_brand.Brand_id, product.Product_category.Category_id, product.Product_subcategory.Subcategory_id, inventory_id, time.Now()).Scan(&product.Product_id)
-	if err != nil {
-		log.Println("Error in products")
-		log.Println(err)
-		return err
-	}
-	result, err := a.DB.Exec("INSERT INTO colors (color, product_id) VALUES ($1, $2)", product.Product_inventory.Product_color, product.Product_id)
-	if err != nil {
-		log.Println("Error in colors")
-		log.Println(err)
-		return err
-	}
-	log.Println("New Color:", result)
+	log.Println("After, Image:", product.Image.Image)
 	return nil
 }
 
-func (a AdminModel) DBEditProduct(product models.ListProduct) error {
+// DBUpdateProducts method for updating product from database.
+func (admin Model) DBUpdateProducts(product models.ProductWithInventory) error {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	log.Println("Name:", product.Product_name)
-	log.Println("Desc:", product.Product_desc) 
-	log.Println("Price:", product.Product_price)
-	log.Println("Time:", time.Now())
-	log.Println("Brand:", product.Product_brand.Brand_id)
-	log.Println("Category:", product.Product_category.Category_id)
-	log.Println("Sibcategory:", product.Product_subcategory.Subcategory_id) 
-	log.Println("Quantity:", product.Product_inventory.Product_quantity)
-	log.Println("Product_id:", product.Product_id)
-
-	// row := a.DB.QueryRow("SELECT product_id, product_name, product_category_id, product_inventory_id FROM products WHERE product_id=$1", product.Product_id)
-	// err := row.Scan(&product.Product_id, &product.Product_name, &product.Product_category.Category_id, &product.Product_inventory.Inventory_id)
-	// if err != nil {
-	// 	log.Println(err)
-	// }
-	// log.Println(product)
-	// _, _ = a.DB.Exec("UPDATE categories SET category_name=$1, category_desc=$2, category_updated_at=$3 WHERE category_id=$4", category.Category_name, category.Category_desc, time.Now(), category.Category_id)
-
-	// result, err := a.DB.Exec("UPDATE inventories SET product_quantity=$1, inventory_updated_at=$2 WHERE inventory_id=$3", product.Product_inventory.Product_quantity, time.Now(), product.Product_inventory.Inventory_id)
-	// if err != nil {
-	// 	log.Println("Error in inventories")
-	// 	log.Println(err)
-	// 	return err
-	// }
-	// log.Println("Inventory Result:", result)
-
-	result, err := a.DB.Exec("UPDATE products SET product_name=$1, product_desc=$2, product_price=$3, product_updated_at=$4, product_brand_id=$5, product_category_id=$6, product_subcategory_id=$7, WHERE product_id=$8", product.Product_name, product.Product_desc, product.Product_price, time.Now(), product.Product_brand.Brand_id, product.Product_category.Category_id, product.Product_subcategory.Subcategory_id, product.Product_id)
+	log.Println("Product:", product)
+	_, err := admin.DB.Exec(`UPDATE products 
+									SET product_name = $1, 
+										product_desc = $2, 
+										product_price = $3, 
+										product_updated_at = $4, 
+										product_brand_id = $5, 
+										product_category_id = $6, 
+										product_subcategory_id = $7 
+									WHERE product_id = $8; `, product.Name,
+		product.Description,
+		product.Price,
+		time.Now(),
+		product.Brand.ID,
+		product.Category.ID,
+		product.Subcategory.ID,
+		product.ID)
+	if err != nil {
+		log.Println("Updating products,", err)
+		return err
+	}
+	log.Println("Products table updation completed")
+	_, err = admin.DB.Exec(`UPDATE images  
+								SET product_image = $1
+								WHERE image_id = $2`, product.Image.Image,
+		product.Image.ID)
 	if err != nil {
 		log.Println(err)
 		return err
 	}
 
-	// result, err = a.DB.QueryRow("SELECT  FROM products WHERE p")
+	for _, value := range product.Inventory {
 
-	log.Println("Products Result:", result)
+		_, err = admin.DB.Exec(`UPDATE inventories 
+									SET color_id = $1,
+										product_quantity = $2,
+										inventory_updated_at = $3
+									WHERE inventory_deleted_at IS NULL
+										AND inventory_id = $4`, value.Color.ID,
+			value.Quantity,
+			time.Now(),
+			value.ID)
+		if err != nil {
+			log.Println("Updating inventories, ", err)
+			return err
+		}
 
-	result, err = a.DB.Exec("UPDATE inventories SET product_color=$1 WHERE invetory_id=$2", product.Product_inventory.Product_color, product.Product_inventory.Inventory_id)
-	if err != nil {
-		log.Println("Error in colors")
-		log.Println(err)
-		return err
 	}
-	log.Println("Color Results:", result)
 
 	return nil
 }
-
-
-
-
 
 // ------------------Category Database----------------------
 
-func (a AdminModel) DBGetAllCategories() ([]models.Categories, error) {
-
-	file := usecases.Logger()
-	log.SetOutput(file)
+// DBGetCategories method for accessing categories from database.
+func (admin Model) DBGetCategories(request models.CategoryRequest) ([]models.Categories, error) {
 
 	var categories []models.Categories
-	rows, err := a.DB.Query("SELECT * FROM categories WHERE category_deleted_at IS NULL")
+	var rows *sql.Rows
+	var err error
+	var filter interface{}
+	var sqlCondition string
+
+	sqlString := `SELECT category_id,
+						category_name,
+						category_desc
+					FROM categories 
+					WHERE category_deleted_at IS NULL `
+
+	if request.CategoryID != nil {
+		filter = request.CategoryID
+		sqlCondition = `AND category_id = $1`
+	}
+	if request.CategoryName != nil {
+		filter = request.CategoryName
+		sqlCondition = `AND category_name = $1`
+	}
+	if filter != nil {
+		rows, err = admin.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter)
+	} else {
+		rows, err = admin.DB.Query(sqlString)
+	}
 	if err != nil {
 		log.Println(err)
 		return categories, err
@@ -384,7 +686,7 @@ func (a AdminModel) DBGetAllCategories() ([]models.Categories, error) {
 	defer rows.Close()
 	for rows.Next() {
 		var category models.Categories
-		err = rows.Scan(&category.Category_id, &category.Category_name, &category.Category_desc, &category.Category_created_at, &category.Category_updated_at, &category.Category_deleted_at)
+		err = rows.Scan(&category.ID, &category.Name, &category.Description)
 		if err != nil {
 			log.Println(err)
 			return categories, err
@@ -394,100 +696,83 @@ func (a AdminModel) DBGetAllCategories() ([]models.Categories, error) {
 	return categories, nil
 }
 
-func (a AdminModel) DBAddCategory(category models.Categories) error {
+// DBAddCategory method for adding new category to database.
+func (admin Model) DBAddCategory(category models.Categories) error {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	result, err := a.DB.Exec("INSERT INTO categories (category_name, category_desc, category_created_at) VALUES ($1, $2, $3)", category.Category_name, category.Category_desc, time.Now())
+	_, err := admin.DB.Exec(`INSERT INTO categories (category_name, 
+													category_desc, 
+													category_created_at) 
+											VALUES ($1, $2, $3)`, category.Name,
+		category.Description,
+		time.Now())
 	if err != nil {
 		log.Println(err)
 		return err
 	}
-	log.Println("New Category:", result)
 	return nil
 }
 
-func (a AdminModel) DBGetCategoryProducts(category_id string)([]models.SampleProduct, error){
+// DBUpdateCategory method for updating category details.
+func (admin Model) DBUpdateCategory(category models.Categories) error {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	var products []models.SampleProduct
-	rows, err := a.DB.Query("SELECT product_id, product_name, product_desc, product_price FROM products WHERE product_category_id=$1", category_id)
-	if err != nil {
-		log.Println(err)
-		return nil, err
-	}
-	defer rows.Close()
-	for rows.Next(){
-		var product models.SampleProduct
-		err = rows.Scan(&product.Product_id, &product.Product_name, &product.Product_desc, &product.Product_price)
-		if err != nil {
-			log.Println(err)
-			return products, err
-		}
-		log.Println("Product:", product)
-		products = append(products, product)
-	}
-	return products, nil
-}
-
-func (a AdminModel) DBGetCategory(category_id string)(models.Categories, error){
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	var category models.Categories
-	row := a.DB.QueryRow("SELECT category_id, category_name, category_desc FROM categories WHERE category_id=$1", category_id)
-	err := row.Scan(&category.Category_id, &category.Category_name, &category.Category_desc)
-	if err != nil {
-		log.Println("Error in Get Category", err)
-		return category, err
-	}
-	return category, nil
-}
-
-func (a AdminModel) DBEditCategory(category models.Categories) (error){
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	result, err := a.DB.Exec("UPDATE categories SET category_name=$1, category_desc=$2, category_updated_at=$3 WHERE category_id=$4", category.Category_name, category.Category_desc, time.Now(), category.Category_id)
+	_, err := admin.DB.Exec(`UPDATE categories 
+								SET category_name = $1, 
+									category_desc = $2, 
+									category_updated_at = $3 
+								WHERE category_id = $4`, category.Name,
+		category.Description,
+		time.Now(),
+		category.ID)
 	if err != nil {
 		log.Println(err)
 		return err
 	}
-	log.Println("Result:", result)
 	return nil
 }
 
-func (a AdminModel) DBDeleteCategory(category_id string) (error){
+// DBDeleteCategory method for deleting category from database.
+func (admin Model) DBDeleteCategory(categoryID int) error {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	result, err := a.DB.Exec("UPDATE categories SET category_deleted_at=$1 WHERE category_id=$2", time.Now(), category_id)
+	_, err := admin.DB.Exec(`UPDATE categories 
+								SET category_deleted_at = $1 
+								WHERE category_id = $2`, time.Now(),
+		categoryID)
 	if err != nil {
 		log.Println(err)
 		return err
 	}
-	log.Println(result)
 	return nil
-} 
-
-
-
+}
 
 // ----------------Sub Category Database------------------------
 
-func (a AdminModel) DBGetAllSubcategories() ([]models.Subcategories, error) {
-
-	file := usecases.Logger()
-	log.SetOutput(file)
+// DBGetSubcategories method for accessing subcategories.
+func (admin Model) DBGetSubcategories(request models.SubcategoryRequest) ([]models.Subcategories, error) {
 
 	var subcategories []models.Subcategories
-	rows, err := a.DB.Query("SELECT * FROM subcategories WHERE subcategory_deleted_at IS NULL")
+	var rows *sql.Rows
+	var err error
+	var filter interface{}
+	var sqlCondition string
+
+	sqlString := `SELECT subcategory_id,
+						subcategory_name,
+						subcategory_desc
+					 FROM subcategories 
+					 WHERE subcategory_deleted_at IS NULL `
+	if request.SubcategoryID != nil {
+		filter = request.SubcategoryID
+		sqlCondition = ` AND subcategory_id = $1`
+	}
+	if request.SubcategoryName != nil {
+		filter = request.SubcategoryName
+		sqlCondition = ` AND subcategory_name = $1`
+	}
+	if filter != nil {
+		rows, err = admin.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter)
+	} else {
+		rows, err = admin.DB.Query(sqlString)
+	}
 	if err != nil {
 		log.Println(err)
 		return subcategories, err
@@ -495,7 +780,7 @@ func (a AdminModel) DBGetAllSubcategories() ([]models.Subcategories, error) {
 	defer rows.Close()
 	for rows.Next() {
 		var subcategory models.Subcategories
-		err = rows.Scan(&subcategory.Subcategory_id, &subcategory.Subcategory_name, &subcategory.Subcategory_desc, &subcategory.Subcategory_created_at, &subcategory.Subcategory_updated_at, &subcategory.Subcategory_deleted_at)
+		err = rows.Scan(&subcategory.ID, &subcategory.Name, &subcategory.Description)
 		if err != nil {
 			log.Println(err)
 			return subcategories, err
@@ -505,101 +790,81 @@ func (a AdminModel) DBGetAllSubcategories() ([]models.Subcategories, error) {
 	return subcategories, nil
 }
 
-func (a AdminModel) DBAddSubcategory(subcategory models.Subcategories) error {
+// DBAddSubcategory method adding subcategory to database.
+func (admin Model) DBAddSubcategory(subcategory models.Subcategories) error {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	result, err := a.DB.Exec("INSERT INTO subcategories (subcategory_name, subcategory_desc, subcategory_created_at) VALUES ($1, $2, $3)", subcategory.Subcategory_name, subcategory.Subcategory_desc, time.Now())
+	_, err := admin.DB.Exec(`INSERT INTO subcategories (subcategory_name, 
+														subcategory_desc, 
+														subcategory_created_at) 
+										VALUES ($1, $2, $3)`, subcategory.Name,
+		subcategory.Description,
+		time.Now())
 	if err != nil {
 		log.Println(err)
 		return err
 	}
-	log.Println("New Subcategory:", result)
-
 	return nil
 }
 
-func (a AdminModel) DBGetSubcategoryProducts(subcategory_id string)([]models.SampleProduct, error){
+// DBUpdateSubcategory method for update category from database.
+func (admin Model) DBUpdateSubcategory(subcategory models.Subcategories) error {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	var products []models.SampleProduct
-	rows, err := a.DB.Query("SELECT product_id, product_name, product_desc, product_price FROM products WHERE product_subcategory_id=$1", subcategory_id)
-	if err != nil {
-		log.Println(err)
-		return nil, err
-	}
-	defer rows.Close()
-	for rows.Next(){
-		var product models.SampleProduct
-		err = rows.Scan(&product.Product_id, &product.Product_name, &product.Product_desc, &product.Product_price)
-		if err != nil {
-			log.Println(err)
-			return products, err
-		}
-		log.Println("Product:", product)
-		products = append(products, product)
-	}
-	return products, nil
-}
-
-func (a AdminModel) DBGetSubcategory(subcategory_id string)(models.Subcategories, error){
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	var subcategory models.Subcategories
-	row := a.DB.QueryRow("SELECT subcategory_id, subcategory_name, subcategory_desc FROM subcategories WHERE subcategory_id=$1", subcategory_id)
-	err := row.Scan(&subcategory.Subcategory_id, &subcategory.Subcategory_name, &subcategory.Subcategory_desc)
-	if err != nil {
-		log.Println("Error in Get Subcategory", err)
-		return subcategory, err
-	}
-	return subcategory, nil
-}
-
-func (a AdminModel) DBEditSubcategory(subcategory models.Subcategories) (error){
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	result, err := a.DB.Exec("UPDATE subcategories SET subcategory_name=$1, subcategory_desc=$2, subcategory_updated_at=$3 WHERE subcategory_id=$4", subcategory.Subcategory_name, subcategory.Subcategory_desc, time.Now(), subcategory.Subcategory_id)
+	_, err := admin.DB.Exec(`UPDATE subcategories 
+								SET subcategory_name = $1, 
+									subcategory_desc = $2, 
+									subcategory_updated_at = $3 
+								WHERE subcategory_id = $4`, subcategory.Name,
+		subcategory.Description,
+		time.Now(),
+		subcategory.ID)
 	if err != nil {
 		log.Println(err)
 		return err
 	}
-	log.Println("Result:", result)
 	return nil
 }
 
-func (a AdminModel) DBDeleteSubcategory(subcategory_id string) (error){
+// DBDeleteSubcategory method for deleting category from database.
+func (admin Model) DBDeleteSubcategory(subcategoryID int) error {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	result, err := a.DB.Exec("UPDATE subcategories SET subcategory_deleted_at=$1 WHERE subcategory_id=$2", time.Now(), subcategory_id)
+	_, err := admin.DB.Exec(`UPDATE subcategories 
+								SET subcategory_deleted_at = $1 
+								WHERE subcategory_id = $2`, time.Now(), subcategoryID)
 	if err != nil {
 		log.Println(err)
 		return err
 	}
-	log.Println(result)
 	return nil
-} 
-
-
-
+}
 
 // ----------------Brand Database------------------------
 
-func (a AdminModel) DBGetAllBrands() ([]models.Brands, error) {
-
-	file := usecases.Logger()
-	log.SetOutput(file)
+// DBGetBrands method for accessing brands from database.
+func (admin Model) DBGetBrands(request models.BrandRequest) ([]models.Brands, error) {
 
 	var brands []models.Brands
-	rows, err := a.DB.Query("SELECT * FROM brands WHERE brand_deleted_at IS NULL")
+	var rows *sql.Rows
+	var err error
+	var filter interface{}
+	var sqlCondition string
+	sqlString := `SELECT brand_id, 
+						brand_name, 
+						brand_desc 
+					FROM brands 
+					WHERE brand_deleted_at IS NULL `
+	if request.BrandID != nil {
+		filter = request.BrandID
+		sqlCondition = ` AND brand_id = $1`
+	}
+	if request.BrandName != nil {
+		filter = request.BrandName
+		sqlCondition = ` AND brand_name = $1`
+	}
+	if filter != nil {
+		rows, err = admin.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter)
+	} else {
+		rows, err = admin.DB.Query(sqlString)
+	}
 	if err != nil {
 		log.Println(err)
 		return brands, err
@@ -607,97 +872,345 @@ func (a AdminModel) DBGetAllBrands() ([]models.Brands, error) {
 	defer rows.Close()
 	for rows.Next() {
 		var brand models.Brands
-		err = rows.Scan(&brand.Brand_id, &brand.Brand_name, &brand.Brand_desc, &brand.Brand_created_at, &brand.Brand_updated_at, &brand.Brand_deleted_at)
+		err = rows.Scan(&brand.ID, &brand.Name, &brand.Description)
 		if err != nil {
 			log.Println(err)
 			return brands, err
 		}
 		brands = append(brands, brand)
 	}
-	log.Println("DBGetAllProducts..")
 	return brands, nil
 }
 
-func (a AdminModel) DBAddBrand(brand models.Brands) error {
+// DBAddBrand method for adding brand to database.
+func (admin Model) DBAddBrand(brand models.Brands) error {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	log.Println("New Brand is inserting:", brand)
-
-	result, err := a.DB.Exec("INSERT INTO brands (brand_name, brand_desc, brand_created_at) VALUES ($1, $2, $3)", brand.Brand_name, brand.Brand_desc, time.Now())
+	_, err := admin.DB.Exec(`INSERT INTO brands (brand_name, 
+													brand_desc, 
+													brand_created_at) 
+										VALUES ($1, $2, $3)`, brand.Name,
+		brand.Description,
+		time.Now())
 	if err != nil {
 		log.Println(err)
 		return err
 	}
-	log.Println("New Brand:", result)
 	return nil
 }
 
-func (a AdminModel) DBGetBrandProducts(brand_id string)([]models.SampleProduct, error){
+// DBUpdateBrand method for updating brand from database.
+func (admin Model) DBUpdateBrand(brand models.Brands) error {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	var products []models.SampleProduct
-	rows, err := a.DB.Query("SELECT product_id, product_name, product_desc, product_price FROM products WHERE product_brand_id=$1", brand_id)
+	_, err := admin.DB.Exec(`UPDATE brands 
+								SET brand_name = $1, 
+									brand_desc = $2, 
+									brand_updated_at = $3 
+								WHERE brand_id = $4`, brand.Name,
+		brand.Description,
+		time.Now(),
+		brand.ID)
 	if err != nil {
 		log.Println(err)
+		return err
+	}
+	return nil
+}
+
+// DBDeleteBrand method for deleting brand from database.
+func (admin Model) DBDeleteBrand(brandID int) error {
+
+	_, err := admin.DB.Exec(`UPDATE brands 
+								SET brand_deleted_at = $1 
+								WHERE brand_id = $2`, time.Now(),
+		brandID)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	return nil
+}
+
+// ----------------Color Database------------------------
+
+// DBGetColors method for accessing colors from database.
+func (admin Model) DBGetColors(request models.ColorRequest) ([]models.Colors, error) {
+
+	var colors []models.Colors
+	var rows *sql.Rows
+	var err error
+	var filter interface{}
+	var sqlCondition string
+	sqlString := `SELECT color_id, 
+						color 
+					FROM colors 
+					WHERE color_deleted_at IS NULL `
+	if request.ColorID != nil {
+		filter = request.ColorID
+		sqlCondition = ` AND color_id = $1`
+	}
+	if request.Color != nil {
+		filter = request.Color
+		sqlCondition = ` AND color = $1`
+	}
+	if filter != nil {
+		rows, err = admin.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter)
+	} else {
+		rows, err = admin.DB.Query(sqlString)
+	}
+	if err != nil {
+		log.Println(err)
+		return colors, err
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var color models.Colors
+		err = rows.Scan(&color.ID, &color.Color)
+		if err != nil {
+			log.Println(err)
+			return colors, err
+		}
+		colors = append(colors, color)
+	}
+	return colors, nil
+}
+
+// DBAddColor method for adding color to database.
+func (admin Model) DBAddColor(color models.Colors) error {
+
+	_, err := admin.DB.Exec(`INSERT INTO colors (color, 
+												color_created_at) 
+										VALUES ($1, $2)`, color.Color,
+		time.Now())
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	return nil
+}
+
+// DBUpdateColor method for updating color from database.
+func (admin Model) DBUpdateColor(color models.Colors) error {
+
+	_, err := admin.DB.Exec(`UPDATE colors 
+								SET color = $1, 
+									color_updated_at = $2 
+								WHERE color_id = $3`, color.Color,
+		time.Now(),
+		color.ID)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	return nil
+}
+
+// DBDeleteColor method for deleting Color from database.
+func (admin Model) DBDeleteColor(colorID int) error {
+
+	_, err := admin.DB.Exec(`UPDATE colors 
+								SET color_deleted_at = $1 
+								WHERE color_id = $2`, time.Now(),
+		colorID)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	return nil
+}
+
+// --------------------- Order Database -------------------
+
+// DBGetOrders method for accessing order details
+func (admin Model) DBGetOrders(request models.OrderRequest) ([]models.Orders, error) {
+
+	var orders []models.Orders
+	var sqlString string
+	var sqlCondition string
+	// var filter []int
+	var filter []interface{}
+	var count int
+
+	sqlString = `SELECT o.order_id, 
+						o.user_id, 
+						o.product_id, 
+						o.inventory_id, 
+						o.quantity, 
+						o.order_status,
+						p.product_name,
+						p.product_price,
+						p.product_desc,
+						p.product_status,
+						p.product_brand_id,
+						p.product_category_id,
+						p.product_subcategory_id,
+						i.image_id,
+						i.product_image,
+						c.category_name,
+						c.category_desc,
+						s.subcategory_name,
+						s.subcategory_desc,
+						b.brand_name,
+						b.brand_desc,
+						q.product_quantity,
+						col.color_id,
+						col.color									
+					FROM orders o
+						INNER JOIN products p
+							ON o.product_id = p.product_id
+						INNER JOIN categories c
+							ON p.product_category_id = c.category_id
+						INNER JOIN subcategories s
+								ON p.product_subcategory_id = s.subcategory_id
+						INNER JOIN brands b
+								ON p.product_brand_id = b.brand_id
+						LEFT JOIN images i
+								ON o.product_id = i.product_id
+						INNER JOIN inventories q
+								ON o.inventory_id = q.inventory_id
+						INNER JOIN colors col
+								ON col.color_id = q.color_id
+					WHERE p.product_deleted_at IS NULL `
+
+	if request.OrderID != nil {
+		count++
+		sqlCondition = fmt.Sprint(` AND o.order_id = $`, count)
+		filter = append(filter, *request.OrderID)
+	}
+	if request.OrderStatus != nil {
+		count++
+		sqlCondition = fmt.Sprint(sqlCondition, ` AND o.order_status = $`, count)
+		filter = append(filter, *request.OrderStatus)
+	}
+	if request.UserID != nil {
+		count++
+		sqlCondition = fmt.Sprint(sqlCondition, ` AND o.user_id = $`, count)
+		filter = append(filter, *request.UserID)
+	}
+	if request.Product != nil {
+		count++
+		sqlCondition = fmt.Sprint(sqlCondition, ` AND p.product_name = $`, count)
+		filter = append(filter, *request.Product)
+	}
+	if request.PriceMin != nil {
+		count++
+		sqlCondition = fmt.Sprint(sqlCondition, ` AND p.product_price > $`, count)
+		filter = append(filter, int(*request.PriceMin))
+	}
+	if request.PriceMax != nil {
+		count++
+		sqlCondition = fmt.Sprint(sqlCondition, ` AND p.product_price < $`, count)
+		filter = append(filter, int(*request.PriceMax))
+	}
+	if request.Category != nil {
+		count++
+		sqlCondition = fmt.Sprint(sqlCondition, ` AND c.category_name = $`, count)
+		filter = append(filter, *request.Category)
+	}
+	if request.Subcategory != nil {
+		count++
+		sqlCondition = fmt.Sprint(sqlCondition, ` AND c.subcategory_name = $`, count)
+		filter = append(filter, *request.Subcategory)
+	}
+	if request.Brand != nil {
+		count++
+		sqlCondition = fmt.Sprint(sqlCondition, ` AND c.brand_name = $`, count)
+		filter = append(filter, *request.Brand)
+	}
+
+	log.Println("Count:", count)
+	log.Println("Filter:", filter)
+	log.Println("Condition:", sqlCondition)
+
+	rows, err := admin.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter...)
+
+	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	for rows.Next(){
-		var product models.SampleProduct
-		err = rows.Scan(&product.Product_id, &product.Product_name, &product.Product_desc, &product.Product_price)
-		if err != nil {
-			log.Println(err)
-			return products, err
+	for rows.Next() {
+		var imageID sql.NullInt32
+		var image sql.NullString
+		var order models.Orders
+
+		err := rows.Scan(&order.ID,
+			&order.UserID,
+			&order.Product.ID,
+			&order.Product.Inventory.ID,
+			&order.Quantity,
+			&order.Status,
+			&order.Product.Name,
+			&order.Product.Price,
+			&order.Product.Description,
+			&order.Product.Status,
+			&order.Product.Brand.ID,
+			&order.Product.Category.ID,
+			&order.Product.Subcategory.ID,
+			&imageID,
+			&image,
+			&order.Product.Category.Name,
+			&order.Product.Category.Description,
+			&order.Product.Subcategory.Name,
+			&order.Product.Subcategory.Description,
+			&order.Product.Brand.Name,
+			&order.Product.Brand.Description,
+			&order.Product.Inventory.Quantity,
+			&order.Product.Inventory.Color.ID,
+			&order.Product.Inventory.Color.Color,
+		)
+		if imageID.Valid {
+			order.Product.Image.ID = int(imageID.Int32)
 		}
-		log.Println("Product:", product)
-		products = append(products, product)
+		if image.Valid {
+			order.Product.Image.Image = image.String
+		}
+		if err != nil {
+			return orders, err
+		}
+		order.Product.Color.ID = order.Product.Inventory.Color.ID
+		order.Product.Color.Color = order.Product.Inventory.Color.Color
+		order.Product.Image.ProductID = order.Product.ID
+		order.Product.Inventory.ProductID = order.Product.ID
+
+		orders = append(orders, order)
 	}
-	return products, nil
+	return orders, nil
 }
 
-func (a AdminModel) DBGetBrand(brand_id string)(models.Brands, error){
+// DBChangeOrderStatus method for changing order status
+func (admin Model) DBChangeOrderStatus(orderID int) error {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	var brand models.Brands
-	row := a.DB.QueryRow("SELECT brand_id, brand_name, brand_desc FROM brands WHERE brand_id=$1", brand_id)
-	err := row.Scan(&brand.Brand_id, &brand.Brand_name, &brand.Brand_desc)
-	if err != nil {
-		log.Println("Error in Get Category", err)
-		return brand, err
+	var orderStatus string
+	row := admin.DB.QueryRow(`SELECT order_status 
+								FROM orders
+								WHERE order_id = $1;`, orderID)
+	err := row.Scan(&orderStatus)
+	var status string
+	if orderStatus == "Ordered" {
+		status = "Shipped"
+	} else if orderStatus == "Shipped" {
+		status = "In-Transit"
+	} else if orderStatus == "In-Transit" {
+		status = "Deleivered"
+	} else {
+		return nil
 	}
-	return brand, nil
-}
-
-func (a AdminModel) DBEditBrand(brand models.Brands) (error){
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	result, err := a.DB.Exec("UPDATE brands SET brand_name=$1, brand_desc=$2, brand_updated_at=$3 WHERE brand_id=$4", brand.Brand_name, brand.Brand_desc, time.Now(), brand.Brand_id)
+	if status != "Delivered" {
+		_, err = admin.DB.Exec(`UPDATE orders
+									SET order_status = $1
+									WHERE order_id = $2;`, status,
+			orderID,
+		)
+	} else {
+		_, err = admin.DB.Exec(`UPDATE orders
+									SET order_status = $1,
+										delivered_at = $2
+									WHERE order_id = $3;`, status,
+			time.Now(),
+			orderID,
+		)
+	}
 	if err != nil {
-		log.Println(err)
 		return err
 	}
-	log.Println("Result:", result)
 	return nil
 }
-
-func (a AdminModel) DBDeleteBrand(brand_id string) (error){
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	result, err := a.DB.Exec("UPDATE brands SET brand_deleted_at=$1 WHERE brand_id=$2", time.Now(), brand_id)
-	if err != nil {
-		log.Println(err)
-		return err
-	}
-	log.Println(result)
-	return nil
-} 

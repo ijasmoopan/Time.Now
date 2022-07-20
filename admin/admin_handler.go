@@ -4,66 +4,37 @@ import (
 	// "context"
 	"crypto/md5"
 	"encoding/hex"
-	"fmt"
+	"encoding/json"
 	"log"
 	"net/http"
 	"strconv"
-	"text/template"
 	"time"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/ijasmoopan/Time.Now/models"
-	"github.com/ijasmoopan/Time.Now/usecases"
-	"github.com/shopspring/decimal"
 )
-
-
 
 // ---------------------Admin Side---------------------------
 
-func (repo *Repo) AdminLoginPage(w http.ResponseWriter, r *http.Request) {
+// AdminLogin for sign in admin.
+func (repo *Repo) AdminLogin(w http.ResponseWriter, r *http.Request) {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
-	tpl, err := template.ParseFiles("./adminTemplates/admin-login.html")
+	var adminLogin models.Admin
+	json.NewDecoder(r.Body).Decode(&adminLogin)
+
+	adminLogin.Password = hex.EncodeToString(md5.New().Sum([]byte(adminLogin.Password)))
+
+	admin, err := repo.admin.DBGetAdmin(adminLogin)
 	if err != nil {
-		log.Println(err)
-		panic(err)
-	}
-	tpl.Execute(w, nil)
-}
-
-func (repo *Repo) AdminLoginValidating(w http.ResponseWriter, r *http.Request) {
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	var adminForm models.Admin
-
-	r.ParseForm()
-	adminForm.Admin_name = r.FormValue("admin_name")
-	adminForm.Admin_password = hex.EncodeToString(md5.New().Sum([]byte(r.FormValue("admin_password"))))
-
-	log.Println("Admin Logging in: ", adminForm)
-
-	admin, err := repo.admin.DBGetAdmin(adminForm)
-	log.Println(err)
-	log.Println("Result form database: ", admin)
-	if err != nil {
-		tpl, err := template.ParseFiles("./adminTemplates/admin-login.html")
-		if err != nil {
-			log.Println("Template error: ", err)
-		}
-		log.Println(err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
 		message := map[string]interface{}{
 			"msg": "Incorrect Name or Password",
 		}
-		tpl.Execute(w, message)
+		json.NewEncoder(w).Encode(&message)
 		return
 	}
-	log.Println("Admin Validated")
-
-	id := strconv.Itoa(int(admin.Admin_id))
+	id := strconv.Itoa(int(admin.ID))
 	token := GeneratingToken(id)
 
 	cookie := http.Cookie{
@@ -73,205 +44,168 @@ func (repo *Repo) AdminLoginValidating(w http.ResponseWriter, r *http.Request) {
 		HttpOnly: true,
 	}
 	http.SetCookie(w, &cookie)
-	log.Println("Token Created...Redirecting to home...")
 
-	http.Redirect(w, r, "/admin/home/"+admin.Admin_name, http.StatusSeeOther)
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	message := map[string]interface{}{
+		"msg": "Successfully Logged In",
+	}
+	json.NewEncoder(w).Encode(&message)
 }
 
+// AdminLogout for logout admin.
 func (repo *Repo) AdminLogout(w http.ResponseWriter, r *http.Request) {
 
-	http.Redirect(w, r, "/admin", http.StatusSeeOther)
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	message := map[string]interface{}{
+		"msg": "Successfully Logged Out",
+	}
+	json.NewEncoder(w).Encode(&message)
 }
 
-func (repo *Repo) GetAdminById(w http.ResponseWriter, r *http.Request) {
-
-	file := usecases.Logger()
-	log.SetOutput(file)
+// GetAdminByID for accessing admin by id.
+func (repo *Repo) GetAdminByID(w http.ResponseWriter, r *http.Request) {
 
 	log.Println("GetAdminById...")
-	admin_id := chi.URLParam(r, "admin_id")
+	adminID := chi.URLParam(r, "adminID")
 
-	log.Println("Admin Id:", admin_id)
+	log.Println("Admin Id:", adminID)
 
-	admin, err := repo.adminbyid.DBGetAdminById(admin_id)
+	admin, err := repo.admin.DBGetAdminByID(adminID)
 	if err != nil {
 		log.Println("Error in DBGetAdminById: ", err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		message := map[string]interface{}{
+			"msg": "Incorrect Name or Password",
+		}
+		json.NewEncoder(w).Encode(&message)
+		return
 	}
-
 	log.Println("Admin by id: ", admin)
-	fmt.Fprint(w, admin.Admin_id, admin.Admin_name, admin.Admin_password)
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	message := map[string]interface{}{
+		"msg": "Admin by ID",
+		"admin": admin,
+	}
+	json.NewEncoder(w).Encode(&message)
 }
 
+// AdminHome for home page of admin.
 func (repo *Repo) AdminHome(w http.ResponseWriter, r *http.Request) {
 
-	admin_name := chi.URLParam(r, "adminname")
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	tpl, err := template.ParseFiles("./adminTemplates/admin-home.html")
-	if err != nil {
-		panic(err)
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	message := map[string]interface{}{
+		"msg": "Home Page",
 	}
-	tpl.Execute(w, map[string]interface{}{
-		"admin": admin_name,
-	})
-	log.Println("Home Page")
+	json.NewEncoder(w).Encode(&message)
 }
 
 
 
 // ----------------------------User Side---------------------------
 
-func (repo *Repo) UserListTable(w http.ResponseWriter, r *http.Request) {
+// GetUsers for giving all users.
+func (repo *Repo) GetUsers(w http.ResponseWriter, r *http.Request) {
 
-	admin_name := chi.URLParam(r, "adminname")
-	file := usecases.Logger()
-	log.SetOutput(file)
+	var userRequest models.UserRequest
 
-	users, err := repo.users.DBGetUsers()
+	json.NewDecoder(r.Body).Decode(&userRequest)
+	defer r.Body.Close()
+
+	users, err := repo.users.DBGetUsers(userRequest)
 	if err != nil {
-		log.Println(err)
-		http.Error(w, http.StatusText(404), 404)
-	}
-
-	tpl, err := template.ParseFiles("./adminTemplates/admin-userlist.html")
-	if err != nil {
-		panic(err)
-	}
-	log.Println(users)
-	err = tpl.Execute(w, map[string]interface{}{
-		"admin": admin_name,
-		"user":  users,
-	})
-	if err != nil {
-		panic(err)
-	}
-}
-
-func (repo *Repo) ViewUser(w http.ResponseWriter, r *http.Request) {
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	ctx := r.Context()
-	userDetails, ok := ctx.Value("user").(models.User)
-	if !ok {
-		log.Println("Error User: ", userDetails)
-		http.Error(w, http.StatusText(404), 404)
+		w.Header().Add("Content-type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		message := map[string]interface{}{
+			"error": err,
+		}
+		json.NewEncoder(w).Encode(&message)
 		return
 	}
-	log.Println("View User: ", userDetails)
-
-	tpl, err := template.ParseFiles("./adminTemplates/admin_viewuser.html")
-	if err != nil {
-		panic(err)
+	w.Header().Add("Content-type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	message := map[string]interface{}{
+		"users": users,
 	}
-	err = tpl.Execute(w, map[string]interface{}{
-		"user_id":         userDetails.User_id,
-		"user_firstname":  userDetails.User_firstname,
-		"user_secondname": userDetails.User_secondname,
-		"user_email":      userDetails.User_email,
-		"user_phone":      userDetails.User_phone,
-		"user_gender":     userDetails.User_gender,
-		"user_referral":   userDetails.User_referral,
-		"user_status":     userDetails.User_status,
-		"user_createdat":  userDetails.Created_at,
-		"user_updatedat":  userDetails.Updated_at,
-		"user_deletedat":  userDetails.Deleted_at,
-	})
-	if err != nil {
-		panic(err)
-	}
+	json.NewEncoder(w).Encode(&message)
 }
 
-func (repo *Repo) EditUser(w http.ResponseWriter, r *http.Request) {
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	ctx := r.Context()
-	userDetails, ok := ctx.Value("user").(models.User)
-	if !ok {
-		http.Error(w, http.StatusText(404), 404)
-		return
-	}
-	log.Println("Edit user: ", userDetails)
-
-	tpl, err := template.ParseFiles("./adminTemplates/admin_edituser.html")
-	if err != nil {
-		panic(err)
-	}
-	tpl.Execute(w, map[string]interface{}{
-		"user_id":         userDetails.User_id,
-		"user_firstname":  userDetails.User_firstname,
-		"user_secondname": userDetails.User_secondname,
-		"user_email":      userDetails.User_email,
-		"user_phone":      userDetails.User_phone,
-		"user_status":     userDetails.User_status,
-		"user_referral":   userDetails.User_referral,
-	})
-}
-
-func (repo *Repo) EditingUser(w http.ResponseWriter, r *http.Request) {
-
-	r.ParseForm()
+// UpdateUser for updating user.
+func (repo *Repo) UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	var user models.User
-	user_id := chi.URLParam(r, "userid")
+	json.NewDecoder(r.Body).Decode(&user)
 
-	user.User_firstname = r.FormValue("firstname")
-	user.User_secondname = r.FormValue("secondname")
-	user.User_email = r.FormValue("email")
-	user.User_phone = r.FormValue("phone")
-	user.User_referral = r.FormValue("referral")
-
-	err := repo.updateuser.DBUpdatingUser(user_id, user)
+	err := repo.users.DBUpdateUser(user)
 	if err != nil {
-		http.Error(w, http.StatusText(404), 404)
+		w.Header().Add("Content-type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		message := map[string]interface{}{
+			"Error": "err",
+		}
+		json.NewEncoder(w).Encode(&message)
 		return
 	}
-
-	http.Redirect(w, r, "/admin/home/userlist/"+user_id+"/viewuser", http.StatusSeeOther)
+	w.Header().Add("Content-type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	message := map[string]interface{}{
+		"msg": "User details updated",
+	}
+	json.NewEncoder(w).Encode(&message)
 }
 
-func (repo *Repo) BlockUser(w http.ResponseWriter, r *http.Request) {
+// UpdateUserStatus for updating user status.
+func (repo *Repo) UpdateUserStatus(w http.ResponseWriter, r *http.Request) {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
+	var user models.User
+	json.NewDecoder(r.Body).Decode(&user)
 
-	ctx := r.Context()
-	admin, ok := ctx.Value("admin").(models.Admin)
-	if !ok {
-		log.Println("Can't access context admin")
-	}
-
-	user_id := chi.URLParam(r, "userid")
-
-	err := repo.userStatus.DBGetUserStatus(user_id)
+	err := repo.users.DBUpdateUserStatus(user.ID)
 	if err != nil {
-		http.Error(w, http.StatusText(404), 404)
+		log.Println(err)
+		w.Header().Add("Content-type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		message := map[string]interface{}{
+			"Error": "err",
+		}
+		json.NewEncoder(w).Encode(&message)
 		return
 	}
-	http.Redirect(w, r, "/admin/home/"+admin.Admin_name+"/userlist", http.StatusSeeOther)
+	w.Header().Add("Content-type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	message := map[string]interface{}{
+		"msg": "User Status updated",
+	}
+	json.NewEncoder(w).Encode(&message)
 }
 
+// DeleteUser for deleting user.
 func (repo *Repo) DeleteUser(w http.ResponseWriter, r *http.Request) {
 
-	ctx := r.Context()
-	admin, ok := ctx.Value("admin").(models.Admin)
-	if !ok {
-		log.Println("Can't access context admin")
-	}
+	var user models.User
+	json.NewDecoder(r.Body).Decode(&user)
 
-	user_id := chi.URLParam(r, "userid")
-
-	err := repo.deleteUser.DBDeleteUser(user_id)
+	err := repo.users.DBDeleteUser(user.ID)
 	if err != nil {
-		http.Error(w, http.StatusText(404), 404)
+		log.Println(err)
+		w.Header().Add("Content-type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		message := map[string]interface{}{
+			"Error": "err",
+		}
+		json.NewEncoder(w).Encode(&message)
 		return
 	}
-	http.Redirect(w, r, "/admin/home/"+admin.Admin_name+"/userlist", http.StatusSeeOther)
+	w.Header().Add("Content-type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	message := map[string]interface{}{
+		"msg": "User Deleted",
+	}
+	json.NewEncoder(w).Encode(&message)
 }
 
 
@@ -280,719 +214,654 @@ func (repo *Repo) DeleteUser(w http.ResponseWriter, r *http.Request) {
 
 // -------------------Product Side------------------------
 
-func (repo *Repo) ProductList(w http.ResponseWriter, r *http.Request) {
+// GetProducts for accessing products.
+func (repo *Repo) GetProducts(w http.ResponseWriter, r *http.Request) {
 
-	admin_name := chi.URLParam(r, "adminname")
+	var request models.AdminProductRequest
+	json.NewDecoder(r.Body).Decode(&request)
+	defer r.Body.Close()
 
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	products, err := repo.products.DBGetAllProducts()
+	products, err := repo.products.DBGetProducts(request)
 	if err != nil {
-		http.Error(w, http.StatusText(404), 404)
+		log.Println("Error:", err)
+		w.Header().Add("Content-type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		message := map[string]interface{}{
+			"Error": "err",
+		}
+		json.NewEncoder(w).Encode(&message)
 		return
 	}
-	for key, value := range products {
-		log.Println("Key: ", key, "Value: ", value)
+	log.Println("Handler Products:", products)
+	w.Header().Add("Content-type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	message := map[string]interface{}{
+		"Product": products,
 	}
-	log.Println("Product listing...")
-	tpl, err := template.ParseFiles("./adminTemplates/ecommerce-product.html")
-	if err != nil {
-		http.Error(w, http.StatusText(404), 404)
-		return
-	}
-	err = tpl.Execute(w, map[string]interface{}{
-		"admin":   admin_name,
-		"product": products,
-	})
-	if err != nil {
-		log.Println("Template Error:", err)
-	}
+	json.NewEncoder(w).Encode(&message)
 }
 
-func (repo *Repo) AddProduct(w http.ResponseWriter, r *http.Request) {
+// AddProducts for adding products into database.
+func (repo *Repo) AddProducts(w http.ResponseWriter, r *http.Request) {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
+	var newProduct models.ProductWithInventory
+	json.NewDecoder(r.Body).Decode(&newProduct)
+	defer r.Body.Close()
 
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
-
-	// categories
-	categories, err := repo.categories.DBGetAllCategories()
+	err := repo.products.DBAddProducts(newProduct)
 	if err != nil {
 		log.Println(err)
-	}
-
-	// subcategories
-	subcategories, err := repo.subcategories.DBGetAllSubcategories()
-	if err != nil {
 		log.Println(err)
-	}
-
-	// brands
-	brands, err := repo.brands.DBGetAllBrands()
-	if err != nil {
-		log.Println(err)
-	}
-
-	tpl, err := template.ParseFiles("adminTemplates/admin_add_product.html")
-	if err != nil {
-
-	}
-	tpl.Execute(w, map[string]interface{}{
-		"admin_name":    admin.Admin_name,
-		"categories":    categories,
-		"subcategories": subcategories,
-		"brands":        brands,
-	})
-}
-
-func (repo *Repo) AddingProduct(w http.ResponseWriter, r *http.Request) {
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
-
-	r.ParseForm()
-	var product models.ListProduct
-	product.Product_name = r.FormValue("product_name")
-	product.Product_inventory.Product_color = r.FormValue("product_color")
-	product.Product_brand.Brand_id, _ = strconv.Atoi(r.FormValue("product_brand"))
-	product.Product_category.Category_id, _ = strconv.Atoi(r.FormValue("product_category"))
-	product.Product_subcategory.Subcategory_id, _ = strconv.Atoi(r.FormValue("product_subcategory"))
-	product.Product_inventory.Product_quantity, _ = strconv.Atoi(r.FormValue("product_quantity"))
-	product.Product_desc = r.FormValue("product_desc")
-	product.Product_price, _ = decimal.NewFromString(r.FormValue("product_price"))
-
-	log.Println("New Product:")
-
-	log.Println("Name:",product.Product_name)
-	log.Println("Color:",product.Product_inventory.Product_color)
-	log.Println("Brand:",product.Product_brand.Brand_id)
-	log.Println("Category:",product.Product_category.Category_id)
-	log.Println("Subcategory:",product.Product_subcategory.Subcategory_id)
-	log.Println("Quantity:",product.Product_inventory.Product_quantity)
-	log.Println("Description:",product.Product_desc)
-	log.Println("Price:",product.Product_price)
-
-	err := repo.addproduct.DBAddProduct(product)
-	if err != nil {
-		log.Println("Error in DB")
-		log.Println(err)
-	}
-
-	http.Redirect(w, r, "/admin/home/"+admin.Admin_name+"/productlist", http.StatusSeeOther)
-}
-
-func (repo *Repo) ViewProduct(w http.ResponseWriter, r *http.Request) {
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	product_id := chi.URLParam(r, "product_id")
-	product, err := repo.product.DBGetProduct(product_id)
-	if err != nil {
-		log.Println(err)
-		return
-	
-	}
-	colors, err := repo.productcolors.DBGetProductColors(product_id)
-	if err != nil {
-		log.Println(err)
-	}
-
-	log.Println("Upcoming Product: ", product)
-	tpl, err := template.ParseFiles("./adminTemplates/ecommerce-product-single.html")
-	if err != nil {
-		// http.Error(w, http.StatusText(404), 404)
-		log.Println(err)
+		w.Header().Add("Content-type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		message := map[string]interface{}{
+			"Error": "err",
+		}
+		json.NewEncoder(w).Encode(&message)
 		return
 	}
-	err = tpl.Execute(w, map[string]interface{}{
-		"Product_id":    product.Product_id,
-		"Product_name":  product.Product_name,
-		"Product_price": product.Product_price,
-		"Product_desc": product.Product_desc,
-		"Product_category_id": product.Product_category.Category_id,
-		"Product_category": product.Product_category.Category_name,
-		"Product_subcategory_id": product.Product_subcategory.Subcategory_id,
-		"Product_subcategory": product.Product_subcategory.Subcategory_name,
-		"Product_brand_id": product.Product_brand.Brand_id,
-		"Product_brand": product.Product_brand.Brand_name,
-		"Product_inventory": product.Product_inventory.Inventory_id,
-		"Product_quantity": product.Product_inventory.Product_quantity,
-		"Product_color": product.Product_inventory.Product_color,
-		// "Product_image": product.Product_image.Image,
-		"Product_colors": colors,
-	})
-	if err != nil {
-		log.Println(err)
+	w.Header().Add("Content-type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	message := map[string]interface{}{
+		"response": "New product added",
 	}
-}
-
-func (repo *Repo) EditProduct(w http.ResponseWriter, r *http.Request){
-
-	product_id := chi.URLParam(r, "product_id")
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
-	product, err := repo.product.DBGetProduct(product_id)
-	if err != nil {
-		fmt.Println(err)
-		http.Error(w, http.StatusText(404), 404)
-		return
-	}
-	categories, err := repo.categories.DBGetAllCategories()
-	if err != nil {
-		log.Println(err)
-	}
-	subcategories, err := repo.subcategories.DBGetAllSubcategories()
-	if err != nil {
-		log.Println(err)		
-	}
-	brands, err := repo.brands.DBGetAllBrands()
-	if err != nil {
-		log.Println(err)
-	}
-	tpl, err := template.ParseFiles("./adminTemplates/admin_edit_product.html")
-	if err != nil {	
-		fmt.Println(err)
-		http.Error(w, http.StatusText(404), 404)
-		return
-	}
-	tpl.Execute(w, map[string]interface{}{
-		"Product_id":    product.Product_id,
-		"Product_name":  product.Product_name,
-		"Product_price": product.Product_price,
-		"Product_desc": product.Product_desc,
-		"Product_category_id": product.Product_category.Category_id,
-		"Product_category": product.Product_category.Category_name,
-		"Product_subcategory_id": product.Product_subcategory.Subcategory_id,
-		"Product_subcategory": product.Product_subcategory.Subcategory_name,
-		"Product_brand_id": product.Product_brand.Brand_id,
-		"Product_brand": product.Product_brand.Brand_name,
-		"Product_inventory": product.Product_inventory.Inventory_id,
-		"Product_quantity": product.Product_inventory.Product_quantity,
-		"Product_color": product.Product_inventory.Product_color,
-		// "Product_image": product.Product_image.Image,
-		// "Product_colors": colors,
-		"admin": admin.Admin_name,
-		"Categories": categories,
-		"Subcategories": subcategories,
-		"Brands": brands,
-	})
-}
-
-func (repo *Repo) EditingProduct(w http.ResponseWriter, r *http.Request){
-
-	product_id := chi.URLParam(r, "product_id")
-
-	r.ParseForm()
-	var product models.ListProduct
-	product.Product_id, _ = strconv.Atoi(product_id)
-	product.Product_name = r.FormValue("product_name")
-	product.Product_price, _ = decimal.NewFromString(r.FormValue("product_price"))
-
-	product.Product_category.Category_id, _ = strconv.Atoi(r.FormValue("product_category"))
-	product.Product_subcategory.Subcategory_id, _ = strconv.Atoi(r.FormValue("product_subcategory"))
-	product.Product_brand.Brand_id, _ = strconv.Atoi(r.FormValue("product_brand"))
-
-	product.Product_inventory.Product_color = r.FormValue("product_color")
-	product.Product_inventory.Product_quantity, _ = strconv.Atoi(r.FormValue("product_quantity"))
-	product.Product_desc = r.FormValue("product_desc")
-
-	log.Println("Product in form:", product)
-	err := repo.editproduct.DBEditProduct(product)
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	http.Redirect(w, r, "/admin/home/productlist/"+product_id+"/viewproduct", http.StatusSeeOther)
+	json.NewEncoder(w).Encode(&message)
 }
 
 
+// UpdateProducts method for updating product from database.
+func (repo *Repo) UpdateProducts(w http.ResponseWriter, r *http.Request){
 
+	var product models.ProductWithInventory
+	json.NewDecoder(r.Body).Decode(&product)
+	defer r.Body.Close()
 
+	err := repo.products.DBUpdateProducts(product)
+	if err != nil {
+		log.Println(err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]interface{}{
+			"msg": err,
+		}
+		json.NewEncoder(w).Encode(&response)
+		return
+	}
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	response := map[string]interface{}{
+		"Response": "Product updated",
+	}
+	json.NewEncoder(w).Encode(&response)
+}
+
+// DeleteProducts method for deleting a product from database.
+func (repo *Repo) DeleteProducts(w http.ResponseWriter, r *http.Request){
+
+	// var product models.Product
+	var product models.ProductDeleteRequest
+	json.NewDecoder(r.Body).Decode(&product)
+	defer r.Body.Close()
+
+	err := repo.products.DBDeleteProducts(product)
+	if err != nil {
+		log.Println(err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]interface{}{
+			"Response": err,
+		}
+		json.NewEncoder(w).Encode(&response)
+		return
+	}
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	response := map[string]interface{}{
+		"Response": "Product deleted",
+	}
+	json.NewEncoder(w).Encode(&response)
+}
+
+// UpdateProductStatus method for updating product status
+func (repo *Repo) UpdateProductStatus(w http.ResponseWriter, r *http.Request){
+
+	var product models.Product
+	json.NewDecoder(r.Body).Decode(&product)
+
+	err := repo.products.DBUpdateProductStatus(product)
+	if err != nil {
+		log.Println(err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]interface{}{
+			"msg": err,
+		}
+		json.NewEncoder(w).Encode(&response)
+		return
+	}
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	response := map[string]interface{}{
+		"Response": "Product status updated",
+	}
+	json.NewEncoder(w).Encode(&response)
+}
 
 
 
 // ---------------------Category Management------------------------------
 
-func (repo *Repo) CategoryList(w http.ResponseWriter, r *http.Request) {
+// GetCategories method for accessing categories.
+func (repo *Repo) GetCategories(w http.ResponseWriter, r *http.Request) {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
+	var request models.CategoryRequest
+	json.NewDecoder(r.Body).Decode(&request)
 
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
-
-	category, err := repo.categories.DBGetAllCategories()
+	category, err := repo.categories.DBGetCategories(request)
 	if err != nil {
 		log.Println(err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]interface{}{
+			"Error": err,
+		}
+		json.NewEncoder(w).Encode(response)
+		return
 	}
-	tpl, err := template.ParseFiles("./adminTemplates/admin_categorylist.html")
-	if err != nil {
-		log.Println(err)
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	response := map[string]interface{}{
+		"Category": category,
 	}
-
-	err = tpl.Execute(w, map[string]interface{}{
-		"category": category,
-		"admin":    admin.Admin_name,
-	})
-	if err != nil {
-		log.Println(err)
-	}
+	json.NewEncoder(w).Encode(response)
 }
 
+// AddCategory for adding category by admin.
 func (repo *Repo) AddCategory(w http.ResponseWriter, r *http.Request) {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
-
-	tpl, err := template.ParseFiles("./adminTemplates/admin_add_category.html")
-	if err != nil {
-		log.Println(err)
-	}
-	err = tpl.Execute(w, map[string]interface{}{
-		"admin": admin.Admin_name,
-	})
-	if err != nil {
-		log.Println(err)
-	}
-}
-
-func (repo *Repo) AddingCategory(w http.ResponseWriter, r *http.Request) {
-
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
-
-	r.ParseForm()
 	var category models.Categories
-	category.Category_name = r.FormValue("category_name")
-	category.Category_desc = r.FormValue("category_desc")
+	json.NewDecoder(r.Body).Decode(&category)
 
-	err := repo.addcategory.DBAddCategory(category)
+	err := repo.categories.DBAddCategory(category)
 	if err != nil {
 		log.Println(err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]interface{}{
+			"Error": err,
+		}
+		json.NewEncoder(w).Encode(response)
+		return
 	}
-	http.Redirect(w, r, "/admin/home/"+admin.Admin_name+"/categorylist", http.StatusSeeOther)
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	response := map[string]interface{}{
+		"Response": "Category Added",
+	}
+	json.NewEncoder(w).Encode(response)
 }
 
-func (repo *Repo) ViewCategoryProducts(w http.ResponseWriter, r *http.Request){
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	category_id := chi.URLParam(r, "category_id")
-
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
-
-	products, err := repo.categoryproducts.DBGetCategoryProducts(category_id)
-	if err != nil {
-		log.Println(err)
-	}
-
-	tpl, err := template.ParseFiles("./adminTemplates/ecommerce-product.html")
-	if err != nil {
-		log.Println(err)
-	}
-	tpl.Execute(w, map[string]interface{}{
-		"admin": admin.Admin_name,
-		"product": products,
-	})
-}
-
-func (repo *Repo) EditCategory(w http.ResponseWriter, r *http.Request){
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
-
-	category_id := chi.URLParam(r, "category_id")
-	category, err := repo.category.DBGetCategory(category_id)
-	if err != nil {
-		log.Println(err)
-	}
-	tpl, err := template.ParseFiles("./adminTemplates/admin_edit_category.html")
-	if err != nil {
-		log.Println(err)
-	}
-	tpl.Execute(w, map[string]interface{}{
-		"admin": admin.Admin_name,
-		"Category_id": category.Category_id,
-		"Category_name": category.Category_name,
-		"Category_desc": category.Category_desc,
-	})
-}
-
-func (repo *Repo) EditingCategory(w http.ResponseWriter, r *http.Request){
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
+// UpdateCategory method for updating category.
+func (repo *Repo) UpdateCategory(w http.ResponseWriter, r *http.Request){
 
 	var category models.Categories
-	category.Category_id, _ = strconv.Atoi(chi.URLParam(r, "category_id"))
+	json.NewDecoder(r.Body).Decode(&category)
 
-	r.ParseForm()
-	category.Category_name = r.FormValue("category_name")
-	category.Category_desc = r.FormValue("category_desc")
-
-	err := repo.editcategory.DBEditCategory(category)
+	err := repo.categories.DBUpdateCategory(category)
 	if err != nil {
 		log.Println(err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]interface{}{
+			"Error": err,
+		}
+		json.NewEncoder(w).Encode(response)
+		return
 	}
-	http.Redirect(w, r, "/admin/home/"+admin.Admin_name+"/categorylist", http.StatusSeeOther)
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	response := map[string]interface{}{
+		"Response": "Category Updated",
+	}
+	json.NewEncoder(w).Encode(response)
 }
 
+// DeleteCategory method for deleting a category.
 func (repo *Repo) DeleteCategory(w http.ResponseWriter, r *http.Request){
 
-	file := usecases.Logger()
-	log.SetOutput(file)
+	var category models.Categories
+	json.NewDecoder(r.Body).Decode(&category)
+	defer r.Body.Close()
 
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
-
-	category_id := chi.URLParam(r, "category_id")
-	err := repo.deletecategory.DBDeleteCategory(category_id)
+	err := repo.categories.DBDeleteCategory(category.ID)
 	if err != nil {
 		log.Println(err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]interface{}{
+			"Error": err,
+		}
+		json.NewEncoder(w).Encode(response)
+		return
 	}
-	http.Redirect(w, r, "/admin/home/"+admin.Admin_name+"/categorylist", http.StatusSeeOther)
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	response := map[string]interface{}{
+		"Response": "Category Deleted",
+	}
+	json.NewEncoder(w).Encode(response)
 }
-
-
-
 
 
 
 // --------------------Sub Category Management-----------------------
 
-func (repo *Repo) SubcategoryList(w http.ResponseWriter, r *http.Request) {
+// GetSubcategories method for accessing subcategories.
+func (repo *Repo) GetSubcategories(w http.ResponseWriter, r *http.Request) {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
+	var request models.SubcategoryRequest
+	json.NewDecoder(r.Body).Decode(&request)
+	defer r.Body.Close()
 
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
-
-	subcategories, err := repo.subcategories.DBGetAllSubcategories()
+	subcategories, err := repo.subcategories.DBGetSubcategories(request)
 	if err != nil {
 		log.Println(err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]interface{}{
+			"Error": err,
+		}
+		json.NewEncoder(w).Encode(response)
+		return
 	}
-	tpl, err := template.ParseFiles("./adminTemplates/admin_subcategorylist.html")
-	if err != nil {
-		log.Println(err)
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	response := map[string]interface{}{
+		"Subcategory": subcategories,
 	}
-	err = tpl.Execute(w, map[string]interface{}{
-		"admin":         admin.Admin_name,
-		"subcategories": subcategories,
-	})
-	if err != nil {
-		log.Println(err)
-	}
+	json.NewEncoder(w).Encode(response)
 }
 
+// AddSubcategory method for adding new subcategory
 func (repo *Repo) AddSubcategory(w http.ResponseWriter, r *http.Request) {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
-
-	tpl, err := template.ParseFiles("./adminTemplates/admin_add_subcategory.html")
-	if err != nil {
-		log.Println(err)
-	}
-	err = tpl.Execute(w, map[string]interface{}{
-		"admin": admin.Admin_name,
-	})
-	if err != nil {
-		log.Println(err)
-	}
-}
-
-func (repo *Repo) AddingSubcategory(w http.ResponseWriter, r *http.Request) {
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	log.Println("Entered into AddingSubcategory")
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
-
-	r.ParseForm()
 	var subcategory models.Subcategories
-	subcategory.Subcategory_name = r.FormValue("subcategory_name")
-	subcategory.Subcategory_desc = r.FormValue("subcategory_desc")
+	json.NewDecoder(r.Body).Decode(&subcategory)
+	defer r.Body.Close()
 
-	err := repo.addsubcategory.DBAddSubcategory(subcategory)
+	err := repo.subcategories.DBAddSubcategory(subcategory)
 	if err != nil {
 		log.Println(err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]interface{}{
+			"Error": err,
+		}
+		json.NewEncoder(w).Encode(response)
+		return
 	}
-	log.Println("Added to database")
-	http.Redirect(w, r, "/admin/home/"+admin.Admin_name+"/subcategorylist", http.StatusSeeOther)
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	response := map[string]interface{}{
+		"Response": "Subcategory Added",
+	}
+	json.NewEncoder(w).Encode(response)
 }
 
-func (repo *Repo) ViewSubcategoryProducts(w http.ResponseWriter, r *http.Request){
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	subcategory_id := chi.URLParam(r, "subcategory_id")
-
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
-
-	products, err := repo.subcategoryproducts.DBGetSubcategoryProducts(subcategory_id)
-	if err != nil {
-		log.Println(err)
-	}
-
-	tpl, err := template.ParseFiles("./adminTemplates/ecommerce-product.html")
-	if err != nil {
-		log.Println(err)
-	}
-	tpl.Execute(w, map[string]interface{}{
-		"admin": admin.Admin_name,
-		"product": products,
-	})
-}
-
-func (repo *Repo) EditSubcategory(w http.ResponseWriter, r *http.Request){
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
-
-	subcategory_id := chi.URLParam(r, "subcategory_id")
-	subcategory, err := repo.subcategory.DBGetSubcategory(subcategory_id)
-	if err != nil {
-		log.Println(err)
-	}
-	tpl, err := template.ParseFiles("./adminTemplates/admin_edit_subcategory.html")
-	if err != nil {
-		log.Println(err)
-	}
-	tpl.Execute(w, map[string]interface{}{
-		"admin": admin.Admin_name,
-		"Subcategory_id": subcategory.Subcategory_id,
-		"Subcategory_name": subcategory.Subcategory_name,
-		"Subcategory_desc": subcategory.Subcategory_desc,
-	})
-}
-
-func (repo *Repo) EditingSubcategory(w http.ResponseWriter, r *http.Request){
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
+// UpdateSubcategory method for updating subcategory
+func (repo *Repo) UpdateSubcategory(w http.ResponseWriter, r *http.Request){
 
 	var subcategory models.Subcategories
-	subcategory.Subcategory_id, _ = strconv.Atoi(chi.URLParam(r, "subcategory_id"))
+	json.NewDecoder(r.Body).Decode(&subcategory)
+	defer r.Body.Close()
 
-	r.ParseForm()
-	subcategory.Subcategory_name = r.FormValue("subcategory_name")
-	subcategory.Subcategory_desc = r.FormValue("subcategory_desc")
-
-	err := repo.editsubcategory.DBEditSubcategory(subcategory)
+	err := repo.subcategories.DBUpdateSubcategory(subcategory)
 	if err != nil {
 		log.Println(err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]interface{}{
+			"Error": err,
+		}
+		json.NewEncoder(w).Encode(response)
+		return
 	}
-	http.Redirect(w, r, "/admin/home/"+admin.Admin_name+"/subcategorylist", http.StatusSeeOther)
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	response := map[string]interface{}{
+		"Response": "Subcategory Updated",
+	}
+	json.NewEncoder(w).Encode(response)
 }
 
+// DeleteSubcategory method for deleting subcategory.
 func (repo *Repo) DeleteSubcategory(w http.ResponseWriter, r *http.Request){
 
-	file := usecases.Logger()
-	log.SetOutput(file)
+	var subcategory models.Subcategories
+	json.NewDecoder(r.Body).Decode(&subcategory)
 
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
-
-	subcategory_id := chi.URLParam(r, "subcategory_id")
-	err := repo.deletesubcategory.DBDeleteSubcategory(subcategory_id)
+	err := repo.subcategories.DBDeleteSubcategory(subcategory.ID)
 	if err != nil {
 		log.Println(err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]interface{}{
+			"Error": err,
+		}
+		json.NewEncoder(w).Encode(response)
+		return
 	}
-	http.Redirect(w, r, "/admin/home/"+admin.Admin_name+"/subcategorylist", http.StatusSeeOther)
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	response := map[string]interface{}{
+		"Response": "Subcategory Deleted",
+	}
+	json.NewEncoder(w).Encode(response)
 }
-
-
 
 
 
 
 // ---------------------Brand Management------------------------------
 
-func (repo *Repo) BrandList(w http.ResponseWriter, r *http.Request) {
+// GetBrands metod for accessing brands from database.
+func (repo *Repo) GetBrands(w http.ResponseWriter, r *http.Request) {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
+	var request models.BrandRequest
+	json.NewDecoder(r.Body).Decode(&request)
+	defer r.Body.Close()
 
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
-
-	brands, err := repo.brands.DBGetAllBrands()
+	brands, err := repo.brands.DBGetBrands(request)
 	if err != nil {
 		log.Println(err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]interface{}{
+			"Error": err,
+		}
+		json.NewEncoder(w).Encode(response)
+		return
 	}
-	tpl, err := template.ParseFiles("./adminTemplates/admin_brandlist.html")
-	if err != nil {
-		log.Println(err)
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	response := map[string]interface{}{
+		"Brands": brands,
 	}
-	err = tpl.Execute(w, map[string]interface{}{
-		"admin": admin.Admin_name,
-		"brand": brands,
-	})
-	if err != nil {
-		log.Println(err)
-	}
+	json.NewEncoder(w).Encode(response)
 }
 
+// AddBrand method for adding brand to database.
 func (repo *Repo) AddBrand(w http.ResponseWriter, r *http.Request) {
 
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
-	log.Println("In AddBrand..")
-
-	tpl, err := template.ParseFiles("./adminTemplates/admin_add_brand.html")
-	if err != nil {
-		log.Println(err)
-	}
-	err = tpl.Execute(w, map[string]interface{}{
-		"admin": admin.Admin_name,
-	})
-	if err != nil {
-		log.Println(err)
-	}
-}
-
-func (repo *Repo) AddingBrand(w http.ResponseWriter, r *http.Request) {
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	log.Println("In AddingBrand..")
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
-
-	r.ParseForm()
 	var brand models.Brands
-	brand.Brand_name = r.FormValue("brand_name")
-	brand.Brand_desc = r.FormValue("brand_desc")
+	json.NewDecoder(r.Body).Decode(&brand)
+	defer r.Body.Close()
 
-	log.Println("New Brand:", brand)
-	err := repo.addbrand.DBAddBrand(brand)
+	err := repo.brands.DBAddBrand(brand)
 	if err != nil {
 		log.Println(err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]interface{}{
+			"Error": err,
+		}
+		json.NewEncoder(w).Encode(response)
+		return
 	}
-	log.Println("New brand inserted")
-	http.Redirect(w, r, "/admin/home/"+admin.Admin_name+"/brandlist", http.StatusSeeOther)
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	response := map[string]interface{}{
+		"Brands": "New brand added",
+	}
+	json.NewEncoder(w).Encode(response)
 }
 
-func (repo *Repo) ViewBrandProducts(w http.ResponseWriter, r *http.Request){
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	brand_id := chi.URLParam(r, "brand_id")
-
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
-
-	products, err := repo.brandproducts.DBGetBrandProducts(brand_id)
-	if err != nil {
-		log.Println(err)
-	}
-
-	tpl, err := template.ParseFiles("./adminTemplates/ecommerce-product.html")
-	if err != nil {
-		log.Println(err)
-	}
-	tpl.Execute(w, map[string]interface{}{
-		"admin": admin.Admin_name,
-		"product": products,
-	})
-}
-
-func (repo *Repo) EditBrand(w http.ResponseWriter, r *http.Request){
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
-
-	brand_id := chi.URLParam(r, "brand_id")
-	brand, err := repo.brand.DBGetBrand(brand_id)
-	if err != nil {
-		log.Println(err)
-	}
-	tpl, err := template.ParseFiles("./adminTemplates/admin_edit_brand.html")
-	if err != nil {
-		log.Println(err)
-	}
-	tpl.Execute(w, map[string]interface{}{
-		"admin": admin.Admin_name,
-		"Brand_id": brand.Brand_id,
-		"Brand_name": brand.Brand_name,
-		"Brand_desc": brand.Brand_desc,
-	})
-}
-
-func (repo *Repo) EditingBrand(w http.ResponseWriter, r *http.Request){
-
-	file := usecases.Logger()
-	log.SetOutput(file)
-
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
+// UpdateBrand method for updating brand.
+func (repo *Repo) UpdateBrand(w http.ResponseWriter, r *http.Request){
 
 	var brand models.Brands
-	brand.Brand_id, _ = strconv.Atoi(chi.URLParam(r, "brand_id"))
+	json.NewDecoder(r.Body).Decode(&brand)
+	defer r.Body.Close()
 
-	r.ParseForm()
-	brand.Brand_name = r.FormValue("brand_name")
-	brand.Brand_desc = r.FormValue("brand_desc")
-
-	err := repo.editbrand.DBEditBrand(brand)
+	err := repo.brands.DBUpdateBrand(brand)
 	if err != nil {
 		log.Println(err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]interface{}{
+			"Error": err,
+		}
+		json.NewEncoder(w).Encode(response)
+		return
 	}
-	http.Redirect(w, r, "/admin/home/"+admin.Admin_name+"/brandlist", http.StatusSeeOther)
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	response := map[string]interface{}{
+		"Brands": "Brand updated",
+	}
+	json.NewEncoder(w).Encode(response)
 }
 
+// DeleteBrand method for deleting brand.
 func (repo *Repo) DeleteBrand(w http.ResponseWriter, r *http.Request){
 
-	file := usecases.Logger()
-	log.SetOutput(file)
+	var brand models.Brands
+	json.NewDecoder(r.Body).Decode(&brand)
+	defer r.Body.Close()
 
-	ctx := r.Context()
-	admin := ctx.Value("admin").(models.Admin)
-
-	brand_id := chi.URLParam(r, "brand_id")
-	err := repo.deletebrand.DBDeleteBrand(brand_id)
+	err := repo.brands.DBDeleteBrand(brand.ID)
 	if err != nil {
 		log.Println(err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]interface{}{
+			"Error": err,
+		}
+		json.NewEncoder(w).Encode(response)
+		return
 	}
-	http.Redirect(w, r, "/admin/home/"+admin.Admin_name+"/brandlist", http.StatusSeeOther)
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	response := map[string]interface{}{
+		"Brands": "Brand deleted",
+	}
+	json.NewEncoder(w).Encode(response)
+}
+
+
+
+// -----------------------Color Management -------------------------
+
+// GetColors method for accessing colors from a database.
+func (repo *Repo) GetColors(w http.ResponseWriter, r *http.Request) {
+
+	var request models.ColorRequest
+	json.NewDecoder(r.Body).Decode(&request)
+	defer r.Body.Close()
+
+	colors, err := repo.colors.DBGetColors(request)
+	if err != nil {
+		log.Println(err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]interface{}{
+			"Error": err,
+		}
+		json.NewEncoder(w).Encode(response)
+		return
+	}
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	response := map[string]interface{}{
+		"Colors": colors,
+	}
+	json.NewEncoder(w).Encode(response)
+}
+
+// AddColor method for adding brand to database.
+func (repo *Repo) AddColor(w http.ResponseWriter, r *http.Request) {
+
+	var color models.Colors
+	json.NewDecoder(r.Body).Decode(&color)
+	defer r.Body.Close()
+
+	err := repo.colors.DBAddColor(color)
+	if err != nil {
+		log.Println(err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]interface{}{
+			"Error": err,
+		}
+		json.NewEncoder(w).Encode(response)
+		return
+	}
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	response := map[string]interface{}{
+		"Response": "New color added",
+	}
+	json.NewEncoder(w).Encode(response)
+}
+
+// UpdateColor method for updating brand.
+func (repo *Repo) UpdateColor(w http.ResponseWriter, r *http.Request){
+
+	var color models.Colors
+	json.NewDecoder(r.Body).Decode(&color)
+	defer r.Body.Close()
+
+	err := repo.colors.DBUpdateColor(color)
+	if err != nil {
+		log.Println(err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]interface{}{
+			"Error": err,
+		}
+		json.NewEncoder(w).Encode(response)
+		return
+	}
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	response := map[string]interface{}{
+		"Response": "Color updated",
+	}
+	json.NewEncoder(w).Encode(response)
+}
+
+// DeleteColor method for deleting brand.
+func (repo *Repo) DeleteColor(w http.ResponseWriter, r *http.Request){
+
+	var color models.Colors
+	json.NewDecoder(r.Body).Decode(&color)
+	defer r.Body.Close()
+
+	err := repo.colors.DBDeleteColor(*color.ID)
+	if err != nil {
+		log.Println(err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]interface{}{
+			"Error": err,
+		}
+		json.NewEncoder(w).Encode(response)
+		return
+	}
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	response := map[string]interface{}{
+		"Response": "Color deleted",
+	}
+	json.NewEncoder(w).Encode(response)
+}
+
+
+
+// --------------------------- Offer Management ---------------------------
+
+// GetOffers method for accessing offers
+func (repo *Repo) GetOffers(w http.ResponseWriter, r *http.Request){
+
+}
+
+
+
+// ---------------------------- Order Management -------------------------
+
+// // GetOrders method for accessing orders
+// func (repo *Repo) GetOrders(w http.ResponseWriter, r *http.Request){
+
+// 	orders, err := repo.orders.DBGetOrders()
+// 	if err != nil {
+// 		log.Println(err)
+// 		w.Header().Add("Content-Type", "application/json")
+// 		w.WriteHeader(http.StatusBadRequest)
+// 		response := map[string]interface{}{
+// 			"Response": "Can't fetch order details",
+// 			"Error": err,
+// 		}
+// 		json.NewEncoder(w).Encode(&response)
+// 		return
+// 	}
+// 	w.Header().Add("Content-Type", "application/json")
+// 	w.WriteHeader(http.StatusOK)
+// 	response := map[string]interface{}{
+// 		"Response": "All orders",
+// 		"Order": orders,
+// 	}
+// 	json.NewEncoder(w).Encode(&response)
+// }
+
+// GetOrders method for accessing orders
+func (repo *Repo) GetOrders(w http.ResponseWriter, r *http.Request){
+
+	var request models.OrderRequest
+	json.NewDecoder(r.Body).Decode(&request)
+
+	orders, err := repo.orders.DBGetOrders(request)
+	if err != nil {
+		log.Println(err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]interface{}{
+			"Response": "Can't fetch order details",
+			"Error": err,
+		}
+		json.NewEncoder(w).Encode(&response)
+		return
+	}
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	response := map[string]interface{}{
+		"Response": "All orders",
+		"Order": orders,
+	}
+	json.NewEncoder(w).Encode(&response)
+}
+
+// ChangeOrderStatus method for changing status of orders
+func (repo *Repo) ChangeOrderStatus(w http.ResponseWriter, r *http.Request){
+
+	var order models.Orders
+	json.NewDecoder(r.Body).Decode(&order)
+
+	err := repo.orders.DBChangeOrderStatus(order.ID)
+	if err != nil {
+		log.Println(err)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]interface{}{
+			"Response": "Can't fetch order details",
+			"Error": err,
+		}
+		json.NewEncoder(w).Encode(&response)
+		return
+	}
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	response := map[string]interface{}{
+		"Response": "Order status updated",
+	}
+	json.NewEncoder(w).Encode(&response)
 }

@@ -5,16 +5,15 @@ import (
 	"fmt"
 	"log"
 	"os"
-
-	"github.com/ijasmoopan/Time.Now/usecases"
+	
+	_ "github.com/pressly/goose/v3" 
+	// "github.com/ijasmoopan/Time.Now/usecases"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
+// ConnectDB method
 func ConnectDB() *sql.DB {
-
-	file := usecases.Logger()
-	log.SetOutput(file)
 
 	err := godotenv.Load("./config/.env")
 	if err != nil {

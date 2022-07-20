@@ -1,42 +1,35 @@
-package admin
+package user
 
 import (
 	"context"
 	"encoding/json"
-	"os"
-
-	// "database/sql"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	// "github.com/go-chi/chi/v5"
 	"github.com/ijasmoopan/Time.Now/models"
-	"github.com/ijasmoopan/Time.Now/usecases"
 	"github.com/joho/godotenv"
 )
 
-
-// IsAdminAuthorized for authorizing admin by middleware.
-func (repo *Repo) IsAdminAuthorized(handler http.Handler) http.Handler {
+//IsUserAuthorized for checking jwt token.
+func (repo *Repo) IsUserAuthorized(handler http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
 
 		err := godotenv.Load("./config/.env")
 		if err != nil {
-			panic(err)
+			
 		}
 		key := os.Getenv("SECRETKEY")
-
-		file := usecases.Logger()
-		log.SetOutput(file)
 
 		cookie, err := r.Cookie("jwt")
 		if err != nil {
 			w.Header().Add("Content-Type", "application/json")
 			w.WriteHeader(http.StatusBadRequest)
 			message := map[string]interface{}{
-				"msg": "There is no Cookie",
+				"msg": "There is no cookie",
+				"error": err,
 			}
 			json.NewEncoder(w).Encode(&message)
 			return
@@ -48,64 +41,42 @@ func (repo *Repo) IsAdminAuthorized(handler http.Handler) http.Handler {
 			w.Header().Add("Content-Type", "application/json")
 			w.WriteHeader(http.StatusBadRequest)
 			message := map[string]interface{}{
-				"msg": "Error while parsing Token",
+				"msg": "There is no cookie",
+				"error": err,
 			}
 			json.NewEncoder(w).Encode(&message)
 			return
 		}
 		claims := token.Claims.(*jwt.StandardClaims)
 
-		var admin models.Admin
-		admin, err = repo.admin.DBGetAdminByID(claims.Issuer)
+		user, err := repo.user.DBAuthUser(claims.Issuer)
 		if err != nil {
 			w.Header().Add("Content-Type", "application/json")
 			w.WriteHeader(http.StatusBadRequest)
 			message := map[string]interface{}{
-				"msg": "Admin Not Found",
+				"msg": "There is no cookie",
+				"error": err,
 			}
 			json.NewEncoder(w).Encode(&message)
 			return
-		}
-		ctx := context.WithValue(r.Context(), models.CtxKey{}, admin)
+		}	
+		ctx := context.WithValue(r.Context(), models.CtxKey{}, user)
 		handler.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
 
-// DeletingJWT for deleting jwt token when logoutting.
-func (repo *Repo) DeletingJWT(handler http.Handler) http.Handler {
+// DeleteToken for deleting jwt token when user logging out.
+func (repo *Repo) DeleteToken(handler http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
 
-		file := usecases.Logger()
-		log.SetOutput(file)
-
-		cookie := http.Cookie{
+		log.Println()
+		cookie := http.Cookie {
 			Name: "jwt",
 			Value: "",
 			Expires: time.Now().Add(-time.Hour),
 			HttpOnly: true,
 		}
 		http.SetCookie(w, &cookie)
-		
 		handler.ServeHTTP(w, r)
 	})
 }
-
-
-
-// func (repo *Repo) ProductCtx(handler http.Handler) http.Handler {
-// 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
-
-// 		file := usecases.Logger()
-// 		log.SetOutput(file)
-
-// 		product_id := chi.URLParam(r, "product_id")
-
-// 		product, err := repo.product.DBGetProduct(product_id)
-// 		if err != nil {
-// 			log.Println(err)
-// 		}
-
-// 		ctx := context.WithValue(r.Context(), "product", product)
-// 		handler.ServeHTTP(w, r.WithContext(ctx))
-// 	})
-// }
