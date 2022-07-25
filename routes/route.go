@@ -1,147 +1,179 @@
 package routes
 
 import (
-	// "net/http"
-
-	"net/http"
-
+	"github.com/go-chi/chi/v5"
 	"github.com/ijasmoopan/Time.Now/admin"
 	"github.com/ijasmoopan/Time.Now/repository"
-
-	"github.com/go-chi/chi/v5"
+	"github.com/ijasmoopan/Time.Now/user"
 )
 
+// Router function for handling routes.
 func Router() *chi.Mux {
 
 	db := repository.ConnectDB()
-
-	a := admin.InterfaceHandler(db)
+	admindb := admin.InterfaceHandler(db)
+	userdb := user.InterfaceHandler(db)
 
 	router := chi.NewRouter()
 
+	// Admin side routes
+	// -----------------------Admin Authentication-----------------------
 
-// Admin side routes
-// -----------------------Admin Authentication-----------------------
+	router.Post("/admin/login", admindb.AdminLogin)
+	router.With(admindb.DeletingJWT, admindb.IsAdminAuthorized).Post("/admin/logout", admindb.AdminLogout)
 
-	adminRouter1 := router.Group(nil)
+	// ----------------------Admin User Management---------------------
 
-	adminRouter1.Get("/admin", a.AdminLoginPage)
-	adminRouter1.Post("/admin/validating", a.AdminLoginValidating)
+	adminRouter := router.Group(nil)
+	adminRouter.Use(admindb.IsAdminAuthorized)
 
-	adminRouter1.With(a.DeletingJWT, a.IsAdminAuthorized).Get("/admin/logout", a.AdminLogout)
+	adminRouter.Get("/admin/{adminName}", admindb.AdminHome)
 
+	adminRouter.Get("/admin/users", admindb.GetUsers)
+	adminRouter.Patch("/admin/users", admindb.UpdateUser)
+	adminRouter.Delete("/admin/users", admindb.DeleteUser)
 
+	adminRouter.Patch("/admin/users/status", admindb.UpdateUserStatus)
 
-// ----------------------Admin User Management--------------------- 
+	// ----------------------Admin Product Management------------------
 
-	adminRouter2 := router.Group(nil)
-	adminRouter2.Use(a.IsAdminAuthorized)
+	adminRouter.Get("/admin/products", admindb.GetProducts)
+	adminRouter.Post("/admin/products", admindb.AddProducts)
+	adminRouter.Patch("/admin/products", admindb.UpdateProducts)
+	adminRouter.Delete("/admin/products", admindb.DeleteProducts)
 
-	adminRouter2.Get("/admin/home/{adminname}", a.AdminHome)
-	adminRouter2.Get("/admin/home/{adminname}/userlist", a.UserListTable)
+	adminRouter.Patch("/admin/products/status", admindb.UpdateProductStatus)
 
-	adminRouter2.With(a.UserCtx).Get("/admin/home/userlist/{userid}/viewuser", a.ViewUser)
+	// ---------------------Admin Category Management--------------------
 
-	adminRouter2.With(a.UserCtx).Get("/admin/home/userlist/{userid}/edituser", a.EditUser)
-	adminRouter2.Post("/admin/home/userlist/{userid}/editinguser", a.EditingUser)
+	adminRouter.Get("/admin/categories", admindb.GetCategories)
+	adminRouter.Post("/admin/categories", admindb.AddCategory)
+	adminRouter.Patch("/admin/categories", admindb.UpdateCategory)
+	adminRouter.Delete("/admin/categories", admindb.DeleteCategory)
 
-	adminRouter2.With(a.UserCtx).Get("/admin/home/userlist/{userid}/statususer", a.BlockUser)
-	adminRouter2.With(a.UserCtx).Get("/admin/home/userlist/{userid}/deleteuser", a.DeleteUser)
+	// -------------------Admin Sub Category Management------------------
 
+	adminRouter.Get("/admin/subcategories", admindb.GetSubcategories)
+	adminRouter.Post("/admin/subcategories", admindb.AddSubcategory)
+	adminRouter.Patch("/admin/subcategories", admindb.UpdateSubcategory)
+	adminRouter.Delete("/admin/subcategories", admindb.DeleteSubcategory)
 
-// ----------------------Admin Product Management------------------
+	// --------------------Admin Brand Management------------------------
 
-	adminRouter2.Get("/admin/home/{adminname}/productlist", a.ProductList)
+	adminRouter.Get("/admin/brands", admindb.GetBrands)
+	adminRouter.Post("/admin/brands", admindb.AddBrand)
+	adminRouter.Patch("/admin/brands", admindb.UpdateBrand)
+	adminRouter.Delete("/admin/brands", admindb.DeleteBrand)
 
-	adminRouter2.Get("/admin/home/{adminname}/productlist/addproduct", a.AddProduct)
-	adminRouter2.Post("/admin/home/{adminname}/productlist/addingproduct", a.AddingProduct)
+	// --------------------Admin Color Management------------------------
 
-	adminRouter2.Get("/admin/home/productlist/{product_id}/viewproduct", a.ViewProduct)
+	adminRouter.Get("/admin/colors", admindb.GetColors)
+	adminRouter.Post("/admin/colors", admindb.AddColor)
+	adminRouter.Patch("/admin/colors", admindb.UpdateColor)
+	adminRouter.Delete("/admin/colors", admindb.DeleteColor)
 
-	adminRouter2.Get("/admin/home/productlist/{product_id}/editproduct", a.EditProduct)
-	adminRouter2.Post("/admin/home/productlist/{product_id}/editingproduct", a.EditingProduct)
+	// ------------------------- Admin Offer Management ------------------------
 
-	// adminRouter2.Get("/admin/home/productlist/{product_id}/deleteproduct", a.DeleteProduct)
+	// adminRouter.Get("/admin/offers", admindb.GetOffers)
 
+	// adminRouter.Get("/admin/offers/products", admindb.GetProductOffers)
+	// adminRouter.Post("/admin/offers/products", admindb.AddProductOffers)
 
+	// CRUD
 
+	adminRouter.Get("/admin/offers", admindb.GetOffers)
+	adminRouter.Post("/admin/offers", admindb.AddOffers)
+	adminRouter.Patch("/admin/offers", admindb.UpdateOffers)
+	adminRouter.Delete("/admin/offers", admindb.DeleteOffers)
+	// CRUD
 
-// ---------------------Admin Category Management--------------------
+	// adminRouter.Get("/admin/subcategoryoffer", admindb.SubcategoryOffer)
+	// CRUD
 
-	adminRouter2.Get("/admin/home/{adminname}/categorylist", a.CategoryList)
+	// ---------------------------- Admin Order Management --------------------------------
 
-	adminRouter2.Get("/admin/home/{adminname}/categorylist/addcategory", a.AddCategory)
-	adminRouter2.Post("/admin/home/{adminname}/categorylist/addingcategory", a.AddingCategory)
+	adminRouter.Get("/admin/orders", admindb.GetOrders)
+	adminRouter.Post("/admin/orders/status", admindb.ChangeOrderStatus)
 
-	adminRouter2.Get("/admin/home/categorylist/{category_id}/viewcategoryproducts", a.ViewCategoryProducts)
+	// -------------------------User Home Page------------------------------------
 
-	adminRouter2.Get("/admin/home/categorylist/{category_id}/editcategory", a.EditCategory)
-	adminRouter2.Post("/admin/home/categorylist/{category_id}/editingcategory", a.EditingCategory)
+	homeRouter := router.Group(nil)
+	homeRouter.Use(userdb.IsHomeUserAuthorized)
 
-	adminRouter2.Get("/admin/home/categorylist/{category_id}/deletecategory", a.DeleteCategory)
+	homeRouter.Get("/products", userdb.GetProducts)
+	// router.Get("/products", userdb.GetProducts)
 
+	homeRouter.Get("/products/{product_id}", userdb.HomeSingleProduct)
+	// router.Get("/products/{product_id}", userdb.HomeSingleProduct)
 
+	router.Post("/login", userdb.UserLogin)
+	router.Post("/signup", userdb.UserRegistration)
+	router.With(userdb.DeleteToken).Post("/logout", userdb.UserLogout)
 
-// -------------------Admin Sub Category Management------------------
+	userRouter := router.Group(nil)
+	userRouter.Use(userdb.IsUserAuthorized)
 
-	adminRouter2.Get("/admin/home/{adminname}/subcategorylist", a.SubcategoryList)
+	userRouter.Get("/user/{userID}/user", userdb.UserProfile)
+	userRouter.Patch("/user/{userID}/user", userdb.UpdateUserProfile)
+	userRouter.Delete("/user/{userID}/user", userdb.DeleteUserProfile)
 
-	adminRouter2.Get("/admin/home/{adminname}/subcategorylist/addsubcategory", a.AddSubcategory)
-	adminRouter2.Post("/admin/home/{adminname}/subcategorylist/addingsubcategory", a.AddingSubcategory)
+	// -------------------------------User Address Management------------------------
 
-	
-	adminRouter2.Get("/admin/home/subcategorylist/{subcategory_id}/viewsubcategoryproducts", a.ViewSubcategoryProducts)
+	userRouter.Get("/user/address", userdb.GetUserAddress)
+	userRouter.Post("/user/address", userdb.AddUserAddress)
+	userRouter.Patch("/user/address", userdb.UpdateUserAddress)
+	userRouter.Delete("/user/address", userdb.DeleteUserAddress)
 
-	adminRouter2.Get("/admin/home/subcategorylist/{subcategory_id}/editsubcategory", a.EditSubcategory)
-	adminRouter2.Post("/admin/home/subcategorylist/{subcategory_id}/editingsubcategory", a.EditingSubcategory)
+	// // ------------------------User Cart Management-----------------------------
 
-	adminRouter2.Get("/admin/home/subcategorylist/{subcategory_id}/deletesubcategory", a.DeleteSubcategory)
+	// 	userRouter.Get("/user/cart", userdb.UserCart)
+	// 	userRouter.Post("/user/{product_id}-{inventory_id}-{quantity}/addtocart", userdb.AddToCart)
 
+	// 	userRouter.Patch("/user/cart/{cart_id}-{inventory_id}-{quantity}/updatecartproduct", userdb.UpdateProductFromCart)
+	// 	userRouter.Delete("/user/cart/{cart_id}/deletecart", userdb.DeleteProductFromCart)
 
+	userRouter.Get("/user/cart", userdb.GetCart)
+	userRouter.Post("/user/cart", userdb.AddCart)
+	userRouter.Patch("/user/cart", userdb.UpdateCart)
+	userRouter.Delete("/user/cart", userdb.DeleteCart)
 
-// --------------------Admin Brand Management------------------------
+	// -----------------------User Wishlist Management---------------------------
 
-	adminRouter2.Get("/admin/home/{adminname}/brandlist", a.BrandList)
+	userRouter.Get("/user/wishlist", userdb.GetWishlist)
+	userRouter.Post("/user/wishlist", userdb.AddWishlist)
+	userRouter.Delete("/user/wishlist", userdb.DeleteWishlist)
 
-	adminRouter2.Get("/admin/home/{adminname}/brandlist/addbrand", a.AddBrand)
-	adminRouter2.Post("/admin/home/{adminname}/brandlist/addingbrand", a.AddingBrand)
+	// --------------------------------User Checkout-------------------------------
 
-	adminRouter2.Get("/admin/home/brandlist/{brand_id}/viewbrandproducts", a.ViewBrandProducts)
+	userRouter.Get("/user/cart/checkout", userdb.CartCheckout)
+	userRouter.Get("/user/product/checkout", userdb.ProductCheckout)
 
-	adminRouter2.Get("/admin/home/brandlist/{brand_id}/editbrand", a.EditBrand)
-	adminRouter2.Post("/admin/home/brandlist/{brand_id}/editingbrand", a.EditingBrand)
+	// ---------------------------- Payment Management ---------------------------
 
-	adminRouter2.Get("/admin/home/brandlist/{brand_id}/deletebrand", a.DeleteBrand)
+	// 	userRouter.Get("/user/checkout/payment/paypal", userdb.PayPal)
+	// 	userRouter.Get("/user/checkout/payment/cod", userdb.CashOnDelivery)
 
+	userRouter.Get("/user/checkout/payment", userdb.GetPayment)
+	userRouter.Post("/user/checkout/payment", userdb.PayPayment)
 
+	// ----------------------------- Order Management ------------------------------
 
-	// User side routes
-// --------------------------------Account Authentication---------------------------
+	userRouter.Post("/user/checkout/placeorder", userdb.PlaceOrder)
 
-	// r.Get("/login", user.UserLoginPage)
-	// r.Post("/loginvalidating", user.UserLoginValidating)
-	// r.Get("/register", user.UserRegistration)
-	// r.Post("/registering", user.UserRegistering)
-	// r.With(middleware.DeletingJWT).Get("/home/logout", user.UserLogout)
-	
-
-// ------------------------------Product Side-------------------------------------
-	// r.With(middleware.IsUserAuthorized).Get("/home/{userfirstname}", user.HomePage) 
-	// r.Get("/", user.Home)
-	// r.Get("/{product_id}/view", user.ProductView)
+	userRouter.Get("/user/orders", userdb.GetOrders)
+	userRouter.Get("/user/cancelorder", userdb.CancelOrder)
 
 	// Trail route....
-	router.Get("/admin/{admin_id}", a.GetAdminById)
-	
+	// router.Get("/admin/{admin_id}", admindb.GetAdminById)
+
 	// Admin CSS Files
-	router.Handle("/adminstyles/*", http.StripPrefix("/adminstyles/", http.FileServer(http.Dir("./adminTemplates/assets"))))
-		
+	// router.Handle("/adminstyles/*", http.StripPrefix("/adminstyles/", http.FileServer(http.Dir("./adminTemplates/assets"))))
+
 	// User CSS Files
-	router.Handle("/userstyles/*", http.StripPrefix("/userstyles/", http.FileServer(http.Dir("./userTemplates/css"))))
-	router.Handle("/userjscript/*", http.StripPrefix("/userjscript/", http.FileServer(http.Dir("./userTemplates/js"))))
-	router.Handle("/userimg/*", http.StripPrefix("/userimg/", http.FileServer(http.Dir("./userTemplates/images"))))
-	router.Handle("/userfont/*", http.StripPrefix("/userfont/", http.FileServer(http.Dir("./userTemplates/fonts"))))
+	// router.Handle("/userstyles/*", http.StripPrefix("/userstyles/", http.FileServer(http.Dir("./userTemplates/css"))))
+	// router.Handle("/userjscript/*", http.StripPrefix("/userjscript/", http.FileServer(http.Dir("./userTemplates/js"))))
+	// router.Handle("/userimg/*", http.StripPrefix("/userimg/", http.FileServer(http.Dir("./userTemplates/images"))))
+	// router.Handle("/userfont/*", http.StripPrefix("/userfont/", http.FileServer(http.Dir("./userTemplates/fonts"))))
 
 	return router
 }
-

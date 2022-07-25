@@ -1,13 +1,14 @@
 -- +goose Up
 -- +goose StatementBegin
 
-CREATE DOMAIN phone_number AS VARCHAR(10) CHECK(VALUE ~ '^[0-9]{10}$');
+CREATE DOMAIN phone_number_address AS VARCHAR(10) CHECK(VALUE ~ '^[0-9]{10}$');
 CREATE DOMAIN pincode AS VARCHAR(6) CHECK(VALUE ~ '^[0-9]{6}$');
 
 CREATE TABLE address(
     address_id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT REFERENCES users(user_id) NOT NULL,
     address_name VARCHAR(100) NOT NULL,
-    address_phone phone_number NOT NULL,
+    address_phone phone_number_address NOT NULL,
     address_pincode pincode NOT NULL,
     address_housename VARCHAR(100) NOT NULL,
     address_streetname VARCHAR(100) NOT NULL,
@@ -26,6 +27,6 @@ CREATE TABLE address(
 
 DROP TABLE address CASCADE;
 DROP DOMAIN IF EXISTS pincode CASCADE;
-DROP DOMAIN IF EXISTS phone_number CASCADE;
+DROP DOMAIN IF EXISTS phone_number_address CASCADE;
 
 -- +goose StatementEnd

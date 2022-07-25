@@ -16,4 +16,5 @@ func main() {
 	router := routes.Router()
 
 	http.ListenAndServe(addr, router)
+
 }
