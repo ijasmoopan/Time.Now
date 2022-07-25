@@ -22,7 +22,7 @@ type Repo struct {
 	}
 
 	products interface {
-		DBGetProducts(models.AdminProductRequest)([]models.ProductWithInventory, error)
+		DBGetProducts(models.AdminProductRequest)(map[int]models.ProductWithInventory, error)
 		DBAddProducts(models.ProductWithInventory)(error)
 		DBUpdateProducts(models.ProductWithInventory)(error)
 		DBDeleteProducts(models.ProductDeleteRequest)(error)
@@ -61,6 +61,13 @@ type Repo struct {
 		DBGetOrders(models.OrderRequest)([]models.Orders, error)
 		DBChangeOrderStatus(int)(error)
 	}
+
+	offers interface {
+		DBGetOffers(models.CategoryOfferRequest)([]models.CategoryOffer, error)
+		DBAddOffers(models.CategoryOfferRequest)(error)
+		DBUpdateOffers(models.CategoryOfferRequest)(error)
+		DBDeleteOffers(*int)(error)
+	}
 }
 
 // InterfaceHandler for handling interface for db connection.
@@ -83,5 +90,7 @@ func InterfaceHandler(db *sql.DB) *Repo {
 		colors: Model{DB: db},
 
 		orders: Model{DB: db},
+
+		offers: Model{DB: db},
 	}
 }

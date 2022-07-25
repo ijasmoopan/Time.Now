@@ -19,16 +19,16 @@ func (repo *Repo) IsUserAuthorized(handler http.Handler) http.Handler {
 
 		err := godotenv.Load("./config/.env")
 		if err != nil {
-			
+			log.Println("Can't access env file")
 		}
 		key := os.Getenv("SECRETKEY")
 
 		cookie, err := r.Cookie("jwt")
 		if err != nil {
 			w.Header().Add("Content-Type", "application/json")
-			w.WriteHeader(http.StatusBadRequest)
+			w.WriteHeader(http.StatusOK)
 			message := map[string]interface{}{
-				"msg": "There is no cookie",
+				"msg": "Please Login",
 				"error": err,
 			}
 			json.NewEncoder(w).Encode(&message)
@@ -39,9 +39,9 @@ func (repo *Repo) IsUserAuthorized(handler http.Handler) http.Handler {
 		})
 		if err != nil {
 			w.Header().Add("Content-Type", "application/json")
-			w.WriteHeader(http.StatusBadRequest)
+			w.WriteHeader(http.StatusOK)
 			message := map[string]interface{}{
-				"msg": "There is no cookie",
+				"msg": "Please Login",
 				"error": err,
 			}
 			json.NewEncoder(w).Encode(&message)
@@ -52,14 +52,55 @@ func (repo *Repo) IsUserAuthorized(handler http.Handler) http.Handler {
 		user, err := repo.user.DBAuthUser(claims.Issuer)
 		if err != nil {
 			w.Header().Add("Content-Type", "application/json")
-			w.WriteHeader(http.StatusBadRequest)
+			w.WriteHeader(http.StatusOK)
 			message := map[string]interface{}{
-				"msg": "There is no cookie",
+				"msg": "Please Login",
 				"error": err,
 			}
 			json.NewEncoder(w).Encode(&message)
 			return
 		}	
+
+		// type CtxKey struct {}
+			log.Println("User ID in middleware:", user.ID)
+
+		ctx := context.WithValue(r.Context(), models.CtxKey{}, user) //nolint
+		handler.ServeHTTP(w, r.WithContext(ctx))
+	})
+}
+
+// IsHomeUserAuthorized method for authorizing user from home.
+func (repo *Repo) IsHomeUserAuthorized(handler http.Handler)http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+		err := godotenv.Load("./config/.env")
+		if err != nil {
+			log.Println("Can't fetch env file")
+		}
+		key := os.Getenv("SECRETKEY")
+
+		cookie, err := r.Cookie("jwt")
+		if err != nil {
+			log.Println("No cookie")
+			handler.ServeHTTP(w, r)
+			return
+		}
+		token, err := jwt.ParseWithClaims(cookie.Value, &jwt.StandardClaims{}, func(token *jwt.Token)(interface{}, error){
+			return []byte(key), nil
+		})
+		if err != nil {
+			log.Println("Can't decode token")
+			handler.ServeHTTP(w, r)
+			return
+		}
+		claims := token.Claims.(*jwt.StandardClaims)
+
+		user, err := repo.user.DBAuthUser(claims.Issuer)
+		if err != nil {
+			log.Println("Incorrect user")
+			handler.ServeHTTP(w, r)
+			return
+		}
+		log.Println("In middleware.. UserID:", user.ID)
 		ctx := context.WithValue(r.Context(), models.CtxKey{}, user)
 		handler.ServeHTTP(w, r.WithContext(ctx))
 	})

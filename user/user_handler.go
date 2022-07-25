@@ -23,6 +23,13 @@ func (repo *Repo) GetProducts(w http.ResponseWriter, r *http.Request){
 	var request models.ProductRequest
 	json.NewDecoder(r.Body).Decode(&request)
 
+	ctx := r.Context()
+	var user int
+	if ctx.Value(models.CtxKey{}) != nil {
+		user = ctx.Value(models.CtxKey{}).(models.UserLogin).ID
+		request.UserID = &user
+	}
+
 	products, err := repo.products.DBGetProducts(request)
 	if err != nil {
 		log.Println(err)
@@ -49,6 +56,13 @@ func (repo *Repo) HomeSingleProduct(w http.ResponseWriter, r *http.Request){
 
 	var request models.ProductRequest
 	json.NewDecoder(r.Body).Decode(&request)
+	defer r.Body.Close()
+
+	ctx := r.Context()
+	if ctx.Value(models.CtxKey{}) != nil {
+		userID := ctx.Value(models.CtxKey{}).(models.UserLogin).ID
+		request.UserID = &userID
+	}
 
 	product, err := repo.products.DBGetProducts(request)
 	if err != nil {
@@ -304,6 +318,12 @@ func (repo *Repo) GetUserAddress(w http.ResponseWriter, r *http.Request){
 	json.NewDecoder(r.Body).Decode(&user)
 	defer r.Body.Close()
 
+	ctx := r.Context()
+	if ctx.Value(models.CtxKey{}) != nil {
+		userID := ctx.Value(models.CtxKey{}).(models.UserLogin).ID
+		user.ID = userID
+	}
+
 	address, err := repo.address.DBGetAddress(user.ID)
 	if err != nil {
 		w.Header().Add("Content-Type", "application/json")
@@ -329,6 +349,12 @@ func (repo *Repo) AddUserAddress(w http.ResponseWriter, r *http.Request){
 
 	var address models.Address
 	json.NewDecoder(r.Body).Decode(&address)
+
+	ctx := r.Context()
+	if ctx.Value(models.CtxKey{}) != nil {
+		userID := ctx.Value(models.CtxKey{}).(models.UserLogin).ID
+		address.UserID = userID
+	}
 
 	err := repo.address.DBAddAddress(address)
 	if err != nil {
@@ -356,6 +382,12 @@ func (repo *Repo) UpdateUserAddress(w http.ResponseWriter, r *http.Request){
 	var address models.Address
 	json.NewDecoder(r.Body).Decode(&address)
 
+	ctx := r.Context()
+	if ctx.Value(models.CtxKey{}) != nil {
+		userID := ctx.Value(models.CtxKey{}).(models.UserLogin).ID
+		address.UserID = userID
+	}
+
 	err := repo.address.DBUpdateAddress(address)
 	if err != nil {
 		log.Println("handler", err)
@@ -381,6 +413,12 @@ func (repo *Repo) DeleteUserAddress(w http.ResponseWriter, r *http.Request){
 
 	var address models.Address
 	json.NewDecoder(r.Body).Decode(&address)
+
+	ctx := r.Context()
+	if ctx.Value(models.CtxKey{}) != nil {
+		userID := ctx.Value(models.CtxKey{}).(models.UserLogin).ID
+		address.UserID = userID
+	}
 
 	err := repo.address.DBDeleteAddress(address.ID)
 	if err != nil {
@@ -413,6 +451,12 @@ func (repo *Repo) AddCart(w http.ResponseWriter, r *http.Request){
 	json.NewDecoder(r.Body).Decode(&cart)
 	defer r.Body.Close()
 
+	ctx := r.Context()
+	if ctx.Value(models.CtxKey{}) != nil {
+		userID := ctx.Value(models.CtxKey{}).(models.UserLogin).ID
+		cart.UserID = userID
+	}
+
 	err := repo.cart.DBAddCart(cart)
 	if err != nil {
 		log.Println("Error:", err)
@@ -437,6 +481,12 @@ func (repo *Repo) GetCart(w http.ResponseWriter, r *http.Request){
 
 	var user models.User
 	json.NewDecoder(r.Body).Decode(&user)
+
+	ctx := r.Context()
+	if ctx.Value(models.CtxKey{}) != nil {
+		userID := ctx.Value(models.CtxKey{}).(models.UserLogin).ID
+		user.ID = userID
+	}
 
 	cartproducts, countOfProducts, err := repo.cart.DBGetCart(user.ID)
 	if len(cartproducts) == 0 {
@@ -475,6 +525,12 @@ func (repo *Repo) UpdateCart(w http.ResponseWriter, r *http.Request){
 	var cart models.Cart
 	json.NewDecoder(r.Body).Decode(&cart)
 
+	ctx := r.Context()
+	if ctx.Value(models.CtxKey{}) != nil {
+		userID := ctx.Value(models.CtxKey{}).(models.UserLogin).ID
+		cart.UserID = userID
+	}
+
 	err := repo.cart.DBUpdateCart(cart)
 	if err != nil {
 		w.Header().Add("Content-Type", "application/json")
@@ -499,6 +555,12 @@ func (repo *Repo) DeleteCart(w http.ResponseWriter, r *http.Request){
 
 	var cart models.Cart
 	json.NewDecoder(r.Body).Decode(&cart)
+
+	ctx := r.Context()
+	if ctx.Value(models.CtxKey{}) != nil {
+		userID := ctx.Value(models.CtxKey{}).(models.UserLogin).ID
+		cart.UserID = userID
+	}
 
 	err := repo.cart.DBDeleteCart(cart.ID)
 	if err != nil {
@@ -530,6 +592,12 @@ func (repo *Repo) GetWishlist(w http.ResponseWriter, r *http.Request){
 	var wishlist models.Wishlist
 	json.NewDecoder(r.Body).Decode(&wishlist)
 	defer r.Body.Close()
+
+	ctx := r.Context()
+	if ctx.Value(models.CtxKey{}) != nil {
+		userID := ctx.Value(models.CtxKey{}).(models.UserLogin).ID
+		wishlist.UserID = userID
+	}
 
 	wishlistproducts, err := repo.wishlist.DBGetWishlist(wishlist.UserID)
 	if err == sql.ErrNoRows {
@@ -568,6 +636,12 @@ func (repo *Repo) AddWishlist(w http.ResponseWriter, r *http.Request){
 	var wishlist models.Wishlist
 	json.NewDecoder(r.Body).Decode(&wishlist)
 
+	ctx := r.Context()
+	if ctx.Value(models.CtxKey{}) != nil {
+		userID := ctx.Value(models.CtxKey{}).(models.UserLogin).ID
+		wishlist.UserID = userID
+	}
+
 	err := repo.wishlist.DBAddWishlist(wishlist)
 	if err != nil {
 		w.Header().Add("Content-Type", "application/json")
@@ -592,6 +666,12 @@ func (repo *Repo) DeleteWishlist(w http.ResponseWriter, r *http.Request){
 
 	var wishlist models.Wishlist
 	json.NewDecoder(r.Body).Decode(&wishlist)
+
+	ctx := r.Context()
+	if ctx.Value(models.CtxKey{}) != nil {
+		userID := ctx.Value(models.CtxKey{}).(models.UserLogin).ID
+		wishlist.UserID = userID
+	}
 
 	err := repo.wishlist.DBDeleteWishlist(wishlist.ID)
 	if err != nil {
@@ -621,6 +701,12 @@ func (repo *Repo) CartCheckout(w http.ResponseWriter, r *http.Request) {
 	var user models.User
 	json.NewDecoder(r.Body).Decode(&user)
 
+	ctx := r.Context()
+	if ctx.Value(models.CtxKey{}) != nil {
+		userID := ctx.Value(models.CtxKey{}).(models.UserLogin).ID
+		user.ID = userID
+	}
+
 	cartCheckout, countOfProducts, totalPrice, err := repo.checkout.DBCartCheckout(user.ID) 
 	if err != nil {
 		w.Header().Add("Content-Type", "application/json")
@@ -632,10 +718,11 @@ func (repo *Repo) CartCheckout(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(&message)
 		return
 	}
+	// w.Header().Add("cartID", cartCheckout.Cart[])
 	w.Header().Add("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	message := map[string]interface{}{
-		"Response": "Product checkout",
+		"Response": "Cart checkout",
 		"Products": countOfProducts,
 		"Total Price": totalPrice,
 		"Products for checkout": cartCheckout,
@@ -648,6 +735,12 @@ func (repo *Repo) ProductCheckout(w http.ResponseWriter, r *http.Request){
 
 	var productCheckout models.ProductCheckout
 	json.NewDecoder(r.Body).Decode(&productCheckout)
+
+	ctx := r.Context()
+	if ctx.Value(models.CtxKey{}) != nil {
+		userID := ctx.Value(models.CtxKey{}).(models.UserLogin).ID
+		productCheckout.UserID = userID
+	}
 
 	productCheckout, totalPrice, err := repo.checkout.DBProductCheckout(productCheckout)
 	if err != nil {
@@ -678,14 +771,75 @@ func (repo *Repo) ProductCheckout(w http.ResponseWriter, r *http.Request){
 // func (repo *Repo) PayPal(w http.ResponseWriter, r *http.Request){
 // }
 
-// CashOnDelivery method for COD payment
-func (repo *Repo) CashOnDelivery(w http.ResponseWriter, r *http.Request){
+// GetPayment method for COD payment
+func (repo *Repo) GetPayment(w http.ResponseWriter, r *http.Request){
 
-	var COD models.COD
-	json.NewDecoder(r.Body).Decode(&COD)
+	var payment models.PaymentRequest
+	json.NewDecoder(r.Body).Decode(&payment)
 
-	
+	ctx := r.Context()
+	if ctx.Value(models.CtxKey{}) != nil {
+		userID := ctx.Value(models.CtxKey{}).(models.UserLogin).ID
+		payment.UserID = &userID
+		log.Println("UserID:", userID)
+	}
+	log.Println("Payment.UserID:", payment.UserID)
 
+	paymentDetails, err := repo.checkout.DBGetPayment(payment)
+	if err != nil {
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]interface{}{
+			"Response": "Can't fetch payment details",
+			"Error": err,
+		}
+		json.NewEncoder(w).Encode(&response)
+		return
+	}
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	response := map[string]interface{}{
+		"Response": "Payment Details",
+		"Payment details": paymentDetails,
+		"Payment method": "Select a payment method",
+	}
+	json.NewEncoder(w).Encode(&response)
+}
+
+// PayPayment method for COD payment
+func (repo *Repo) PayPayment(w http.ResponseWriter, r *http.Request){
+
+	var payment models.Payment
+	json.NewDecoder(r.Body).Decode(&payment)
+
+	ctx := r.Context()
+	if ctx.Value(models.CtxKey{}) != nil {
+		userID := ctx.Value(models.CtxKey{}).(models.UserLogin).ID
+		payment.UserID = userID
+	}
+	if payment.Amount == nil || payment.PaymentType == nil {
+		response := map[string]interface{}{
+			"Response": "Payment",
+			"Message": "Insert TotalAmount & PaymentType",
+		}
+		ResponseOK(w, response)
+		return
+	}
+
+	payment, err := repo.checkout.DBPayPayment(payment)
+	if err != nil {
+		response := map[string]interface{}{
+			"Response": "Can't fetch payment details",
+			"Error": err,
+		}
+		ResponseBR(w, response)
+		return
+	}
+	response := map[string]interface{}{
+		"Response": "Payment",
+		"Payment method": payment,
+	}
+	ResponseOK(w, response)
 }
 
 
@@ -697,6 +851,13 @@ func (repo *Repo) PlaceOrder(w http.ResponseWriter, r *http.Request){
 
 	var placeOrder models.PlaceOrder
 	json.NewDecoder(r.Body).Decode(&placeOrder)
+
+	ctx := r.Context()
+	if ctx.Value(models.CtxKey{}) != nil {
+		userID := ctx.Value(models.CtxKey{}).(models.UserLogin).ID
+		placeOrder.UserID = userID
+	}
+	r.Header.Get("cartID")
 
 	err := repo.checkout.DBPlaceOrder(placeOrder)
 	if err != nil {
@@ -726,6 +887,12 @@ func (repo *Repo) GetOrders(w http.ResponseWriter, r *http.Request){
 
 	var user models.User
 	json.NewDecoder(r.Body).Decode(&user)
+
+	ctx := r.Context()
+	if ctx.Value(models.CtxKey{}) != nil {
+		userID := ctx.Value(models.CtxKey{}).(models.UserLogin).ID
+		user.ID = userID
+	}
 
 	orders, err := repo.orders.DBGetOrders(user.ID)
 	if err != nil {

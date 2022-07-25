@@ -783,35 +783,104 @@ func (repo *Repo) DeleteColor(w http.ResponseWriter, r *http.Request){
 // GetOffers method for accessing offers
 func (repo *Repo) GetOffers(w http.ResponseWriter, r *http.Request){
 
+	var request models.CategoryOfferRequest
+	json.NewDecoder(r.Body).Decode(&request)
+
+	categoryOffer, err := repo.offers.DBGetOffers(request)
+	if err != nil {
+		response := map[string]interface{}{
+			"Response": "Can't fetch offer details",
+			"Error": err,
+		}
+		ResponseBR(w, response)
+		return
+	}
+	response := map[string]interface{}{
+		"Response": "Category offers",
+		"Offers": categoryOffer,
+	}
+	ResponseOK(w, response)
+}
+
+// AddOffers method for adding category offer.
+func (repo *Repo) AddOffers(w http.ResponseWriter, r *http.Request){
+
+	var categoryOffer models.CategoryOfferRequest
+	json.NewDecoder(r.Body).Decode(&categoryOffer)
+	defer r.Body.Close()
+
+	log.Println("New Offer:", categoryOffer)
+
+	err := repo.offers.DBAddOffers(categoryOffer)
+	if err != nil {
+		response := map[string]interface{}{
+			"Response": "Can't fetch offer details",
+			"Error":err,
+		}
+		ResponseBR(w, response)
+		return
+	}
+	response := map[string]interface{}{
+		"Response": "Category Offer Added",
+	}
+	ResponseOK(w, response)
+}
+
+// UpdateOffers method for updating offer
+func (repo *Repo) UpdateOffers(w http.ResponseWriter, r *http.Request){
+
+	var offer models.CategoryOfferRequest
+	json.NewDecoder(r.Body).Decode(&offer)
+	defer r.Body.Close()
+	err := repo.offers.DBUpdateOffers(offer)
+	if err != nil {
+		response := map[string]interface{}{
+			"Response": "Can't fetch offer details",
+			"Error":err,
+		}
+		ResponseBR(w, response)
+		return
+	}
+	response := map[string]interface{}{
+		"Response": "Category Offer Updated",
+	}
+	ResponseOK(w, response)
+}
+
+// DeleteOffers method for deleting offer
+func (repo *Repo) DeleteOffers(w http.ResponseWriter, r *http.Request){
+
+	var offer models.CategoryOfferRequest
+	json.NewDecoder(r.Body).Decode(&offer)
+	defer r.Body.Close()
+
+	if offer.ID != nil {
+		err := repo.offers.DBDeleteOffers(offer.ID)
+		if err != nil {
+			response := map[string]interface{}{
+				"Response": "Can't fetch offer details",
+				"Error":err,
+			}
+			ResponseBR(w, response)
+			return
+		}
+		response := map[string]interface{}{
+			"Response": "Category Offer Deleted",
+		}
+		ResponseOK(w, response)
+	} else {
+		response := map[string]interface{}{
+			"Response": "Insert offer ID",
+		}
+		ResponseOK(w, response)
+	}
 }
 
 
 
+
+
 // ---------------------------- Order Management -------------------------
-
-// // GetOrders method for accessing orders
-// func (repo *Repo) GetOrders(w http.ResponseWriter, r *http.Request){
-
-// 	orders, err := repo.orders.DBGetOrders()
-// 	if err != nil {
-// 		log.Println(err)
-// 		w.Header().Add("Content-Type", "application/json")
-// 		w.WriteHeader(http.StatusBadRequest)
-// 		response := map[string]interface{}{
-// 			"Response": "Can't fetch order details",
-// 			"Error": err,
-// 		}
-// 		json.NewEncoder(w).Encode(&response)
-// 		return
-// 	}
-// 	w.Header().Add("Content-Type", "application/json")
-// 	w.WriteHeader(http.StatusOK)
-// 	response := map[string]interface{}{
-// 		"Response": "All orders",
-// 		"Order": orders,
-// 	}
-// 	json.NewEncoder(w).Encode(&response)
-// }
 
 // GetOrders method for accessing orders
 func (repo *Repo) GetOrders(w http.ResponseWriter, r *http.Request){

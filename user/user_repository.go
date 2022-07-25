@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/ijasmoopan/Time.Now/models"
+	"github.com/ijasmoopan/Time.Now/usecases"
 )
 
 // Model describing struct for database connection.
@@ -20,88 +21,211 @@ type Model struct {
 // DBGetProducts for accessing products with respect to reqeust params.
 func (user Model) DBGetProducts(request models.ProductRequest) ([]models.ProductWithInventory, error) {
 
+	file := usecases.Logger()
+	log.SetOutput(file)
+
 	var products []models.ProductWithInventory
-	var filter []interface{}
+	filter := make([]interface{}, 0, 10)
 	count := 1
-	var sqlCondition string
+	var sqlCondition, sqlString string
 	var rows *sql.Rows
 	var err error
 
-	sqlString := `SELECT p.product_id,
-						p.product_name,
-						p.product_price,
-						p.product_desc,
-						p.product_status,
-						p.product_brand_id,
-						p.product_category_id,
-						p.product_subcategory_id,
-						i.image_id,
-						i.product_image,
-						c.category_name,
-						c.category_desc,
-						s.subcategory_name,
-						s.subcategory_desc,
-						b.brand_name,
-						b.brand_desc
-					FROM   products p
-						INNER JOIN categories c
-								ON p.product_category_id = c.category_id
-						INNER JOIN subcategories s
-								ON p.product_subcategory_id = s.subcategory_id
-						INNER JOIN brands b
-								ON p.product_brand_id = b.brand_id
-						LEFT JOIN images i
-								ON p.product_id = i.product_id
-					WHERE  p.product_deleted_at IS NULL `
+	sqlString = `WITH cte_getproducts (product_id, 
+										product_name, 
+										product_price,
+										product_desc, 
+										product_status, 
+										product_deleted_at,
+										product_brand_id,
+										product_category_id,
+										product_subcategory_id,
+										image_id,
+										product_image,
+										category_name,
+										category_desc,
+										subcategory_name,
+										subcategory_desc,
+										brand_name,
+										brand_desc,
+										offer_id,
+										offer_name,
+										offer,
+										offer_from,
+										offer_to,
+										offer_status,
+										offer_price,
+										wishlist
+										) 
+					AS (SELECT p.product_id,
+								p.product_name,
+								p.product_price,
+								p.product_desc,
+								p.product_status,
+								p.product_deleted_at,
+								p.product_brand_id,
+								p.product_category_id,
+								p.product_subcategory_id,
+								i.image_id,
+								i.product_image,
+								c.category_name,
+								c.category_desc,
+								s.subcategory_name,
+								s.subcategory_desc,
+								b.brand_name,
+								b.brand_desc,
+								o.id,
+								o.name,
+								o.offer,
+								o.offer_from,
+								o.offer_to,
+								CASE 
+									WHEN o.offer_from <= NOW() AND o.offer_to >= NOW() THEN true
+									ELSE false
+								END AS offer_status,
+								CASE 
+									WHEN o.offer_from <= NOW() AND o.offer_to >= NOW() THEN (p.product_price - ((p.product_price * o.offer)/100))::FLOAT
+									ELSE NULL
+								END AS offer_price`
 
-	if request.Product != nil {
-		filter = append(filter, *request.Product)
-		sqlCondition = fmt.Sprint(` AND p.product_name = $`, count)
+	if request.UserID != nil {
+		sqlString = fmt.Sprint(sqlString, `,
+										CASE 
+											WHEN p.product_id = w.product_id AND w.user_id = $`, count, `THEN true
+											ELSE false
+										END AS wishlist `)
+		filter = append(filter, *request.UserID)
 		count++
+	} else {
+		sqlString = fmt.Sprint(sqlString, `,
+											CASE 
+												WHEN p.product_id = w.product_id THEN false
+												ELSE false
+											END AS wishlist `)
+	}
+	sqlString = fmt.Sprint(sqlString, ` FROM   products p
+											INNER JOIN categories c
+												ON p.product_category_id = c.category_id
+											INNER JOIN subcategories s
+												ON p.product_subcategory_id = s.subcategory_id
+											INNER JOIN brands b
+												ON p.product_brand_id = b.brand_id
+											LEFT JOIN images i
+												ON p.product_id = i.product_id
+											LEFT JOIN category_offers o
+												ON o.category_id = p.product_category_id
+											
+											LEFT JOIN wishlist w
+												ON w.product_id = p.product_id
+											LEFT JOIN users u
+												ON u.user_id = w.user_id
+										WHERE  p.product_deleted_at IS NULL
+											ORDER BY offer)
+
+										SELECT * 
+											FROM cte_getproducts
+											WHERE product_deleted_at IS NULL `)
+	if request.Product != nil {
+		for idx, value := range request.Product {
+			if idx == 0 {
+				filter = append(filter, fmt.Sprint("%", *value, "%"))
+				sqlCondition = fmt.Sprint(` AND product_name ILIKE $`, count)
+				count++
+			} else {
+				filter = append(filter, fmt.Sprint("%", *value, "%"))
+				sqlCondition = fmt.Sprint(sqlCondition, ` OR product_name ILIKE $`, count)
+				count++
+			}
+		}
 	}
 	if request.Category != nil {
-		filter = append(filter, *request.Category)
-		sqlCondition = fmt.Sprint(sqlCondition, ` AND c.category_name = $`, count)
-		count++
+		for idx, value := range request.Category {
+			if idx == 0 {
+				filter = append(filter, fmt.Sprint("%", *value, "%"))
+				sqlCondition = fmt.Sprint(sqlCondition, ` AND category_name ILIKE $`, count)
+				count++
+			} else {
+				filter = append(filter, fmt.Sprint("%", *value, "%"))
+				sqlCondition = fmt.Sprint(sqlCondition, ` OR category_name ILIKE $`, count)
+				count++
+			}
+		}
 	}
 	if request.Subcategory != nil {
-		filter = append(filter, *request.Subcategory)
-		sqlCondition = fmt.Sprint(sqlCondition, ` AND s.subcategory_name = $`, count)
-		count++
+		for idx, value := range request.Subcategory {
+			if idx == 0 {
+				filter = append(filter, fmt.Sprint("%", *value, "%"))
+				sqlCondition = fmt.Sprint(sqlCondition, ` AND subcategory_name ILIKE $`, count)
+				count++
+			} else {
+				filter = append(filter, fmt.Sprint("%", *value, "%"))
+				sqlCondition = fmt.Sprint(sqlCondition, ` OR subcategory_name ILIKE $`, count)
+				count++
+			}
+		}
 	}
 	if request.Brand != nil {
-		filter = append(filter, *request.Brand)
-		sqlCondition = fmt.Sprint(sqlCondition, ` AND b.brand_name = $`, count)
-		count++
+		for idx, value := range request.Brand {
+			if idx == 0 {
+				filter = append(filter, fmt.Sprint("%", *value, "%"))
+				sqlCondition = fmt.Sprint(sqlCondition, ` AND brand_name ILIKE $`, count)
+				count++
+			} else {
+				filter = append(filter, fmt.Sprint("%", *value, "%"))
+				sqlCondition = fmt.Sprint(sqlCondition, ` OR brand_name ILIKE $`, count)
+				count++
+			}
+		}
 	}
 	if request.PriceMin != nil {
 		filter = append(filter, *request.PriceMin)
-		sqlCondition = fmt.Sprint(sqlCondition, ` AND p.product_price > $`, count)
+		sqlCondition = fmt.Sprint(sqlCondition, ` AND product_price >= $`, count)
 		count++
 	}
 	if request.PriceMax != nil {
 		filter = append(filter, *request.PriceMax)
-		sqlCondition = fmt.Sprint(sqlCondition, ` AND p.product_price < $`, count)
+		sqlCondition = fmt.Sprint(sqlCondition, ` AND product_price <= $`, count)
 		count++
 	}
+	// wishlist
+	if request.Wishlist != nil {
+		filter = append(filter, *request.Wishlist)
+		sqlCondition = fmt.Sprint(sqlCondition, ` AND wishlist = $`, count)
+		count++
+	}
+	// offer
+	if request.OfferMin != nil {
+		filter = append(filter, *request.OfferMin)
+		sqlCondition = fmt.Sprint(sqlCondition, ` AND offer >= $`, count)
+		count++
+	}
+	if request.OfferMax != nil {
+		filter = append(filter, *request.OfferMax)
+		sqlCondition = fmt.Sprint(sqlCondition, ` AND offer <= $`, count)
+		count++
+	}
+	// paging
+	var limit = 5
+	sqlCondition = fmt.Sprint(sqlCondition, ` ORDER BY product_id`)
+	if request.Page != nil {
+		*request.Page = (*request.Page - 1) * 5 
+		filter = append(filter, limit, *request.Page)
+		sqlCondition = fmt.Sprint(sqlCondition, ` LIMIT $`, count)
+		count++
+		sqlCondition = fmt.Sprint(sqlCondition, ` OFFSET $`, count)
+		count++
+	} else {
+		filter = append(filter, limit, 0)
+		sqlCondition = fmt.Sprint(sqlCondition, ` LIMIT $`, count)
+		count++
+		sqlCondition = fmt.Sprint(sqlCondition, ` OFFSET $`, count)
+		count++
+	}
+
 	log.Println("sqlCondition:", sqlCondition)
 	log.Println("filter:", filter)
 
-	if count == 7 {
-		rows, err = user.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter[0], filter[1], filter[2], filter[3], filter[4], filter[5])
-	} else if count == 6 {
-		rows, err = user.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter[0], filter[1], filter[2], filter[3], filter[4])
-	} else if count == 5 {
-		rows, err = user.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter[0], filter[1], filter[2], filter[3])
-	} else if count == 4 {
-		rows, err = user.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter[0], filter[1], filter[2])
-	} else if count == 3 {
-		rows, err = user.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter[0], filter[1])
-	} else if count == 2 {
-		rows, err = user.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter[0])
-	} else {
-		rows, err = user.DB.Query(sqlString)
-	}
+	rows, err = user.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter...)
 
 	if err != nil {
 		log.Println(err)
@@ -110,13 +234,18 @@ func (user Model) DBGetProducts(request models.ProductRequest) ([]models.Product
 	defer rows.Close()
 	for rows.Next() {
 		var product models.ProductWithInventory
-		var imageID sql.NullInt32
-		var image sql.NullString
+		var deletedAt *time.Time
+		var imageID, offerID, offer sql.NullInt32
+		var image, offerName sql.NullString
+		var offerFrom, offerTo sql.NullTime
+		var offerStatus bool
+		var offerPrice sql.NullFloat64
 		err := rows.Scan(&product.ID,
 			&product.Name,
 			&product.Price,
 			&product.Description,
 			&product.Status,
+			&deletedAt,
 			&product.Brand.ID,
 			&product.Category.ID,
 			&product.Subcategory.ID,
@@ -128,6 +257,16 @@ func (user Model) DBGetProducts(request models.ProductRequest) ([]models.Product
 			&product.Subcategory.Description,
 			&product.Brand.Name,
 			&product.Brand.Description,
+
+			&offerID,
+			&offerName,
+			&offer,
+			&offerFrom,
+			&offerTo,
+			&offerStatus,
+
+			&offerPrice,
+			&product.Wishlist,
 		)
 		if imageID.Valid {
 			product.Image.ID = int(imageID.Int32)
@@ -135,6 +274,32 @@ func (user Model) DBGetProducts(request models.ProductRequest) ([]models.Product
 		}
 		if image.Valid {
 			product.Image.Image = image.String
+		}
+		if offerStatus != false {
+			log.Println("Offer status is ", offerStatus)
+			product.Offer.Status = offerStatus
+
+			if offerID.Valid {
+				product.Offer.ID = int(offerID.Int32)
+			}
+			if offerName.Valid {
+				product.Offer.Name = offerName.String
+			}
+			if offer.Valid {
+				product.Offer.Offer = int(offer.Int32)
+			}
+			if offerFrom.Valid {
+				product.Offer.From = offerFrom.Time.Format("01-02-2006")
+			}
+			if offerTo.Valid {
+				product.Offer.To = offerTo.Time.Format("01-02-2006")
+			}
+			if offerPrice.Valid {
+				product.OfferPrice = &offerPrice.Float64
+			}
+			product.Offer.Category.ID = product.Category.ID
+			product.Offer.Category.Name = product.Category.Name
+			product.Offer.Category.Description = product.Category.Description
 		}
 		if err != nil {
 			log.Println("Error while getting products", err)
@@ -144,6 +309,9 @@ func (user Model) DBGetProducts(request models.ProductRequest) ([]models.Product
 
 		var colors []models.Colors
 		var inventories []models.Inventories
+		filter2 := make([]interface{}, 0, 10)
+		count2 := 0
+		var sqlCondition2 string 
 		inventoryrows, err := user.DB.Query(`SELECT i.inventory_id, 
 													i.product_id, 
 													c.color_id,
@@ -154,6 +322,19 @@ func (user Model) DBGetProducts(request models.ProductRequest) ([]models.Product
 													ON i.color_id = c.color_id
 												WHERE i.inventory_deleted_at IS NULL
 													AND i.product_id = $1;`, product.ID)
+		if request.Color != nil {
+			for idx, value := range request.Color {
+				if idx == 0 {
+					count2++
+					filter2 = append(filter2, fmt.Sprint("%", *value, "%"))
+					sqlCondition2 = fmt.Sprint(sqlCondition2, ` AND c.color ILIKE $`, count2)
+				} else {
+					count2++
+					filter2 = append(filter2, fmt.Sprint("%", *value, "%"))
+					sqlCondition2 = fmt.Sprint(sqlCondition2, ` OR c.color ILIKE $`, count2)
+				}
+			}
+		}
 		if err != nil {
 			log.Println("Inventoryrows:", err)
 			return nil, err
@@ -187,158 +368,134 @@ func (user Model) DBGetProducts(request models.ProductRequest) ([]models.Product
 }
 
 // DBGetProductsWithColors method access all products corresponding to request params.
-func (user Model) DBGetProductsWithColors(request models.ProductRequest) ([]models.ProductWithColor, error) {
-
-	var products []models.ProductWithColor
-	var sqlCondition string
-
-	sqlString := `SELECT p.product_id,
-						p.product_name,
-						p.product_price,
-						p.product_desc,
-						i.image_id,
-						p.product_brand_id,
-						p.product_category_id,
-						p.product_subcategory_id,
-						i.product_id,
-						i.product_image,
-						c.category_name,
-						c.category_desc,
-						s.subcategory_name,
-						s.subcategory_desc,
-						b.brand_name,
-						b.brand_desc
-					FROM   products p
-						INNER JOIN categories c
-								ON p.product_category_id = c.category_id
-						INNER JOIN subcategories s
-								ON p.product_subcategory_id = s.subcategory_id
-						INNER JOIN brands b
-								ON p.product_brand_id = b.brand_id
-						LEFT JOIN images i
-								ON p.product_id = i.product_id
-					WHERE  p.product_deleted_at IS NULL `
-
-	var rows *sql.Rows
-	var err error
-	var filter []interface{}
-	count := 1
-	if request.Product != nil {
-		filter = append(filter, *request.Product)
-		sqlCondition = fmt.Sprint(` AND p.product_name = $`, count)
-		count++
-	}
-	if request.Category != nil {
-		filter = append(filter, *request.Category)
-		sqlCondition = fmt.Sprint(sqlCondition, ` AND p.product_category_name = $`, count)
-		count++
-	}
-	if request.Subcategory != nil {
-		filter = append(filter, *request.Subcategory)
-		sqlCondition = fmt.Sprint(sqlCondition, ` AND p.product_subcategory_name = $`, count)
-		count++
-	}
-	if request.Brand != nil {
-		filter = append(filter, *request.Brand)
-		sqlCondition = fmt.Sprint(sqlCondition, ` AND p.product_brand_name = $`, count)
-		count++
-	}
-	if request.PriceMin != nil {
-		filter = append(filter, *request.PriceMin)
-		sqlCondition = fmt.Sprint(sqlCondition, ` AND p.product_price > $`, count)
-		count++
-	}
-	if request.PriceMax != nil {
-		filter = append(filter, *request.PriceMax)
-		sqlCondition = fmt.Sprint(sqlCondition, ` AND p.product_price < $`, count)
-		count++
-	}
-
-	if count == 7 {
-		rows, err = user.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter[0], filter[1], filter[2], filter[3], filter[4], filter[5])
-	} else if count == 6 {
-		rows, err = user.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter[0], filter[1], filter[2], filter[3], filter[4])
-	} else if count == 5 {
-		rows, err = user.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter[0], filter[1], filter[2], filter[3])
-	} else if count == 4 {
-		rows, err = user.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter[0], filter[1], filter[2])
-	} else if count == 3 {
-		rows, err = user.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter[0], filter[1])
-	} else if count == 2 {
-		rows, err = user.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter[0])
-	} else {
-		rows, err = user.DB.Query(sqlString)
-	}
-
-	if err != nil {
-		log.Println(err)
-		return products, err
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		var product models.ProductWithColor
-		var imageID sql.NullInt32
-		var productID sql.NullInt32
-		var image sql.NullString
-		err := rows.Scan(&product.ID,
-			&product.Name,
-			&product.Price,
-			&product.Description,
-			&imageID,
-			&product.Brand.ID,
-			&product.Category.ID,
-			&product.Subcategory.ID,
-			&productID,
-			&image,
-			&product.Category.Name,
-			&product.Category.Description,
-			&product.Subcategory.Name,
-			&product.Subcategory.Description,
-			&product.Brand.Name,
-			&product.Brand.Description,
-		)
-		if imageID.Valid {
-			product.Image.ID = int(imageID.Int32)
-		}
-		if productID.Valid {
-			product.Image.ProductID = int(productID.Int32)
-		}
-		if image.Valid {
-			product.Image.Image = image.String
-		}
-		if err != nil {
-			log.Println(err)
-			return products, err
-		}
-		log.Println(product)
-
-		// ---------------------- Colors -------------------------
-
-		colorRows, err := user.DB.Query(`SELECT c.color_id,
-											c.color
-										FROM colors c
-										INNER JOIN inventories i
-											ON i.color_id = c.color_id
-										WHERE i.product_id = $1`, product.ID)
-		if err != nil {
-			log.Println(err)
-			return products, err
-		}
-		defer colorRows.Close()
-		for colorRows.Next() {
-			var color models.Colors
-			err = colorRows.Scan(&color.ID,
-				&color.Color)
-			product.Color = append(product.Color, color)
-		}
-
-		// ------------------------ END --------------------------
-
-		products = append(products, product)
-	}
-	return products, nil
-}
+// func (user Model) DBGetProductsWithColors(request models.ProductRequest) ([]models.ProductWithColor, error) {
+// 	var products []models.ProductWithColor
+// 	var sqlCondition string
+// 	sqlString := `SELECT p.product_id,
+// 						p.product_name,
+// 						p.product_price,
+// 						p.product_desc,
+// 						i.image_id,
+// 						p.product_brand_id,
+// 						p.product_category_id,
+// 						p.product_subcategory_id,
+// 						i.product_id,
+// 						i.product_image,
+// 						c.category_name,
+// 						c.category_desc,
+// 						s.subcategory_name,
+// 						s.subcategory_desc,
+// 						b.brand_name,
+// 						b.brand_desc
+// 					FROM   products p
+// 						INNER JOIN categories c
+// 								ON p.product_category_id = c.category_id
+// 						INNER JOIN subcategories s
+// 								ON p.product_subcategory_id = s.subcategory_id
+// 						INNER JOIN brands b
+// 								ON p.product_brand_id = b.brand_id
+// 						LEFT JOIN images i
+// 								ON p.product_id = i.product_id
+// 					WHERE  p.product_deleted_at IS NULL `
+// 	var rows *sql.Rows
+// 	var err error
+// 	var filter []interface{}
+// 	count := 1
+// 	if request.Product != nil {
+// 		filter = append(filter, *request.Product)
+// 		sqlCondition = fmt.Sprint(` AND p.product_name = $`, count)
+// 		count++
+// 	}
+// 	if request.Category != nil {
+// 		filter = append(filter, *request.Category)
+// 		sqlCondition = fmt.Sprint(sqlCondition, ` AND p.product_category_name = $`, count)
+// 		count++
+// 	}
+// 	if request.Subcategory != nil {
+// 		filter = append(filter, *request.Subcategory)
+// 		sqlCondition = fmt.Sprint(sqlCondition, ` AND p.product_subcategory_name = $`, count)
+// 		count++
+// 	}
+// 	if request.Brand != nil {
+// 		filter = append(filter, *request.Brand)
+// 		sqlCondition = fmt.Sprint(sqlCondition, ` AND p.product_brand_name = $`, count)
+// 		count++
+// 	}
+// 	if request.PriceMin != nil {
+// 		filter = append(filter, *request.PriceMin)
+// 		sqlCondition = fmt.Sprint(sqlCondition, ` AND p.product_price > $`, count)
+// 		count++
+// 	}
+// 	if request.PriceMax != nil {
+// 		filter = append(filter, *request.PriceMax)
+// 		sqlCondition = fmt.Sprint(sqlCondition, ` AND p.product_price < $`, count)
+// 		count++
+// 	}
+// 	rows, err = user.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter...)
+// 	if err != nil {
+// 		log.Println(err)
+// 		return products, err
+// 	}
+// 	defer rows.Close()
+// 	for rows.Next() {
+// 		var product models.ProductWithColor
+// 		var imageID sql.NullInt32
+// 		var productID sql.NullInt32
+// 		var image sql.NullString
+// 		err := rows.Scan(&product.ID,
+// 			&product.Name,
+// 			&product.Price,
+// 			&product.Description,
+// 			&imageID,
+// 			&product.Brand.ID,
+// 			&product.Category.ID,
+// 			&product.Subcategory.ID,
+// 			&productID,
+// 			&image,
+// 			&product.Category.Name,
+// 			&product.Category.Description,
+// 			&product.Subcategory.Name,
+// 			&product.Subcategory.Description,
+// 			&product.Brand.Name,
+// 			&product.Brand.Description,
+// 		)
+// 		if imageID.Valid {
+// 			product.Image.ID = int(imageID.Int32)
+// 		}
+// 		if productID.Valid {
+// 			product.Image.ProductID = int(productID.Int32)
+// 		}
+// 		if image.Valid {
+// 			product.Image.Image = image.String
+// 		}
+// 		if err != nil {
+// 			log.Println(err)
+// 			return products, err
+// 		}
+// 		log.Println(product)
+// 		// ---------------------- Colors -------------------------
+// 		colorRows, err := user.DB.Query(`SELECT c.color_id,
+// 											c.color
+// 										FROM colors c
+// 										INNER JOIN inventories i
+// 											ON i.color_id = c.color_id
+// 										WHERE i.product_id = $1`, product.ID)
+// 		if err != nil {
+// 			log.Println(err)
+// 			return products, err
+// 		}
+// 		defer colorRows.Close()
+// 		for colorRows.Next() {
+// 			var color models.Colors
+// 			err = colorRows.Scan(&color.ID,
+// 				&color.Color)
+// 			product.Color = append(product.Color, color)
+// 		}
+// 		// ------------------------ END --------------------------
+// 		products = append(products, product)
+// 	}
+// 	return products, nil
+// }
 
 // DBGetAllColorsOfAProduct get all colors of a product.
 func (user Model) DBGetAllColorsOfAProduct(productID int) ([]models.Inventories, error) {
@@ -839,58 +996,49 @@ func (user Model) DBAddCart(cartProduct models.Cart) error {
 		log.Println("Err", err)
 		return err
 	}
-
 	// Reduce product quantity in inventories
-	_, err = user.DB.Exec(`UPDATE inventories 
-								SET product_quantity = product_quantity - $1
-								WHERE inventory_id = $2;`, cartProduct.Quantity,
-			cartProduct.Product.Inventory.ID,
-		)
-
-	if err != nil {
-		log.Println("Err", err)
-		return err
-	}
-
-	durationOfTime := time.Duration(15 * time.Minute)
-
-	f := func() {
-
-		log.Println("After 15 minutes... ")
-
-		// Buisness logic
-		log.Println("Checking order_id is in order table or not")
-		row := user.DB.QueryRow(`SELECT order_id 
-									FROM orders 
-									WHERE cart_id = $1;`, cartProduct.ID)
-		err = row.Scan(&cartProduct.ID)
-		if err == sql.ErrNoRows {
-
-			log.Println("Checking cart_id is still in cart table or not")
-			row = user.DB.QueryRow(`SELECT cart_id 
-										FROM cart 
-										WHERE cart_id = $1
-											AND deleted_at IS NULL;`, cartProduct.ID)
-			err = row.Scan(&cartProduct.ID)
-
-			if err == sql.ErrNoRows {
-			// Increase product quantity in inventories
-			log.Println("No rows.. so increasing quantity in inventories")
-			_, err = user.DB.Exec(`UPDATE inventories 
-									SET product_quantity = product_quantity + $1
-									WHERE inventory_id = $2;`, cartProduct.Quantity,
-					cartProduct.Product.Inventory.ID,
-				)
-			}
-		}
-		if err != nil {
-			log.Println("Err", err)
-			return 
-		}
-
-	}
-	timer := time.AfterFunc(durationOfTime, f)
-	defer timer.Stop()
+	// _, err = user.DB.Exec(`UPDATE inventories 
+	// 							SET product_quantity = product_quantity - $1
+	// 							WHERE inventory_id = $2;`, cartProduct.Quantity,
+	// 		cartProduct.Product.Inventory.ID,
+	// 	)
+	// if err != nil {
+	// 	log.Println("Err", err)
+	// 	return err
+	// }
+	// durationOfTime := time.Duration(15 * time.Minute)
+	// f := func() {
+	// 	log.Println("After 15 minutes... ")
+	// 	// Buisness logic
+	// 	log.Println("Checking order_id is in order table or not")
+	// 	row := user.DB.QueryRow(`SELECT order_id 
+	// 								FROM orders 
+	// 								WHERE cart_id = $1;`, cartProduct.ID)
+	// 	err = row.Scan(&cartProduct.ID)
+	// 	if err == sql.ErrNoRows {
+	// 		log.Println("Checking cart_id is still in cart table or not")
+	// 		row = user.DB.QueryRow(`SELECT cart_id 
+	// 									FROM cart 
+	// 									WHERE cart_id = $1
+	// 										AND deleted_at IS NULL;`, cartProduct.ID)
+	// 		err = row.Scan(&cartProduct.ID)
+	// 		if err == sql.ErrNoRows {
+	// 		// Increase product quantity in inventories
+	// 		log.Println("No rows.. so increasing quantity in inventories")
+	// 		_, err = user.DB.Exec(`UPDATE inventories 
+	// 								SET product_quantity = product_quantity + $1
+	// 								WHERE inventory_id = $2;`, cartProduct.Quantity,
+	// 				cartProduct.Product.Inventory.ID,
+	// 			)
+	// 		}
+	// 	}
+	// 	if err != nil {
+	// 		log.Println("Err", err)
+	// 		return 
+	// 	}
+	// }
+	// timer := time.AfterFunc(durationOfTime, f)
+	// defer timer.Stop()
 
 	return nil
 }
@@ -898,16 +1046,15 @@ func (user Model) DBAddCart(cartProduct models.Cart) error {
 // DBUpdateCart method for updating product from cart.
 func (user Model) DBUpdateCart(cart models.Cart) error {
 
-	var quantity int
-	log.Println("Checking cart_id is still in cart table or not")
-	row := user.DB.QueryRow(`SELECT quantity 
-								FROM cart 
-								WHERE cart_id = $1
-									AND deleted_at IS NULL;`, cart.ID)
-	err := row.Scan(&quantity)
-
-	if cart.Quantity == quantity {
-		_, err = user.DB.Exec(`UPDATE cart
+	// var quantity int
+	// log.Println("Checking cart_id is still in cart table or not")
+	// row := user.DB.QueryRow(`SELECT quantity 
+	// 							FROM cart 
+	// 							WHERE cart_id = $1
+	// 								AND deleted_at IS NULL;`, cart.ID)
+	// err := row.Scan(&quantity)
+	// if cart.Quantity == quantity {
+		_, err := user.DB.Exec(`UPDATE cart
 										SET inventory_id = $1,
 										quantity = $2,
 										updated_at = $3
@@ -916,16 +1063,14 @@ func (user Model) DBUpdateCart(cart models.Cart) error {
 			time.Now(),
 			cart.ID,
 		)
-	}
+	// }
 // ----------------------------------------------------------------------------------------------------
-		_, err = user.DB.Exec(`UPDATE inventories 
-								SET product_quantity = product_quantity + $1
-								WHERE inventory_id = $2;`, cart.Quantity,
-						cart.Product.Inventory.ID,
-					)
+		// _, err = user.DB.Exec(`UPDATE inventories 
+		// 						SET product_quantity = product_quantity + $1
+		// 						WHERE inventory_id = $2;`, cart.Quantity,
+		// 				cart.Product.Inventory.ID,
+		// 			)
 	
-
-
 	if err != nil {
 		return err
 	}
@@ -1103,7 +1248,20 @@ func (user Model) DBCartCheckout(userID int) (models.CartCheckout, int, float64,
 										col.color,
 										cart.cart_id,
 										cart.quantity,
-										cart.user_id
+										cart.user_id,
+										o.id,
+										o.name,
+										o.offer,
+										o.offer_from,
+										o.offer_to,
+										CASE 
+											WHEN o.offer_from <= NOW() AND o.offer_to >= NOW() THEN true
+											ELSE false
+										END AS offer_status,
+										CASE 
+											WHEN o.offer_from <= NOW() AND o.offer_to >= NOW() THEN (p.product_price - ((p.product_price * o.offer)/100))::FLOAT
+											ELSE NULL
+										END AS offer_price
 									FROM cart
 										INNER JOIN products p
 												ON cart.product_id = p.product_id
@@ -1119,6 +1277,8 @@ func (user Model) DBCartCheckout(userID int) (models.CartCheckout, int, float64,
 												ON q.inventory_id = cart.inventory_id
 										INNER JOIN colors col
 												ON col.color_id = q.color_id
+										LEFT JOIN category_offers o
+												ON o.category_id = p.product_category_id
 									WHERE  cart.user_id = $1
 										AND p.product_deleted_at IS NULL
 										AND cart.deleted_at IS NULL;`, userID)
@@ -1131,37 +1291,74 @@ func (user Model) DBCartCheckout(userID int) (models.CartCheckout, int, float64,
 	log.Println("for loop")
 	for rows.Next() {
 		var cartProduct models.Cart
-		var productImageID sql.NullInt32
-		var productImage sql.NullString
+		var productImageID, offerID, offer sql.NullInt32
+		var productImage, offerName sql.NullString
+		var offerFrom, offerTo sql.NullTime
+		var offerStatus bool
+		var offerPrice sql.NullFloat64
 
 		err := rows.Scan(&cartProduct.Product.ID,
-			&cartProduct.Product.Name,
-			&cartProduct.Product.Price,
-			&cartProduct.Product.Description,
-			&cartProduct.Product.Status,
-			&cartProduct.Product.Brand.ID,
-			&cartProduct.Product.Category.ID,
-			&cartProduct.Product.Subcategory.ID,
-			&productImageID,
-			&productImage,
-			&cartProduct.Product.Category.Name,
-			&cartProduct.Product.Category.Description,
-			&cartProduct.Product.Subcategory.Name,
-			&cartProduct.Product.Subcategory.Description,
-			&cartProduct.Product.Brand.Name,
-			&cartProduct.Product.Brand.Description,
-			&cartProduct.Product.Inventory.ID,
-			&cartProduct.Product.Inventory.Quantity,
-			&cartProduct.Product.Inventory.Color.ID,
-			&cartProduct.Product.Inventory.Color.Color,
-			&cartProduct.ID,
-			&cartProduct.Quantity,
-			&cartProduct.UserID)
+				&cartProduct.Product.Name,
+				&cartProduct.Product.Price,
+				&cartProduct.Product.Description,
+				&cartProduct.Product.Status,
+				&cartProduct.Product.Brand.ID,
+				&cartProduct.Product.Category.ID,
+				&cartProduct.Product.Subcategory.ID,
+				&productImageID,
+				&productImage,
+				&cartProduct.Product.Category.Name,
+				&cartProduct.Product.Category.Description,
+				&cartProduct.Product.Subcategory.Name,
+				&cartProduct.Product.Subcategory.Description,
+				&cartProduct.Product.Brand.Name,
+				&cartProduct.Product.Brand.Description,
+				&cartProduct.Product.Inventory.ID,
+				&cartProduct.Product.Inventory.Quantity,
+				&cartProduct.Product.Inventory.Color.ID,
+				&cartProduct.Product.Inventory.Color.Color,
+				&cartProduct.ID,
+				&cartProduct.Quantity,
+				&cartProduct.UserID,
+				&offerID,
+				&offerName,
+				&offer,
+				&offerFrom,
+				&offerTo,
+				&offerStatus,
+				&offerPrice,
+			)
 		if productImageID.Valid {
 			cartProduct.Product.Image.ID = int(productImageID.Int32)
 		}
 		if productImage.Valid {
 			cartProduct.Product.Image.Image = productImage.String
+		}
+		if offerStatus != false {
+			log.Println("Offer status is ", offerStatus)
+			cartProduct.Product.Offer.Status = offerStatus
+
+			if offerID.Valid {
+				cartProduct.Product.Offer.ID = int(offerID.Int32)
+			}
+			if offerName.Valid {
+				cartProduct.Product.Offer.Name = offerName.String
+			}
+			if offer.Valid {
+				cartProduct.Product.Offer.Offer = int(offer.Int32)
+			}
+			if offerFrom.Valid {
+				cartProduct.Product.Offer.From = offerFrom.Time.Format("01-02-2006")
+			}
+			if offerTo.Valid {
+				cartProduct.Product.Offer.To = offerTo.Time.Format("01-02-2006")
+			}
+			if offerPrice.Valid {
+				cartProduct.Product.OfferPrice = offerPrice.Float64
+			}
+			cartProduct.Product.Offer.Category.ID = cartProduct.Product.Category.ID
+			cartProduct.Product.Offer.Category.Name = cartProduct.Product.Category.Name
+			cartProduct.Product.Offer.Category.Description = cartProduct.Product.Category.Description
 		}
 		if err != nil {
 			log.Println("Error in for loop:", err)
@@ -1369,6 +1566,150 @@ func (user Model) DBProductCheckout(productCheckout models.ProductCheckout) (mod
 
 // ------------------------------- Placing Order ------------------------------------
 
+// DBGetPayment method for cash on delivery
+func (user Model) DBGetPayment(request models.PaymentRequest)(models.PaymentResponse, error){
+
+	var payment models.PaymentResponse
+	payment.UserID = *request.UserID
+
+	var sqlString string
+	var param int
+	sqlString = `SELECT p.product_price,`
+	if request.ProductID == nil {
+		sqlString = fmt.Sprint(sqlString, `cart.quantity,
+											cart.user_id,`)
+	}
+	sqlString = fmt.Sprint(sqlString, `CASE 
+											WHEN o.offer_from <= NOW() AND o.offer_to >= NOW() THEN true
+											ELSE false
+										END AS offer_status,
+										CASE 
+											WHEN o.offer_from <= NOW() AND o.offer_to >= NOW() THEN (p.product_price - ((p.product_price * o.offer)/100))::FLOAT
+											ELSE NULL
+										END AS offer_price`)
+	if request.ProductID != nil {
+		sqlString = fmt.Sprint(sqlString, `	FROM inventories q
+												INNER JOIN products p
+														ON q.product_id = p.product_id`)
+	} else {
+		sqlString = fmt.Sprint(sqlString, ` FROM cart
+												INNER JOIN products p
+														ON cart.product_id = p.product_id`)
+	}
+	sqlString = fmt.Sprint(sqlString, ` LEFT JOIN category_offers o
+												ON o.category_id = p.product_category_id
+									WHERE p.product_deleted_at IS NULL
+											AND p.product_status = true`)
+
+	if request.ProductID != nil {
+		sqlString = fmt.Sprint(sqlString, ` AND q.inventory_id = $1`)
+		param = *request.ProductID
+	} else {
+		sqlString = fmt.Sprint(sqlString, ` AND cart.user_id = $1
+											AND cart.deleted_at IS NULL`)
+		param = *request.UserID
+	}
+
+	rows, err := user.DB.Query(sqlString, param)
+
+	if err != nil {
+		log.Println("Error:", err)
+		return payment, err
+	}
+	defer rows.Close()
+	for rows.Next(){
+
+		var offerStatus bool
+		var offerPrice sql.NullFloat64
+		var productPrice float64
+		var productQuantity int
+		
+		if request.ProductID != nil {
+			err = rows.Scan(&productPrice,
+					&offerStatus,
+					&offerPrice,
+				)
+			productQuantity = 1
+		} else {
+			err = rows.Scan(&productPrice,
+					&productQuantity,
+					&payment.UserID,
+					&offerStatus,
+					&offerPrice,
+				)
+		}
+		if offerStatus != false {
+			if offerPrice.Valid {
+				payment.TotalPrice = payment.TotalPrice + (productPrice * float64(productQuantity))
+	
+				payment.OfferPrice = payment.OfferPrice + (offerPrice.Float64 * float64(productQuantity))
+
+				payment.Savings = payment.Savings + (productPrice - offerPrice.Float64)
+
+			}
+		} else {
+			payment.TotalPrice = payment.TotalPrice + (productPrice * float64(productQuantity))
+
+			payment.OfferPrice = payment.OfferPrice + productPrice * float64(productQuantity)
+		}
+		if err != nil {
+			log.Println(err)
+			return payment, err
+		}
+	}
+	payment.PaymentType = append(payment.PaymentType, "Cash On Delivery", "Bank")
+	return payment, nil
+}
+
+// DBPayPayment for paying payment
+func (user Model) DBPayPayment(payment models.Payment)(models.Payment, error){
+
+	if *payment.PaymentType == "COD" {
+		// insert into payment table 
+		err := user.DB.QueryRow(`INSERT INTO payments (user_id,
+													total_price,
+													payment_type,
+													payment_status,
+													created_at)
+										VALUES ($1, $2, $3, $4, $5) 
+										RETURNING payment_id, 
+												payment_status `, payment.UserID,
+				payment.Amount,
+				payment.PaymentType,
+				false,
+				time.Now()).Scan(&payment.ID, 
+					&payment.PaymentStatus)
+		if err != nil {
+			log.Println(err)
+			return payment, err
+		}
+	} else if *payment.PaymentType == "Bank" {
+		// insert into payment table
+		err := user.DB.QueryRow(`INSERT INTO payments (user_id,
+													total_price,
+													payment_type,
+													payment_status,
+													created_at, 
+													paid_at)
+										VALUES ($1, $2, $3, $4, $5, $6) 
+										RETURNING payment_id, 
+												payment_status`, payment.UserID,
+				payment.Amount,
+				payment.PaymentType,
+				true,
+				time.Now(),
+				time.Now()).Scan(&payment.ID,
+					&payment.PaymentStatus)
+		if err != nil {
+			log.Println(err)
+			return payment, err
+		}
+	} else {
+		return payment, errors.New("Enter a valid payment type")
+	}
+	return payment, nil
+}
+
 // DBPlaceOrder method for placing an order
 func (user Model) DBPlaceOrder(placeOrder models.PlaceOrder) error {
 
@@ -1380,53 +1721,79 @@ func (user Model) DBPlaceOrder(placeOrder models.PlaceOrder) error {
 	}
 	for i := 0; i < len(placeOrder.ProductID); i++ {
 
-		// --------------------------- Something Big -------------------------
 		if placeOrder.CartID != nil {
-			var timeStatus time.Time
-			var currentTime = time.Now()
-			row := tx.QueryRow(`SELECT CASE WHEN updated_at IS NOT NULL THEN updated_at
-											WHEN updated_at IS NULL THEN created_at
-										END AS status
-									FROM cart
-									WHERE cart_id = $1
-										AND deleted_at IS NULL; `, placeOrder.CartID[i])
-			err = row.Scan(&timeStatus)
-			if err != nil {
-				tx.Rollback()
-				return err
-			}
-			duration := currentTime.Sub(timeStatus)
-			if duration > 15 {
+			// var timeStatus time.Time
+			// var currentTime = time.Now()
+			// row := tx.QueryRow(`SELECT CASE WHEN updated_at IS NOT NULL THEN updated_at
+			// 								WHEN updated_at IS NULL THEN created_at
+			// 							END AS status
+			// 						FROM cart
+			// 						WHERE cart_id = $1
+			// 							AND deleted_at IS NULL; `, placeOrder.CartID[i])
+			// err = row.Scan(&timeStatus)
+			// if err != nil {
+			// 	tx.Rollback()
+			// 	return err
+			// }
+			// duration := currentTime.Sub(timeStatus)
+			// if duration > 15 {
 				// Reduce product quantity in inventories
-				_, err = user.DB.Exec(`UPDATE inventories 
-											SET product_quantity = product_quantity - $1
-											WHERE inventory_id = $2;`, placeOrder.Quantity[i],
-						placeOrder.InventoryID[i],
-					)
-			} 
+
+			_, err = tx.Exec(`UPDATE inventories 
+										SET product_quantity = product_quantity - $1
+										WHERE inventory_id = $2;`, placeOrder.Quantity[i],
+					placeOrder.InventoryID[i],
+				)
+			// } 
 			// If it is else case, then no need to reduce product quantity in inventories
 		} else {
 			// Reduce product quantity in inventories
-			_, err = user.DB.Exec(`UPDATE inventories 
+			_, err = tx.Exec(`UPDATE inventories 
 										SET product_quantity = product_quantity - $1
 										WHERE inventory_id = $2;`, placeOrder.Quantity[i],
 					placeOrder.InventoryID[i],
 				)
 		}
+		if err != nil {
+			tx.Rollback()
+			return err
+		}
 
 		// --------------------------- END -------------------------
 
+		// var payment models.Payment
+		// row := tx.QueryRow(`SELECT payment_id,
+		// 							user_id,
+		// 							total_price,
+		// 							payment_type,
+		// 							payment_status
+		// 						FROM payments
+		// 						WHERE cancelled_at IS NULL
+		// 						AND payment_id = $1;`, placeOrder.PaymentID)
+		// err = row.Scan(&payment.ID,
+		// 	&payment.UserID,
+		// 	&payment.Amount,
+		// 	&payment.PaymentType,
+		// 	&payment.PaymentStatus,
+		// )
+		// if err != nil {
+		// 	tx.Rollback()
+		// 	return err
+		// }
+
 		_, err = tx.ExecContext(ctx, `INSERT INTO orders (user_id,
-										address_id, 
-										product_id, 
-										inventory_id, 
-										quantity,
-										ordered_at)
+														address_id, 
+														product_id, 
+														inventory_id, 
+														quantity,
+														payment_id,
+														ordered_at)
 								VALUES ($1, $2, $3, $4, $5, $6);`, placeOrder.UserID,
 			placeOrder.AddressID,
 			placeOrder.ProductID[i],
 			placeOrder.InventoryID[i],
 			placeOrder.Quantity[i],
+			placeOrder.PaymentID,
 			time.Now(),
 		)
 		if err != nil {
@@ -1439,12 +1806,12 @@ func (user Model) DBPlaceOrder(placeOrder models.PlaceOrder) error {
 		// 								WHERE inventory_id = $2;`, placeOrder.Quantity[i],
 		// 	placeOrder.InventoryID[i],
 		// )
-		if err != nil {
-			tx.Rollback()
-			return err
-		}
+		// if err != nil {
+		// 	tx.Rollback()
+		// 	return err
+		// }
 		_, err = tx.ExecContext(ctx, `DELETE FROM cart 
-										WHERE inventory_id = $1;`, placeOrder.InventoryID[i],
+											WHERE inventory_id = $1;`, placeOrder.InventoryID[i],
 		)
 		if err != nil {
 			tx.Rollback()

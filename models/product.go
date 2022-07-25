@@ -11,6 +11,7 @@ type Product struct {
 	Name        string        `json:"productName"`
 	Description string        `json:"productDesc"`
 	Price       float64       `json:"productPrice"`
+	OfferPrice  float64       `json:"offerPrice"`
 	Status      bool          `json:"productStatus"`
 	Color       Colors        `json:"productColor"`
 	Image       Images        `json:"productImage"`
@@ -18,6 +19,7 @@ type Product struct {
 	Category    Categories    `json:"productCategory"`
 	Subcategory Subcategories `json:"productSubcategory"`
 	Inventory   Inventories   `json:"productInventory"`
+	Offer       CategoryOffer `json:"offer"`
 }
 
 // ProductWithInventory describes details of products.
@@ -26,6 +28,7 @@ type ProductWithInventory struct {
 	Name        string        `json:"productName"`
 	Description string        `json:"productDesc"`
 	Price       float64       `json:"productPrice"`
+	OfferPrice  *float64      `json:"offerPrice"`
 	Status      bool          `json:"productStatus"`
 	Color       []Colors      `json:"productColor"`
 	Image       Images        `json:"productImage"`
@@ -33,6 +36,23 @@ type ProductWithInventory struct {
 	Category    Categories    `json:"productCategory"`
 	Subcategory Subcategories `json:"productSubcategory"`
 	Inventory   []Inventories `json:"productInventory"`
+	Offer       CategoryOffer `json:"offer"`
+	Wishlist    *bool         `json:"wishlist"`
+}
+
+// Products describes details of products.
+type Products struct {
+	ID          int           `json:"productID"`
+	Name        string        `json:"productName"`
+	Description string        `json:"productDesc"`
+	Price       float64       `json:"productPrice"`
+	Status      bool          `json:"productStatus"`
+	Color       Colors        `json:"productColor"`
+	Image       Images        `json:"productImage"`
+	Brand       Brands        `json:"productBrand"`
+	Category    Categories    `json:"productCategory"`
+	Subcategory Subcategories `json:"productSubcategory"`
+	Inventory   Inventories   `json:"productInventory"`
 }
 
 // ProductDeleteRequest struct for deleting a product or its inventory

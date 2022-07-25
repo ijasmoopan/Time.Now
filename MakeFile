@@ -1,0 +1,1 @@
+goose status: goose -dir=migrations postgres postgres://postgres:ijasmoopan@localhost:5432/timenow?sslmode=disable status

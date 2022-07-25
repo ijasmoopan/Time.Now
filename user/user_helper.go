@@ -31,7 +31,7 @@ type Repo struct {
 		// DBGetProduct(string)(models.Product, error)
 		DBGetAllColorsOfAProduct(int)([]models.Inventories, error)
 		DBGetRecommendedProducts(int, int, int)([]models.Product, error)
-		DBGetProductsWithColors(models.ProductRequest)([]models.ProductWithColor, error)
+		// DBGetProductsWithColors(models.ProductRequest)([]models.ProductWithColor, error)
 	}
 
 	cart interface {
@@ -52,6 +52,8 @@ type Repo struct {
 		DBCartCheckout(int)(models.CartCheckout, int, float64, error)
 		DBProductCheckout(models.ProductCheckout)(models.ProductCheckout, float64, error)
 
+		DBGetPayment(models.PaymentRequest)(models.PaymentResponse, error)
+		DBPayPayment(models.Payment)(models.Payment, error)
 		DBPlaceOrder(models.PlaceOrder)(error)
 	}
 

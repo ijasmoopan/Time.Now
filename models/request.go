@@ -2,12 +2,18 @@ package models
 
 // ProductRequest struct describes requests for distributing products.
 type ProductRequest struct {
-	Product     *string `json:"product"`
-	Category    *string `json:"category"`
-	Subcategory *string `json:"subcategory"`
-	Brand       *string `json:"brand"`
-	PriceMin    *int    `json:"priceMin"`
-	PriceMax    *int    `json:"priceMax"`
+	Product     []*string `json:"product"`
+	Category    []*string `json:"category"`
+	Subcategory []*string `json:"subcategory"`
+	Brand       []*string `json:"brand"`
+	Color       []*string `json:"color"`
+	PriceMin    *int      `json:"priceMin"`
+	PriceMax    *int      `json:"priceMax"`
+	UserID      *int      `json:"userID"`
+	Wishlist    *bool     `json:"wishlist"`
+	OfferMin    *int      `json:"offerMin"`
+	OfferMax    *int      `json:"offerMax"`
+	Page        *int      `json:"page"`
 }
 
 // AdminRequest struct describes requests for distrbuting admin.
@@ -26,15 +32,17 @@ type UserRequest struct {
 
 // AdminProductRequest describes requests for distributing products for admin.
 type AdminProductRequest struct {
-	Product     *string `json:"product"`
-	Category    *string `json:"category"`
-	Subcategory *string `json:"subcategory"`
-	Brand       *string `json:"brand"`
-	Color       *string `json:"color"`
-	Status      *bool   `json:"status"`
-	PriceMin    *int    `json:"priceMin"`
-	PriceMax    *int    `json:"priceMax"`
-	Quantity    *int    `json:"quantity"`
+	Product     []*string `json:"product"`
+	Category    []*string `json:"category"`
+	Subcategory []*string `json:"subcategory"`
+	Brand       []*string `json:"brand"`
+	Color       []*string `json:"color"`
+	Status      *bool     `json:"status"`
+	PriceMin    *int      `json:"priceMin"`
+	PriceMax    *int      `json:"priceMax"`
+	Quantity    *int      `json:"quantity"`
+	Page        *int      `json:"page"`
+	Offer       *int      `json:"offer"`
 }
 
 // CategoryRequest describes requests for getting categories for admin.

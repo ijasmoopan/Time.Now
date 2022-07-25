@@ -8,6 +8,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
+// GeneratingToken function is for generating token.
 func GeneratingToken(id string) string {
 
 	err := godotenv.Load("./config/.env")
