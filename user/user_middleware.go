@@ -10,12 +10,16 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/ijasmoopan/Time.Now/models"
+	"github.com/ijasmoopan/Time.Now/usecases"
 	"github.com/joho/godotenv"
 )
 
 //IsUserAuthorized for checking jwt token.
 func (repo *Repo) IsUserAuthorized(handler http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+
+		file := usecases.Logger()
+		log.SetOutput(file)
 
 		err := godotenv.Load("./config/.env")
 		if err != nil {
@@ -72,6 +76,10 @@ func (repo *Repo) IsUserAuthorized(handler http.Handler) http.Handler {
 // IsHomeUserAuthorized method for authorizing user from home.
 func (repo *Repo) IsHomeUserAuthorized(handler http.Handler)http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+
+		file := usecases.Logger()
+		log.SetOutput(file)
+		
 		err := godotenv.Load("./config/.env")
 		if err != nil {
 			log.Println("Can't fetch env file")
