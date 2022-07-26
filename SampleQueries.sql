@@ -471,7 +471,226 @@ SELECT * FROM categories;
 ------------------------------------
 
 
+SELECT * FROM category_offers ORDER BY offer;
+	
+UPDATE category_offers 
+	SET name = $1,
+		offer = $2, 
+		category_id = $3, 
+		offer_from = $4, 
+		offer_to = $5
+	WHERE id = $6
+DELETE FROM products 
+	WHERE product_id = 7;
+DELETE FROM category_offers WHERE id = 1;
+SELECT * FROM wishlist;
 
+WITH cte_getproducts (product_id, 
+					product_name, 
+					product_price,
+					product_desc, 
+					product_status, 
+					product_deleted_at,
+					product_brand_id,
+					product_category_id,
+					product_subcategory_id,
+					image_id,
+					product_image,
+					category_name,
+					category_desc,
+					subcategory_name,
+					subcategory_desc,
+					brand_name,
+					brand_desc,
+
+					offer_id,
+					offer_name,
+					offer,
+					offer_from,
+					offer_to,
+					offer_status,
+					offer_price,
+					wishlist
+					) 
+			AS (SELECT p.product_id,
+						p.product_name,
+						p.product_price,
+						p.product_desc,
+						p.product_status,
+						p.product_deleted_at,
+						p.product_brand_id,
+						p.product_category_id,
+						p.product_subcategory_id,
+						i.image_id,
+						i.product_image,
+						c.category_name,
+						c.category_desc,
+						s.subcategory_name,
+						s.subcategory_desc,
+						b.brand_name,
+						b.brand_desc,
+						o.id,
+						o.name,
+						o.offer,
+						o.offer_from,
+						o.offer_to,
+						CASE 
+							WHEN o.offer_from <= NOW() AND o.offer_to >= NOW() THEN true
+							ELSE false
+						END AS offer_status,
+						CASE 
+							WHEN o.offer_from <= NOW() AND o.offer_to >= NOW() THEN (p.product_price - ((p.product_price * o.offer)/100))::FLOAT
+							ELSE NULL
+						END AS offer_price,
+						CASE 
+							WHEN p.product_id = w.product_id AND w.user_id = 12 THEN true
+							ELSE false
+						END AS wishlist
+			FROM   products p
+				INNER JOIN categories c
+					ON p.product_category_id = c.category_id
+				INNER JOIN subcategories s
+					ON p.product_subcategory_id = s.subcategory_id
+				INNER JOIN brands b
+					ON p.product_brand_id = b.brand_id
+				LEFT JOIN images i
+					ON p.product_id = i.product_id
+				LEFT JOIN category_offers o
+					ON o.category_id = p.product_category_id
+				
+				LEFT JOIN wishlist w
+					ON w.product_id = p.product_id
+				LEFT JOIN users u
+					ON u.user_id = w.user_id
+			WHERE  p.product_deleted_at IS NULL
+				ORDER BY offer)
+
+			SELECT * 
+				FROM cte_getproducts
+				WHERE product_deleted_at IS NULL 
+				ORDER BY product_id
+				OFFSET 5
+				LIMIT 5;
+				
+-------------------------------------------
+SELECT * FROM wishlist;
+SELECT * FROM products;
+SELECT * FROM inventories ORDER BY inventory_id;
+SELECT p.*, 
+		w.*,
+		CASE 
+			WHEN w.product_id = p.product_id AND w.user_id = 12 THEN true
+			ELSE false
+		END AS wishlist
+	FROM products p 
+		LEFT JOIN wishlist w
+			ON p.product_id = w.product_id
+		LEFT JOIN users u
+			ON w.user_id = u.user_id
+	WHERE p.product_deleted_at IS NULL;
+				
+SELECT * FROM products
+	WHERE product_name ILIKE '%sh%';
+	
+	
+SELECT * FROM orders;
+SELECT * FROM payments;
+---------------- If it is COD
+INSERT INTO payments (user_id,
+					 total_price,
+					 payment_type,
+					 payment_status,
+					 created_at)
+		VALUES ($1, $2, $3, $4, $5)
+------------------- If it is UPI
+INSERT INTO payments (user_id,
+					 total_price,
+					 payment_type,
+					 payment_status,
+					 created_at, 
+					 paid_at)
+		VALUES ($1, $2, $3, $4, $5, $6)
+
+		
+SELECT p.product_price,
+		cart.quantity,
+		cart.user_id,
+		CASE 
+			WHEN o.offer_from <= NOW() AND o.offer_to >= NOW() THEN true
+			ELSE false
+		END AS offer_status,
+		CASE 
+			WHEN o.offer_from <= NOW() AND o.offer_to >= NOW() THEN (p.product_price - ((p.product_price * o.offer)/100))::FLOAT
+			ELSE NULL
+		END AS offer_price
+
+	FROM cart
+		INNER JOIN products p
+				ON cart.product_id = p.product_id
+
+		LEFT JOIN category_offers o
+				ON o.category_id = p.product_category_id
+	WHERE  cart.user_id = 12
+		AND p.product_deleted_at IS NULL
+		AND cart.deleted_at IS NULL;
+		
+		-----------------------------------------------------------------
+SELECT * FROM inventories;
+SELECT p.product_price,
+		CASE 
+			WHEN o.offer_from <= NOW() AND o.offer_to >= NOW() THEN true
+			ELSE false
+		END AS offer_status,
+		CASE 
+			WHEN o.offer_from <= NOW() AND o.offer_to >= NOW() THEN (p.product_price - ((p.product_price * o.offer)/100))::FLOAT
+			ELSE NULL
+		END AS offer_price
+	FROM inventories q
+		INNER JOIN products p
+				ON q.product_id = p.product_id
+		LEFT JOIN category_offers o
+				ON o.category_id = p.product_category_id
+	WHERE  q.inventory_id = 30
+		AND p.product_deleted_at IS NULL
+		AND p.product_status = true;
+		
+SELECT * FROM payments;
+
+SELECT payment_id,
+		user_id,
+		total_price,
+		payment_type,
+		payment_status
+	FROM payments
+	 WHERE cancelled_at IS NULL
+	 AND payment_id = 1;
+
+SELECT * FROM orders;
+SELECT o.order_id,
+		o.user_id,
+		o.product_id,
+		o.inventory_id,
+		o.quantity,
+		o.order_status,
+		o.address_id,
+		p.payment_id,
+		p.user_id,
+		p.total_price,
+		p.payment_type,
+		p.payment_status
+	FROM orders o
+		INNER JOIN payments p
+			ON o.payment_id = p.payment_id;
+
+SELECT * FROM cart;
+INSERT INTO orders (user_id,
+					address_id, 
+					product_id, 
+					inventory_id,
+					payment_id,
+					quantity,
+					ordered_at)
+			VALUES ($1, $2, $3, $4, $5, $6, $7);
 
 
 

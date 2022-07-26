@@ -7,10 +7,7 @@ require (
 	github.com/shopspring/decimal v1.3.1
 )
 
-require (
-	golang.org/x/lint v0.0.0-20210508222113-6edffad5e616 // indirect
-	golang.org/x/tools v0.1.11 // indirect
-)
+require golang.org/x/tools v0.1.11 // indirect
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
