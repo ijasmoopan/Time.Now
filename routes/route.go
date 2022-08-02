@@ -2,6 +2,7 @@ package routes
 
 import (
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 	"github.com/ijasmoopan/Time.Now/admin"
 	"github.com/ijasmoopan/Time.Now/repository"
 	"github.com/ijasmoopan/Time.Now/user"
@@ -15,6 +16,7 @@ func Router() *chi.Mux {
 	userdb := user.InterfaceHandler(db)
 
 	router := chi.NewRouter()
+	router.Use(middleware.Logger)
 
 	// Admin side routes
 	// -----------------------Admin Authentication-----------------------
