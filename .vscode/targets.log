@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Aug 02 05:57:53 2022
+# Make data base, printed on Fri Aug 05 16:19:03 2022
 
 # Variables
 
@@ -25,9 +25,7 @@ VBOX_MSI_INSTALL_PATH = C:\Program Files\Oracle\VirtualBox\
 # environment
 LOCALAPPDATA = C:\Users\ijasm\AppData\Local
 # environment
-WSLENV = WT_SESSION::WT_PROFILE_ID
-# environment
-VSCODE_CWD = C:\Users\ijasm\OneDrive\Desktop\Time.Now
+VSCODE_CWD = C:\Users\ijasm\AppData\Local\Programs\Microsoft VS Code
 # environment
 CHOCOLATEYINSTALL = C:\ProgramData\chocolatey
 # environment
@@ -35,7 +33,7 @@ SYSTEMROOT = C:\WINDOWS
 # environment
 PROCESSOR_LEVEL = 6
 # environment
-PSMODULEPATH = C:\Users\ijasm\OneDrive\Documents\WindowsPowerShell\Modules;C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
+PSMODULEPATH = C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
 # default
 MAKE_COMMAND := C:/ProgramData/chocolatey/lib/make/tools/install/bin/make.exe
 # environment
@@ -43,7 +41,7 @@ GOPATH = C:\Users\ijasm\go
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_24224_DUYZPADMFTJQNXKW
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_18796_TQYCHXWTUPYGYCME
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -91,11 +89,9 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 24224
+VSCODE_PID = 18796
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
-# environment
-WT_PROFILE_ID = {61c54bbd-c2c6-5271-96e7-009a87ff44bf}
 # automatic
 *F = $(notdir $*)
 # automatic
@@ -137,8 +133,6 @@ PROMPT = $P$G
 # environment
 CHOCOLATEYLASTPATHUPDATE = 133032944234926780
 # environment
-WT_SESSION = f6d61288-8823-465e-b8c2-20683266e826
-# environment
 LOGONSERVER = \\IJAS
 # environment
 USERNAME = ijasm
@@ -149,7 +143,7 @@ COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
 # environment
 PROGRAMW6432 = C:\Program Files
 # environment
-PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PY;.PYW;.CPL
+PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PY;.PYW
 # automatic
 +F = $(notdir $+)
 # environment
@@ -201,9 +195,7 @@ SUFFIXES :=
 # environment
 ALLUSERSPROFILE = C:\ProgramData
 # environment
-VSCODE_CLI = 1
-# environment
-ELECTRON_NO_ATTACH_CONSOLE = 1
+SESSIONNAME = Console
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync load
 # environment
@@ -211,7 +203,7 @@ PROCESSOR_REVISION = a502
 # environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 165 Stepping 2, GenuineIntel
 # variable set hash-table stats:
-# Load=99/1024=10%, Rehash=0, Collisions=8/126=6%
+# Load=95/1024=9%, Rehash=0, Collisions=8/122=7%
 
 # Pattern-specific Variable Values
 
@@ -219,9 +211,9 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 165 Stepping 2, GenuineIntel
 
 # Directories
 
-# . (key c:/Users/ijasm/OneDrive/Desktop/Time.Now, mtime 1658852007): 22 files, no impossibilities.
+# . (key c:/Users/ijasm/OneDrive/Desktop/Time.Now, mtime 1659696454): 24 files, no impossibilities.
 
-# 22 files, no impossibilities in 1 directories.
+# 24 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -258,8 +250,7 @@ all:
 
 run:
 #  Implicit rule search has not been done.
-#  Modification time never chec 
-ked.
+#  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 5):
 	go run main.go
@@ -286,12 +277,12 @@ status:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 29 / storage = 219 B / avg = 7 B
-# current buf: size = 8174 B / used = 219 B / count = 29 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 31 / storage = 249 B / avg = 8 B
+# current buf: size = 8174 B / used = 249 B / count = 31 / avg = 8 B
 
-# strcache performance: lookups = 37 / hit rate = 21%
+# strcache performance: lookups = 39 / hit rate = 20%
 # hash-table stats:
-# Load=29/8192=0%, Rehash=0, Collisions=0/37=0%
-# Finished Make data base on Tue Aug 02 05:57:53 2022
+# Load=31/8192=0%, Rehash=0, Collisions=0/39=0%
+# Finished Make data base on Fri Aug 05 16:19:03 2022
 
  

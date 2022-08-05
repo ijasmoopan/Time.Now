@@ -356,30 +356,13 @@ func (admin Model) DBGetProducts(request models.AdminProductRequest) (map[int]mo
 									FROM cte_getproducts
 									WHERE product_deleted_at IS NULL`
 
-					// inventory_id, 
-					// color_id,
-					// color, 
-					// product_quantity
-
-					// inv.inventory_id, 
-					// col.color_id,
-					// col.color, 
-					// inv.product_quantity 
-
-					// INNER JOIN inventories inv
-					// 	ON inv.product_id = p.product_id
-					// INNER JOIN colors col
-					// 	ON inv.color_id = col.color_id
-
-					// 	AND inv.inventory_deleted_at IS NULL
-
-// -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
 
 	if request.Product != nil {
 		for idx, value := range request.Product {
 			if idx == 0 {
 				filter = append(filter, fmt.Sprint("%", *value, "%"))
-				sqlCondition = fmt.Sprint(` AND product_name ILIKE $`, count	)
+				sqlCondition = fmt.Sprint(` AND product_name ILIKE $`, count)
 				count++
 			} else {
 				filter = append(filter, fmt.Sprint("%", *value, "%"))
@@ -443,11 +426,10 @@ func (admin Model) DBGetProducts(request models.AdminProductRequest) (map[int]mo
 		count++
 	}
 
-
 	var limit = 5
 	sqlCondition = fmt.Sprint(sqlCondition, ` ORDER BY product_id`)
 	if request.Page != nil {
-		*request.Page = (*request.Page - 1) * 5 
+		*request.Page = (*request.Page - 1) * 5
 		filter = append(filter, limit, *request.Page)
 		sqlCondition = fmt.Sprint(sqlCondition, ` LIMIT $`, count)
 		count++
@@ -460,7 +442,7 @@ func (admin Model) DBGetProducts(request models.AdminProductRequest) (map[int]mo
 		sqlCondition = fmt.Sprint(sqlCondition, ` OFFSET $`, count)
 		count++
 	}
-	
+
 	log.Println("sqlCondition:", sqlCondition)
 	log.Println("filter:", filter)
 
@@ -497,20 +479,13 @@ func (admin Model) DBGetProducts(request models.AdminProductRequest) (map[int]mo
 			&product.Subcategory.Description,
 			&product.Brand.Name,
 			&product.Brand.Description,
-
 			&offerID,
 			&offerName,
 			&offer,
 			&offerFrom,
 			&offerTo,
 			&offerStatus,
-
 			&offerPrice,
-
-			// &product.Inventory.ID,
-			// &product.Inventory.Color.ID,
-			// &product.Inventory.Color.Color,
-			// &product.Inventory.Quantity,
 		)
 		if imageID.Valid {
 			product.Image.ID = int(imageID.Int32)
@@ -644,9 +619,9 @@ func (admin Model) DBGetProducts(request models.AdminProductRequest) (map[int]mo
 		product.Inventory = inventories
 		product.Color = colors
 
-		if _, ok :=  products[product.ID]; !ok {
+		if _, ok := products[product.ID]; !ok {
 			products[product.ID] = product
-		} 
+		}
 	}
 	return products, nil
 }
@@ -1360,7 +1335,7 @@ func (admin Model) DBChangeOrderStatus(orderID int) error {
 }
 
 // DBGetOffers function for accessing categoryOffers
-func (admin Model) DBGetOffers(request models.CategoryOfferRequest)([]models.CategoryOffer, error){
+func (admin Model) DBGetOffers(request models.CategoryOfferRequest) ([]models.CategoryOffer, error) {
 
 	var offers []models.CategoryOffer
 	var filter []interface{}
@@ -1396,7 +1371,7 @@ func (admin Model) DBGetOffers(request models.CategoryOfferRequest)([]models.Cat
 		return nil, err
 	}
 	defer rows.Close()
-	for rows.Next(){
+	for rows.Next() {
 		var offer models.CategoryOffer
 		var offerFrom, offerTo time.Time
 		err = rows.Scan(&offer.Category.ID,
@@ -1420,7 +1395,7 @@ func (admin Model) DBGetOffers(request models.CategoryOfferRequest)([]models.Cat
 }
 
 // DBAddOffers function for adding category offer to a category.
-func (admin Model) DBAddOffers(offer models.CategoryOfferRequest)(error){
+func (admin Model) DBAddOffers(offer models.CategoryOfferRequest) error {
 
 	log.Println("Offer:", offer)
 	_, err := admin.DB.Exec(`INSERT INTO category_offers 
@@ -1430,11 +1405,11 @@ func (admin Model) DBAddOffers(offer models.CategoryOfferRequest)(error){
 										offer_from, 
 										offer_to)
 								VALUES ($1, $2, $3, $4, $5)`, offer.Name,
-			offer.Offer,
-			offer.CategoryID,
-			offer.OfferFrom,
-			offer.OfferTo,
-		)
+		offer.Offer,
+		offer.CategoryID,
+		offer.OfferFrom,
+		offer.OfferTo,
+	)
 	if err != nil {
 		log.Println("Error:", err)
 		return err
@@ -1443,7 +1418,7 @@ func (admin Model) DBAddOffers(offer models.CategoryOfferRequest)(error){
 }
 
 // DBUpdateOffers method for updating categoryOffer
-func (admin Model) DBUpdateOffers(offer models.CategoryOfferRequest)(error){
+func (admin Model) DBUpdateOffers(offer models.CategoryOfferRequest) error {
 	var sqlString, sqlCondition string
 	var filter []interface{}
 	var count = 0
@@ -1468,10 +1443,10 @@ func (admin Model) DBUpdateOffers(offer models.CategoryOfferRequest)(error){
 			sqlCondition = fmt.Sprint(sqlCondition, `,`)
 		}
 		sqlCondition = fmt.Sprint(sqlCondition, ` category_id = $`, count)
-		filter =  append(filter, *offer.CategoryID)
+		filter = append(filter, *offer.CategoryID)
 	}
 	if offer.OfferFrom != nil {
-		count++ 
+		count++
 		if count > 1 {
 			sqlCondition = fmt.Sprint(sqlCondition, `,`)
 		}
@@ -1499,7 +1474,7 @@ func (admin Model) DBUpdateOffers(offer models.CategoryOfferRequest)(error){
 }
 
 // DBDeleteOffers method for deleting an offer.
-func(admin Model) DBDeleteOffers(offerID *int)(error){
+func (admin Model) DBDeleteOffers(offerID *int) error {
 
 	_, err := admin.DB.Exec(`DELETE 
 								FROM category_offers 
