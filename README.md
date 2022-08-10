@@ -1,8 +1,8 @@
 ## Time.Now
 
-This is my first ever master project. It is a collection of watches, so I named it 'Time.Now'. There is a reason for providing this name to my project. That reason we all Gophers should knew. So in my point of view it is a right name for this project.
+This is my first ever master project. It is a collection of watches, so I named it as 'Time.Now'. There is a reason behind this name. That reason we all Gophers should knew. So in my point of view it is a right name for this project.
 
-In this I have done whole backend works, that means Rest APIs for every endpoints. 
+In this I have done whole backend works, that means Rest APIs for every endpoints. There is having a question that why I done this project, If you want to know that please keep read the following.
 
 Before doing this project, I thought which project I will choose. That time I asked to some of my friends, then they suggest me if you can make an E-commerce website, then go with that. And while you are doing an E-commerce you can learn a lot. Basically I want to learn deeply what I am learning, it is one of my hobby. So I went with the E-commerce.
 
@@ -18,3 +18,5 @@ Next one I have used Goose package. It is a database migration tool. It manages 
 And I used more features, I will explain those in detail later.
 
 The first page or landing page of the project is a products listing page. In that page users can view limited amount of products, because I have used pagination when listing products. In this page users can select a product and he should select it's color as well. After that for buying that product, user have 2 options, that means either can add that product to cart or can buy that product by instant buy method. Both these 2 methods have 2 differnet type of payments, Cash on delivery and Banking. 
+
+To be continued..
