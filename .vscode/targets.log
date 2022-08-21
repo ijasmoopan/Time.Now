@@ -8,10 +8,12 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Aug 05 16:19:03 2022
+# Make data base, printed on Sun Aug 21 17:35:40 2022
 
 # Variables
 
+# environment
+FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
 SYSTEMDRIVE = C:
 # environment
@@ -41,7 +43,11 @@ GOPATH = C:\Users\ijasm\go
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_18796_TQYCHXWTUPYGYCME
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_24840_FPZGRILVJGTTFBKF
+# environment
+CLOUDSDK_METRICS_ENVIRONMENT_VERSION = 1.20.1
+# environment
+FPS_BROWSER_USER_PROFILE_STRING = Default
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -53,7 +59,7 @@ VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = C:\Users\ijasm\AppData\Roaming\Code\CachedData\3b889b090b5ad5793f524b5d1d39fda662b96a2a
+VSCODE_CODE_CACHE_PATH = C:\Users\ijasm\AppData\Roaming\Code\CachedData\e4503b30fc78200f846c62cf8091b76ff5547662
 # environment
 LANG = C
 # default
@@ -89,7 +95,7 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 18796
+VSCODE_PID = 24840
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # automatic
@@ -121,7 +127,7 @@ MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = C:\Python310\Scripts\;C:\Python310\;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\PostgreSQL\11\bin\;C:\Program Files\PostgreSQL\14\bin\;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\Go\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Users\ijasm\AppData\Local\Microsoft\WindowsApps;C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;C:\Users\ijasm\AppData\Local\Programs\Microsoft VS Code\bin;C:\xampp\php;C:\Users\ijasm\AppData\Roaming\npm;C:\Users\ijasm\go\bin
+PATH = C:\Users\ijasm\AppData\Local\cloud-code\installer\google-cloud-sdk\bin;C:\Python310\Scripts\;C:\Python310\;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\PostgreSQL\11\bin\;C:\Program Files\PostgreSQL\14\bin\;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\Go\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Users\ijasm\AppData\Local\Microsoft\WindowsApps;C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;C:\Users\ijasm\AppData\Local\Programs\Microsoft VS Code\bin;C:\xampp\php;C:\Users\ijasm\AppData\Roaming\npm;C:\Users\ijasm\go\bin;C:\Users\ijasm\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin;C:\Program Files\Google\Cloud SDK\google-cloud-sdk\bin
 # environment
 COMPUTERNAME = IJAS
 # default
@@ -159,6 +165,8 @@ OS = Windows_NT
 # default
 MAKE_VERSION := 4.3
 # environment
+RLSSVCPORT = 22112
+# environment
 PROGRAMFILES(X86) = C:\Program Files (x86)
 # environment
 USERDOMAIN_ROAMINGPROFILE = IJAS
@@ -183,7 +191,7 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 TEMP = C:\Users\ijasm\AppData\Local\Temp
 # environment
-VSCODE_IPC_HOOK = \\.\pipe\6a5cb707b3a0b7fc8f949e5066b849ac-1.69.2-main-sock
+VSCODE_IPC_HOOK = \\.\pipe\6a5cb707b3a0b7fc8f949e5066b849ac-1.70.2-main-sock
 # environment
 GOPROXY = https://proxy.golang.org,direct
 # default
@@ -196,6 +204,8 @@ SUFFIXES :=
 ALLUSERSPROFILE = C:\ProgramData
 # environment
 SESSIONNAME = Console
+# environment
+CLOUDSDK_METRICS_ENVIRONMENT = cloudcode.vscode
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync load
 # environment
@@ -203,7 +213,7 @@ PROCESSOR_REVISION = a502
 # environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 165 Stepping 2, GenuineIntel
 # variable set hash-table stats:
-# Load=95/1024=9%, Rehash=0, Collisions=8/122=7%
+# Load=100/1024=10%, Rehash=0, Collisions=9/127=7%
 
 # Pattern-specific Variable Values
 
@@ -283,6 +293,6 @@ status:
 # strcache performance: lookups = 39 / hit rate = 20%
 # hash-table stats:
 # Load=31/8192=0%, Rehash=0, Collisions=0/39=0%
-# Finished Make data base on Fri Aug 05 16:19:03 2022
+# Finished Make data base on Sun Aug 21 17:35:40 2022
 
  

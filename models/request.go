@@ -24,25 +24,25 @@ type AdminRequest struct {
 
 // UserRequest struct describes requests for distributing users.
 type UserRequest struct {
-	UserID *int    `json:"userID"`
-	Email  *string `json:"email"`
-	Gender *string `json:"gender"`
-	Status *bool   `json:"status"`
+	UserID string `json:"userID"`
+	Email  string `json:"email"`
+	Gender string `json:"gender"`
+	Status string `json:"status"`
 }
 
 // AdminProductRequest describes requests for distributing products for admin.
 type AdminProductRequest struct {
-	Product     []*string `json:"product"`
-	Category    []*string `json:"category"`
-	Subcategory []*string `json:"subcategory"`
-	Brand       []*string `json:"brand"`
-	Color       []*string `json:"color"`
-	Status      *bool     `json:"status"`
-	PriceMin    *int      `json:"priceMin"`
-	PriceMax    *int      `json:"priceMax"`
-	Quantity    *int      `json:"quantity"`
-	Page        *int      `json:"page"`
-	Offer       *int      `json:"offer"`
+	Product     string `json:"product"`
+	Category    string `json:"category"`
+	Subcategory string `json:"subcategory"`
+	Brand       string `json:"brand"`
+	Color       string `json:"color"`
+	Status      string `json:"status"`
+	PriceMin    string `json:"priceMin"`
+	PriceMax    string `json:"priceMax"`
+	Quantity    string `json:"quantity"`
+	Page        string `json:"page"`
+	Offer       string `json:"offer"`
 }
 
 // CategoryRequest describes requests for getting categories for admin.

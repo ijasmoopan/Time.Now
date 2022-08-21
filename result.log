@@ -1291,3 +1291,1012 @@ created by net/http.(*Server).Serve
 2022/08/05 11:44:41 Color: {9 10 {0xc000374120 0xc0002a3400} 22}
 2022/08/05 11:44:41 Color: {10 10 {0xc000374130 0xc0002a3420} 14}
 2022/08/05 11:44:41 Product: {10 bat man Multipurpose watch 25 0xc000374080 true [{0xc000374110 0xc0002a33d0} {0xc000374120 0xc0002a3400} {0xc000374130 0xc0002a3420}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc000374110 0xc0002a33d0} 23} {9 10 {0xc000374120 0xc0002a3400} 22} {10 10 {0xc000374130 0xc0002a3420} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000374076}
+2022/08/14 22:19:46 sqlCondition:  ORDER BY product_id LIMIT $1 OFFSET $2
+2022/08/14 22:19:46 filter: [5 0]
+2022/08/14 22:19:46 Offer status is  true
+2022/08/14 22:19:46 Offer: {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}}
+2022/08/14 22:19:46 Offer Price: 0xc000312e60
+2022/08/14 22:19:46 Product half: {4 G-Shock Powerful watch 49 0xc000312e60 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} <nil>}
+2022/08/14 22:19:46 Product ID: 4
+2022/08/14 22:19:46 Products Map: map[]
+2022/08/14 22:19:46 SQL Condition: 
+2022/08/14 22:19:46 Filter 2: [4]
+2022/08/14 22:19:46 Product ID: 4
+2022/08/14 22:19:47 InventoryRows: &{0xc0000b13b0 0x442600 0xc0002065a0 <nil> <nil> {{0 0} 0 0 0 0} false <nil> []}
+2022/08/14 22:19:47 Color: {1 4 {0xc000092cd0 0xc00008aed0} 10}
+2022/08/14 22:19:47 Offer status is  true
+2022/08/14 22:19:47 Offer: {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}}
+2022/08/14 22:19:47 Offer Price: 0xc000092d90
+2022/08/14 22:19:47 Product half: {5 Dizzo Superb 39 0xc000092d90 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} <nil>}
+2022/08/14 22:19:47 Product ID: 5
+2022/08/14 22:19:47 Products Map: map[4:{4 G-Shock Powerful watch 49 0xc000312e60 true [{0xc000092cd0 0xc00008aed0}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc000092cd0 0xc00008aed0} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} <nil>}]
+2022/08/14 22:19:47 SQL Condition: 
+2022/08/14 22:19:47 Filter 2: [5]
+2022/08/14 22:19:47 Product ID: 5
+2022/08/14 22:19:47 InventoryRows: &{0xc0000b13b0 0x442600 0xc0002066e0 <nil> <nil> {{0 0} 0 0 0 0} false <nil> []}
+2022/08/14 22:19:47 Color: {2 5 {0xc000092e70 0xc00008b030} 10}
+2022/08/14 22:19:47 Offer status is  true
+2022/08/14 22:19:47 Offer: {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}}
+2022/08/14 22:19:47 Offer Price: 0xc000092f20
+2022/08/14 22:19:47 Product half: {8 super man Multipurpose watch 15 0xc000092f20 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} <nil>}
+2022/08/14 22:19:47 Product ID: 8
+2022/08/14 22:19:47 Products Map: map[4:{4 G-Shock Powerful watch 49 0xc000312e60 true [{0xc000092cd0 0xc00008aed0}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc000092cd0 0xc00008aed0} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} <nil>} 5:{5 Dizzo Superb 39 0xc000092d90 true [{0xc000092e70 0xc00008b030}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc000092e70 0xc00008b030} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} <nil>}]
+2022/08/14 22:19:47 SQL Condition: 
+2022/08/14 22:19:47 Filter 2: [8]
+2022/08/14 22:19:47 Product ID: 8
+2022/08/14 22:19:47 InventoryRows: &{0xc0000b13b0 0x442600 0xc000206820 <nil> <nil> {{0 0} 0 0 0 0} false <nil> []}
+2022/08/14 22:19:47 No colors
+2022/08/14 22:19:47 Offer status is  true
+2022/08/14 22:19:47 Offer: {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}}
+2022/08/14 22:19:47 Offer Price: 0xc0000930d0
+2022/08/14 22:19:47 Product half: {9 super man Multipurpose watch 15 0xc0000930d0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} <nil>}
+2022/08/14 22:19:47 Product ID: 9
+2022/08/14 22:19:47 Products Map: map[4:{4 G-Shock Powerful watch 49 0xc000312e60 true [{0xc000092cd0 0xc00008aed0}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc000092cd0 0xc00008aed0} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} <nil>} 5:{5 Dizzo Superb 39 0xc000092d90 true [{0xc000092e70 0xc00008b030}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc000092e70 0xc00008b030} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} <nil>}]
+2022/08/14 22:19:47 SQL Condition: 
+2022/08/14 22:19:47 Filter 2: [9]
+2022/08/14 22:19:47 Product ID: 9
+2022/08/14 22:19:47 InventoryRows: &{0xc0000b13b0 0x442600 0xc000206960 <nil> <nil> {{0 0} 0 0 0 0} false <nil> []}
+2022/08/14 22:19:47 Color: {6 9 {0xc0000931d0 0xc00008b2e0} 20}
+2022/08/14 22:19:47 Offer status is  true
+2022/08/14 22:19:47 Offer: {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}}
+2022/08/14 22:19:47 Offer Price: 0xc0000932a0
+2022/08/14 22:19:47 Product half: {10 bat man Multipurpose watch 25 0xc0000932a0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} <nil>}
+2022/08/14 22:19:47 Product ID: 10
+2022/08/14 22:19:47 Products Map: map[4:{4 G-Shock Powerful watch 49 0xc000312e60 true [{0xc000092cd0 0xc00008aed0}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc000092cd0 0xc00008aed0} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} <nil>} 5:{5 Dizzo Superb 39 0xc000092d90 true [{0xc000092e70 0xc00008b030}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc000092e70 0xc00008b030} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} <nil>} 9:{9 super man Multipurpose watch 15 0xc0000930d0 true [{0xc0000931d0 0xc00008b2e0} {0xc0000931e0 0xc00008b310} {0xc0000931f0 0xc00008b330}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc0000931d0 0xc00008b2e0} 20} {5 9 {0xc0000931e0 0xc00008b310} 30} {7 9 {0xc0000931f0 0xc00008b330} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} <nil>}]
+2022/08/14 22:19:47 SQL Condition: 
+2022/08/14 22:19:47 Filter 2: [10]
+2022/08/14 22:19:47 Product ID: 10
+2022/08/14 22:19:47 InventoryRows: &{0xc0000b13b0 0x442600 0xc000206b40 <nil> <nil> {{0 0} 0 0 0 0} false <nil> []}
+2022/08/14 22:19:47 Color: {11 10 {0xc0000933f0 0xc00008b4f0} 23}
+2022/08/14 22:19:47 Handler Products: map[4:{4 G-Shock Powerful watch 49 0xc000312e60 true [{0xc000092cd0 0xc00008aed0}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc000092cd0 0xc00008aed0} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} <nil>} 5:{5 Dizzo Superb 39 0xc000092d90 true [{0xc000092e70 0xc00008b030}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc000092e70 0xc00008b030} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} <nil>} 9:{9 super man Multipurpose watch 15 0xc0000930d0 true [{0xc0000931d0 0xc00008b2e0} {0xc0000931e0 0xc00008b310} {0xc0000931f0 0xc00008b330}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc0000931d0 0xc00008b2e0} 20} {5 9 {0xc0000931e0 0xc00008b310} 30} {7 9 {0xc0000931f0 0xc00008b330} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} <nil>} 10:{10 bat man Multipurpose watch 25 0xc0000932a0 true [{0xc0000933f0 0xc00008b4f0} {0xc000093400 0xc00008b520} {0xc000093410 0xc00008b540}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc0000933f0 0xc00008b4f0} 23} {9 10 {0xc000093400 0xc00008b520} 22} {10 10 {0xc000093410 0xc00008b540} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} <nil>}]
+2022/08/15 02:07:10 No cookie
+2022/08/15 02:07:10 sqlCondition:  ORDER BY product_id LIMIT $1 OFFSET $2
+2022/08/15 02:07:10 filter: [5 0]
+2022/08/15 02:07:11 Offer status is  true
+2022/08/15 02:07:11 DB Product: {4 G-Shock Powerful watch 49 0xc00018a350 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc00018a346}
+2022/08/15 02:07:11 Color: {1 4 {0xc00018a7a0 0xc0001841f0} 10}
+2022/08/15 02:07:11 Product: {4 G-Shock Powerful watch 49 0xc00018a350 true [{0xc00018a7a0 0xc0001841f0}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc00018a7a0 0xc0001841f0} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc00018a346}
+2022/08/15 02:07:11 Offer status is  true
+2022/08/15 02:07:11 DB Product: {5 Dizzo Superb 39 0xc00018a880 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc00018a876}
+2022/08/15 02:07:11 Color: {2 5 {0xc00018a910 0xc000184330} 10}
+2022/08/15 02:07:11 Product: {5 Dizzo Superb 39 0xc00018a880 true [{0xc00018a910 0xc000184330}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc00018a910 0xc000184330} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc00018a876}
+2022/08/15 02:07:11 Offer status is  true
+2022/08/15 02:07:11 DB Product: {8 super man Multipurpose watch 15 0xc00018a9e0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00018a9d6}
+2022/08/15 02:07:11 Product: {8 super man Multipurpose watch 15 0xc00018a9e0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00018a9d6}
+2022/08/15 02:07:11 Offer status is  true
+2022/08/15 02:07:11 DB Product: {9 super man Multipurpose watch 15 0xc00018ab10 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00018ab06}
+2022/08/15 02:07:11 Color: {6 9 {0xc00018aba0 0xc000184540} 20}
+2022/08/15 02:07:11 Color: {5 9 {0xc00018abb0 0xc000184570} 30}
+2022/08/15 02:07:11 Color: {7 9 {0xc00018abc0 0xc000184590} 25}
+2022/08/15 02:07:11 Product: {9 super man Multipurpose watch 15 0xc00018ab10 true [{0xc00018aba0 0xc000184540} {0xc00018abb0 0xc000184570} {0xc00018abc0 0xc000184590}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc00018aba0 0xc000184540} 20} {5 9 {0xc00018abb0 0xc000184570} 30} {7 9 {0xc00018abc0 0xc000184590} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00018ab06}
+2022/08/15 02:07:11 Offer status is  true
+2022/08/15 02:07:11 DB Product: {10 bat man Multipurpose watch 25 0xc00018acb0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00018aca6}
+2022/08/15 02:07:11 Color: {11 10 {0xc00018ad40 0xc0001846f0} 23}
+2022/08/15 02:07:11 Color: {9 10 {0xc00018ad50 0xc000184720} 22}
+2022/08/15 02:07:11 Color: {10 10 {0xc00018ad60 0xc000184740} 14}
+2022/08/15 02:07:11 Product: {10 bat man Multipurpose watch 25 0xc00018acb0 true [{0xc00018ad40 0xc0001846f0} {0xc00018ad50 0xc000184720} {0xc00018ad60 0xc000184740}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc00018ad40 0xc0001846f0} 23} {9 10 {0xc00018ad50 0xc000184720} 22} {10 10 {0xc00018ad60 0xc000184740} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00018aca6}
+2022/08/16 08:24:00 user request: {0xc000014208 0xc00004e140 0xc00004e150 0xc000014210}
+2022/08/16 08:24:05 user request: {0xc000296358 0xc00029c190 0xc00029c1b0 0xc000296360}
+2022/08/16 08:25:03 user request: &{0xc0000a2958 0xc00008cd20 0xc00008cd40 0xc0000a2960}
+2022/08/16 08:30:22 user request: {1   }
+2022/08/16 08:30:22 User:  {1 Ijas Moopan ijasmoopan46@gmail.com 7034464400 M true  }
+2022/08/16 08:30:49 user request: {   }
+2022/08/16 08:30:49 User:  {2 salman butter fasil2401@gmail.com 8590385573 M true  }
+2022/08/16 08:30:49 User:  {4 christopher antony christopher@gmail.com 7012049963 M true  }
+2022/08/16 08:30:49 User:  {6 J K jk@gmail.com 8921790175 M true  }
+2022/08/16 08:30:49 User:  {13 stenil joseph stenil@gmail.com 9567947493 M true  }
+2022/08/16 08:30:49 User:  {12 Niyas MT niyas@gmail.com 9645494876 M true  }
+2022/08/16 08:30:49 User:  {1 Ijas Moopan ijasmoopan46@gmail.com 7034464400 M true  }
+2022/08/16 08:30:49 User:  {3 rishal p muhammedrishalpaangil@gmail.com 8136860910 M false  }
+2022/08/16 08:31:11 user request: {  M }
+2022/08/16 08:31:11 User:  {2 salman butter fasil2401@gmail.com 8590385573 M true  }
+2022/08/16 08:31:11 User:  {4 christopher antony christopher@gmail.com 7012049963 M true  }
+2022/08/16 08:31:11 User:  {6 J K jk@gmail.com 8921790175 M true  }
+2022/08/16 08:31:11 User:  {13 stenil joseph stenil@gmail.com 9567947493 M true  }
+2022/08/16 08:31:11 User:  {12 Niyas MT niyas@gmail.com 9645494876 M true  }
+2022/08/16 08:31:11 User:  {1 Ijas Moopan ijasmoopan46@gmail.com 7034464400 M true  }
+2022/08/16 08:31:11 User:  {3 rishal p muhammedrishalpaangil@gmail.com 8136860910 M false  }
+2022/08/16 08:31:30 user request: {   false}
+2022/08/16 08:31:30 User:  {3 rishal p muhammedrishalpaangil@gmail.com 8136860910 M false  }
+2022/08/16 08:32:01 user request: { ijasmoopan46@gmail.com  false}
+2022/08/16 08:32:05 user request: { ijasmoopan46@gmail.com  }
+2022/08/16 08:32:05 User:  {1 Ijas Moopan ijasmoopan46@gmail.com 7034464400 M true  }
+2022/08/16 08:32:09 user request: {1 ijasmoopan46@gmail.com  }
+2022/08/16 08:32:09 User:  {1 Ijas Moopan ijasmoopan46@gmail.com 7034464400 M true  }
+2022/08/16 08:32:17 user request: {1 ijasmoopan46@gmail.com M }
+2022/08/16 08:32:17 User:  {1 Ijas Moopan ijasmoopan46@gmail.com 7034464400 M true  }
+2022/08/16 08:32:26 user request: {1 ijasmoopan46@gmail.com M true}
+2022/08/16 08:32:26 User:  {1 Ijas Moopan ijasmoopan46@gmail.com 7034464400 M true  }
+2022/08/17 23:52:30 http: panic serving [::1]:50303: key is of invalid type
+goroutine 19 [running]:
+net/http.(*conn).serve.func1()
+	C:/Program Files/Go/src/net/http/server.go:1825 +0xbf
+panic({0x46dce0, 0xc00004efa0})
+	C:/Program Files/Go/src/runtime/panic.go:844 +0x258
+github.com/ijasmoopan/Time.Now/admin.GeneratingToken({0x4d9fee, 0x1})
+	C:/Users/ijasm/OneDrive/Desktop/Time.Now/admin/admin_usecase.go:30 +0x259
+github.com/ijasmoopan/Time.Now/admin.(*Repo).AdminLogin(0xc0001a4090, {0x285a0884338?, 0xc000208280}, 0xc00018e500)
+	C:/Users/ijasm/OneDrive/Desktop/Time.Now/admin/admin_handler.go:38 +0x536
+net/http.HandlerFunc.ServeHTTP(0x472e40?, {0x285a0884338?, 0xc000208280?}, 0xc00019e6e5?)
+	C:/Program Files/Go/src/net/http/server.go:2084 +0x2f
+github.com/go-chi/chi/v5.(*Mux).routeHTTP(0xc000186060, {0x285a0884338, 0xc000208280}, 0xc00018e500)
+	C:/Users/ijasm/go/pkg/mod/github.com/go-chi/chi/v5@v5.0.7/mux.go:442 +0x216
+net/http.HandlerFunc.ServeHTTP(0xc00018e400?, {0x285a0884338?, 0xc000208280?}, 0xd8?)
+	C:/Program Files/Go/src/net/http/server.go:2084 +0x2f
+github.com/go-chi/chi/v5/middleware.RequestLogger.func1.1({0x571958, 0xc0002061c0}, 0xc00018e400)
+	C:/Users/ijasm/go/pkg/mod/github.com/go-chi/chi/v5@v5.0.7/middleware/logger.go:57 +0x17d
+net/http.HandlerFunc.ServeHTTP(0x571bd0?, {0x571958?, 0xc0002061c0?}, 0x759060?)
+	C:/Program Files/Go/src/net/http/server.go:2084 +0x2f
+github.com/go-chi/chi/v5.(*Mux).ServeHTTP(0xc000186060, {0x571958, 0xc0002061c0}, 0xc00018e300)
+	C:/Users/ijasm/go/pkg/mod/github.com/go-chi/chi/v5@v5.0.7/mux.go:88 +0x442
+net/http.serverHandler.ServeHTTP({0x570bc0?}, {0x571958, 0xc0002061c0}, 0xc00018e300)
+	C:/Program Files/Go/src/net/http/server.go:2916 +0x43b
+net/http.(*conn).serve(0xc0000b0000, {0x571c78, 0xc000182b10})
+	C:/Program Files/Go/src/net/http/server.go:1966 +0x5d7
+created by net/http.(*Server).Serve
+	C:/Program Files/Go/src/net/http/server.go:3071 +0x4db
+2022/08/18 10:10:38 No cookie
+2022/08/18 10:10:38 sqlCondition:  ORDER BY product_id LIMIT $1 OFFSET $2
+2022/08/18 10:10:38 filter: [5 0]
+2022/08/18 10:10:40 Offer status is  true
+2022/08/18 10:10:40 DB Product: {4 G-Shock Powerful watch 49 0xc0000159e0 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc0000159d6}
+2022/08/18 10:10:40 Color: {1 4 {0xc0002801c0 0xc000286070} 10}
+2022/08/18 10:10:40 Product: {4 G-Shock Powerful watch 49 0xc0000159e0 true [{0xc0002801c0 0xc000286070}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc0002801c0 0xc000286070} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc0000159d6}
+2022/08/18 10:10:40 Offer status is  true
+2022/08/18 10:10:40 DB Product: {5 Dizzo Superb 39 0xc0002802b0 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc0002802a6}
+2022/08/18 10:10:40 Color: {2 5 {0xc000280340 0xc0002861b0} 10}
+2022/08/18 10:10:40 Product: {5 Dizzo Superb 39 0xc0002802b0 true [{0xc000280340 0xc0002861b0}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc000280340 0xc0002861b0} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc0002802a6}
+2022/08/18 10:10:40 Offer status is  true
+2022/08/18 10:10:40 DB Product: {8 super man Multipurpose watch 15 0xc000280410 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000280406}
+2022/08/18 10:10:40 Product: {8 super man Multipurpose watch 15 0xc000280410 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000280406}
+2022/08/18 10:10:40 Offer status is  true
+2022/08/18 10:10:40 DB Product: {9 super man Multipurpose watch 15 0xc000280540 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000280536}
+2022/08/18 10:10:40 Color: {6 9 {0xc0002805d0 0xc0002863c0} 20}
+2022/08/18 10:10:40 Color: {5 9 {0xc0002805e0 0xc0002863f0} 30}
+2022/08/18 10:10:40 Color: {7 9 {0xc0002805f0 0xc000286410} 25}
+2022/08/18 10:10:40 Product: {9 super man Multipurpose watch 15 0xc000280540 true [{0xc0002805d0 0xc0002863c0} {0xc0002805e0 0xc0002863f0} {0xc0002805f0 0xc000286410}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc0002805d0 0xc0002863c0} 20} {5 9 {0xc0002805e0 0xc0002863f0} 30} {7 9 {0xc0002805f0 0xc000286410} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000280536}
+2022/08/18 10:10:40 Offer status is  true
+2022/08/18 10:10:40 DB Product: {10 bat man Multipurpose watch 25 0xc0002806e0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0002806d6}
+2022/08/18 10:10:40 Color: {11 10 {0xc000280770 0xc000286570} 23}
+2022/08/18 10:10:40 Color: {9 10 {0xc000280780 0xc0002865a0} 22}
+2022/08/18 10:10:40 Color: {10 10 {0xc000280790 0xc0002865c0} 14}
+2022/08/18 10:10:40 Product: {10 bat man Multipurpose watch 25 0xc0002806e0 true [{0xc000280770 0xc000286570} {0xc000280780 0xc0002865a0} {0xc000280790 0xc0002865c0}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc000280770 0xc000286570} 23} {9 10 {0xc000280780 0xc0002865a0} 22} {10 10 {0xc000280790 0xc0002865c0} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0002806d6}
+2022/08/18 10:12:24 Token not found
+2022/08/18 10:18:58 http: panic serving [::1]:60206: key is of invalid type
+goroutine 37 [running]:
+net/http.(*conn).serve.func1()
+	C:/Program Files/Go/src/net/http/server.go:1825 +0xbf
+panic({0xb2dce0, 0xc00004ec90})
+	C:/Program Files/Go/src/runtime/panic.go:844 +0x258
+github.com/ijasmoopan/Time.Now/admin.GeneratingToken({0xb9a00c, 0x1})
+	C:/Users/ijasm/OneDrive/Desktop/Time.Now/admin/admin_usecase.go:30 +0x259
+github.com/ijasmoopan/Time.Now/admin.(*Repo).AdminLogin(0xc0001a8120, {0x1d262c8b1b8?, 0xc000026740}, 0xc000150400)
+	C:/Users/ijasm/OneDrive/Desktop/Time.Now/admin/admin_handler.go:38 +0x536
+net/http.HandlerFunc.ServeHTTP(0xb32e40?, {0x1d262c8b1b8?, 0xc000026740?}, 0xc000012645?)
+	C:/Program Files/Go/src/net/http/server.go:2084 +0x2f
+github.com/go-chi/chi/v5.(*Mux).routeHTTP(0xc00018a120, {0x1d262c8b1b8, 0xc000026740}, 0xc000150400)
+	C:/Users/ijasm/go/pkg/mod/github.com/go-chi/chi/v5@v5.0.7/mux.go:442 +0x216
+net/http.HandlerFunc.ServeHTTP(0xc000150300?, {0x1d262c8b1b8?, 0xc000026740?}, 0xd8?)
+	C:/Program Files/Go/src/net/http/server.go:2084 +0x2f
+github.com/go-chi/chi/v5/middleware.RequestLogger.func1.1({0xc31a18, 0xc00014c0e0}, 0xc000150300)
+	C:/Users/ijasm/go/pkg/mod/github.com/go-chi/chi/v5@v5.0.7/middleware/logger.go:57 +0x17d
+net/http.HandlerFunc.ServeHTTP(0xc31c90?, {0xc31a18?, 0xc00014c0e0?}, 0xe1a060?)
+	C:/Program Files/Go/src/net/http/server.go:2084 +0x2f
+github.com/go-chi/chi/v5.(*Mux).ServeHTTP(0xc00018a120, {0xc31a18, 0xc00014c0e0}, 0xc000150200)
+	C:/Users/ijasm/go/pkg/mod/github.com/go-chi/chi/v5@v5.0.7/mux.go:88 +0x442
+net/http.serverHandler.ServeHTTP({0xc30c80?}, {0xc31a18, 0xc00014c0e0}, 0xc000150200)
+	C:/Program Files/Go/src/net/http/server.go:2916 +0x43b
+net/http.(*conn).serve(0xc000231400, {0xc31d38, 0xc000181290})
+	C:/Program Files/Go/src/net/http/server.go:1966 +0x5d7
+created by net/http.(*Server).Serve
+	C:/Program Files/Go/src/net/http/server.go:3071 +0x4db
+2022/08/18 10:26:23 Token not found
+2022/08/18 10:28:11 ID: 1
+2022/08/18 10:28:11 http: panic serving [::1]:58859: interface conversion: interface {} is string, not int
+goroutine 7 [running]:
+net/http.(*conn).serve.func1()
+	C:/Program Files/Go/src/net/http/server.go:1825 +0xbf
+panic({0xaf81e0, 0xc0000797a0})
+	C:/Program Files/Go/src/runtime/panic.go:844 +0x258
+github.com/ijasmoopan/Time.Now/admin.(*Repo).IsAdminAuthorized.func1({0x24bd2ebc9f8?, 0xc000026680}, 0xc00014e200)
+	C:/Users/ijasm/OneDrive/Desktop/Time.Now/admin/admin_middleware.go:93 +0xfbe
+net/http.HandlerFunc.ServeHTTP(0xc000088d80?, {0x24bd2ebc9f8?, 0xc000026680?}, 0xc0000230e0?)
+	C:/Program Files/Go/src/net/http/server.go:2084 +0x2f
+github.com/go-chi/chi/v5.(*ChainHandler).ServeHTTP(0xaf2e40?, {0x24bd2ebc9f8?, 0xc000026680?}, 0xc000012364?)
+	C:/Users/ijasm/go/pkg/mod/github.com/go-chi/chi/v5@v5.0.7/chain.go:31 +0x2c
+github.com/go-chi/chi/v5.(*Mux).routeHTTP(0xc0000861e0, {0x24bd2ebc9f8, 0xc000026680}, 0xc00014e200)
+	C:/Users/ijasm/go/pkg/mod/github.com/go-chi/chi/v5@v5.0.7/mux.go:442 +0x216
+net/http.HandlerFunc.ServeHTTP(0xc00014e100?, {0x24bd2ebc9f8?, 0xc000026680?}, 0xd0?)
+	C:/Program Files/Go/src/net/http/server.go:2084 +0x2f
+github.com/go-chi/chi/v5/middleware.RequestLogger.func1.1({0xbf1a58, 0xc000156000}, 0xc00014e100)
+	C:/Users/ijasm/go/pkg/mod/github.com/go-chi/chi/v5@v5.0.7/middleware/logger.go:57 +0x17d
+net/http.HandlerFunc.ServeHTTP(0xbf1cd0?, {0xbf1a58?, 0xc000156000?}, 0xdda060?)
+	C:/Program Files/Go/src/net/http/server.go:2084 +0x2f
+github.com/go-chi/chi/v5.(*Mux).ServeHTTP(0xc0000861e0, {0xbf1a58, 0xc000156000}, 0xc000192000)
+	C:/Users/ijasm/go/pkg/mod/github.com/go-chi/chi/v5@v5.0.7/mux.go:88 +0x442
+net/http.serverHandler.ServeHTTP({0xbf0cc0?}, {0xbf1a58, 0xc000156000}, 0xc000192000)
+	C:/Program Files/Go/src/net/http/server.go:2916 +0x43b
+net/http.(*conn).serve(0xc000073180, {0xbf1d78, 0xc0000893b0})
+	C:/Program Files/Go/src/net/http/server.go:1966 +0x5d7
+created by net/http.(*Server).Serve
+	C:/Program Files/Go/src/net/http/server.go:3071 +0x4db
+2022/08/18 10:30:25 ID: 1
+2022/08/18 10:30:27 Admin: {1 admin 31323334d41d8cd98f00b204e9800998ecf8427e}
+2022/08/18 10:30:27 sqlCondition:  ORDER BY product_id LIMIT $1 OFFSET $2
+2022/08/18 10:30:27 filter: [5 0]
+2022/08/18 10:30:27 Offer status is  true
+2022/08/18 10:30:27 Offer: {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}}
+2022/08/18 10:30:27 Offer Price: 0xc000015a70
+2022/08/18 10:30:27 Product half: {4 G-Shock Powerful watch 49 0xc000015a70 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} <nil>}
+2022/08/18 10:30:27 Product ID: 4
+2022/08/18 10:30:27 Products Map: map[]
+2022/08/18 10:30:27 SQL Condition: 
+2022/08/18 10:30:27 Filter 2: [4]
+2022/08/18 10:30:27 Product ID: 4
+2022/08/18 10:30:27 InventoryRows: &{0xc00014a750 0x8a43e0 0xc0000739a0 <nil> <nil> {{0 0} 0 0 0 0} false <nil> []}
+2022/08/18 10:30:27 Color: {1 4 {0xc000015ee0 0xc00004f4e0} 10}
+2022/08/18 10:30:27 Offer status is  true
+2022/08/18 10:30:27 Offer: {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}}
+2022/08/18 10:30:27 Offer Price: 0xc000015fa0
+2022/08/18 10:30:27 Product half: {5 Dizzo Superb 39 0xc000015fa0 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} <nil>}
+2022/08/18 10:30:27 Product ID: 5
+2022/08/18 10:30:27 Products Map: map[4:{4 G-Shock Powerful watch 49 0xc000015a70 true [{0xc000015ee0 0xc00004f4e0}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc000015ee0 0xc00004f4e0} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} <nil>}]
+2022/08/18 10:30:27 SQL Condition: 
+2022/08/18 10:30:27 Filter 2: [5]
+2022/08/18 10:30:27 Product ID: 5
+2022/08/18 10:30:27 InventoryRows: &{0xc00014a750 0x8a43e0 0xc000073ae0 <nil> <nil> {{0 0} 0 0 0 0} false <nil> []}
+2022/08/18 10:30:27 Color: {2 5 {0xc0002c0080 0xc00004f640} 10}
+2022/08/18 10:30:27 Offer status is  true
+2022/08/18 10:30:27 Offer: {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}}
+2022/08/18 10:30:27 Offer Price: 0xc0002c0130
+2022/08/18 10:30:27 Product half: {8 super man Multipurpose watch 15 0xc0002c0130 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} <nil>}
+2022/08/18 10:30:27 Product ID: 8
+2022/08/18 10:30:27 Products Map: map[4:{4 G-Shock Powerful watch 49 0xc000015a70 true [{0xc000015ee0 0xc00004f4e0}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc000015ee0 0xc00004f4e0} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} <nil>} 5:{5 Dizzo Superb 39 0xc000015fa0 true [{0xc0002c0080 0xc00004f640}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc0002c0080 0xc00004f640} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} <nil>}]
+2022/08/18 10:30:27 SQL Condition: 
+2022/08/18 10:30:27 Filter 2: [8]
+2022/08/18 10:30:27 Product ID: 8
+2022/08/18 10:30:27 InventoryRows: &{0xc00014a750 0x8a43e0 0xc000073c20 <nil> <nil> {{0 0} 0 0 0 0} false <nil> []}
+2022/08/18 10:30:27 No colors
+2022/08/18 10:30:27 Offer status is  true
+2022/08/18 10:30:27 Offer: {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}}
+2022/08/18 10:30:27 Offer Price: 0xc0002c02e0
+2022/08/18 10:30:27 Product half: {9 super man Multipurpose watch 15 0xc0002c02e0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} <nil>}
+2022/08/18 10:30:27 Product ID: 9
+2022/08/18 10:30:27 Products Map: map[4:{4 G-Shock Powerful watch 49 0xc000015a70 true [{0xc000015ee0 0xc00004f4e0}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc000015ee0 0xc00004f4e0} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} <nil>} 5:{5 Dizzo Superb 39 0xc000015fa0 true [{0xc0002c0080 0xc00004f640}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc0002c0080 0xc00004f640} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} <nil>}]
+2022/08/18 10:30:27 SQL Condition: 
+2022/08/18 10:30:27 Filter 2: [9]
+2022/08/18 10:30:27 Product ID: 9
+2022/08/18 10:30:27 InventoryRows: &{0xc00014a750 0x8a43e0 0xc000073d60 <nil> <nil> {{0 0} 0 0 0 0} false <nil> []}
+2022/08/18 10:30:27 Color: {6 9 {0xc0002c03e0 0xc00004f8f0} 20}
+2022/08/18 10:30:27 Offer status is  true
+2022/08/18 10:30:27 Offer: {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}}
+2022/08/18 10:30:27 Offer Price: 0xc0002c04b0
+2022/08/18 10:30:27 Product half: {10 bat man Multipurpose watch 25 0xc0002c04b0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} <nil>}
+2022/08/18 10:30:27 Product ID: 10
+2022/08/18 10:30:27 Products Map: map[4:{4 G-Shock Powerful watch 49 0xc000015a70 true [{0xc000015ee0 0xc00004f4e0}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc000015ee0 0xc00004f4e0} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} <nil>} 5:{5 Dizzo Superb 39 0xc000015fa0 true [{0xc0002c0080 0xc00004f640}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc0002c0080 0xc00004f640} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} <nil>} 9:{9 super man Multipurpose watch 15 0xc0002c02e0 true [{0xc0002c03e0 0xc00004f8f0} {0xc0002c03f0 0xc00004f920} {0xc0002c0400 0xc00004f940}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc0002c03e0 0xc00004f8f0} 20} {5 9 {0xc0002c03f0 0xc00004f920} 30} {7 9 {0xc0002c0400 0xc00004f940} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} <nil>}]
+2022/08/18 10:30:27 SQL Condition: 
+2022/08/18 10:30:27 Filter 2: [10]
+2022/08/18 10:30:27 Product ID: 10
+2022/08/18 10:30:27 InventoryRows: &{0xc00014a750 0x8a43e0 0xc000073f40 <nil> <nil> {{0 0} 0 0 0 0} false <nil> []}
+2022/08/18 10:30:27 Color: {11 10 {0xc0002c0600 0xc00004fb00} 23}
+2022/08/18 10:30:27 Handler Products: map[4:{4 G-Shock Powerful watch 49 0xc000015a70 true [{0xc000015ee0 0xc00004f4e0}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc000015ee0 0xc00004f4e0} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} <nil>} 5:{5 Dizzo Superb 39 0xc000015fa0 true [{0xc0002c0080 0xc00004f640}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc0002c0080 0xc00004f640} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} <nil>} 9:{9 super man Multipurpose watch 15 0xc0002c02e0 true [{0xc0002c03e0 0xc00004f8f0} {0xc0002c03f0 0xc00004f920} {0xc0002c0400 0xc00004f940}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc0002c03e0 0xc00004f8f0} 20} {5 9 {0xc0002c03f0 0xc00004f920} 30} {7 9 {0xc0002c0400 0xc00004f940} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} <nil>} 10:{10 bat man Multipurpose watch 25 0xc0002c04b0 true [{0xc0002c0600 0xc00004fb00} {0xc0002c0610 0xc00004fb30} {0xc0002c0620 0xc00004fb50}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc0002c0600 0xc00004fb00} 23} {9 10 {0xc0002c0610 0xc00004fb30} 22} {10 10 {0xc0002c0620 0xc00004fb50} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} <nil>}]
+2022/08/18 10:30:44 Token not found
+2022/08/18 10:30:55 ID: 1
+2022/08/18 10:30:55 Admin: {1 admin 31323334d41d8cd98f00b204e9800998ecf8427e}
+2022/08/18 11:01:15 No cookie
+2022/08/18 11:01:15 sqlCondition:  ORDER BY product_id LIMIT $1 OFFSET $2
+2022/08/18 11:01:15 filter: [5 0]
+2022/08/18 11:01:17 Offer status is  true
+2022/08/18 11:01:17 DB Product: {4 G-Shock Powerful watch 49 0xc000280370 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc000280366}
+2022/08/18 11:01:17 Color: {1 4 {0xc0002807c0 0xc0002861c0} 10}
+2022/08/18 11:01:17 Product: {4 G-Shock Powerful watch 49 0xc000280370 true [{0xc0002807c0 0xc0002861c0}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc0002807c0 0xc0002861c0} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc000280366}
+2022/08/18 11:01:17 Offer status is  true
+2022/08/18 11:01:17 DB Product: {5 Dizzo Superb 39 0xc0002808a0 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc000280896}
+2022/08/18 11:01:17 Color: {2 5 {0xc000280930 0xc000286300} 10}
+2022/08/18 11:01:17 Product: {5 Dizzo Superb 39 0xc0002808a0 true [{0xc000280930 0xc000286300}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc000280930 0xc000286300} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc000280896}
+2022/08/18 11:01:17 Offer status is  true
+2022/08/18 11:01:17 DB Product: {8 super man Multipurpose watch 15 0xc000280a00 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0002809f6}
+2022/08/18 11:01:17 Product: {8 super man Multipurpose watch 15 0xc000280a00 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0002809f6}
+2022/08/18 11:01:17 Offer status is  true
+2022/08/18 11:01:17 DB Product: {9 super man Multipurpose watch 15 0xc000280b30 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000280b26}
+2022/08/18 11:01:17 Color: {6 9 {0xc000280bc0 0xc000286510} 20}
+2022/08/18 11:01:17 Color: {5 9 {0xc000280bd0 0xc000286540} 30}
+2022/08/18 11:01:17 Color: {7 9 {0xc000280be0 0xc000286560} 25}
+2022/08/18 11:01:17 Product: {9 super man Multipurpose watch 15 0xc000280b30 true [{0xc000280bc0 0xc000286510} {0xc000280bd0 0xc000286540} {0xc000280be0 0xc000286560}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc000280bc0 0xc000286510} 20} {5 9 {0xc000280bd0 0xc000286540} 30} {7 9 {0xc000280be0 0xc000286560} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000280b26}
+2022/08/18 11:01:17 Offer status is  true
+2022/08/18 11:01:17 DB Product: {10 bat man Multipurpose watch 25 0xc000280cd0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000280cc6}
+2022/08/18 11:01:17 Color: {11 10 {0xc000280d60 0xc0002866c0} 23}
+2022/08/18 11:01:17 Color: {9 10 {0xc000280d70 0xc0002866f0} 22}
+2022/08/18 11:01:17 Color: {10 10 {0xc000280d80 0xc000286710} 14}
+2022/08/18 11:01:17 Product: {10 bat man Multipurpose watch 25 0xc000280cd0 true [{0xc000280d60 0xc0002866c0} {0xc000280d70 0xc0002866f0} {0xc000280d80 0xc000286710}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc000280d60 0xc0002866c0} 23} {9 10 {0xc000280d70 0xc0002866f0} 22} {10 10 {0xc000280d80 0xc000286710} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000280cc6}
+2022/08/18 11:01:37 Login user: {0 niyas@gmail.com 1234}
+2022/08/18 11:01:37 {0 niyas@gmail.com 31323334d41d8cd98f00b204e9800998ecf8427e}
+2022/08/18 11:13:22 open ./congig/.env: The system cannot find the path specified.
+2022/08/18 11:13:22 Token generated..Redirecting to Home...
+2022/08/18 11:13:40 No cookie
+2022/08/18 11:13:40 sqlCondition:  ORDER BY product_id LIMIT $1 OFFSET $2
+2022/08/18 11:13:40 filter: [5 0]
+2022/08/18 11:13:40 Offer status is  true
+2022/08/18 11:13:40 DB Product: {4 G-Shock Powerful watch 49 0xc000196f60 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc000196f56}
+2022/08/18 11:13:40 Color: {1 4 {0xc00009f4c0 0xc00008d050} 10}
+2022/08/18 11:13:40 Product: {4 G-Shock Powerful watch 49 0xc000196f60 true [{0xc00009f4c0 0xc00008d050}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc00009f4c0 0xc00008d050} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc000196f56}
+2022/08/18 11:13:40 Offer status is  true
+2022/08/18 11:13:40 DB Product: {5 Dizzo Superb 39 0xc00009f5a0 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc00009f596}
+2022/08/18 11:13:40 Color: {2 5 {0xc00009f630 0xc00008d190} 10}
+2022/08/18 11:13:40 Product: {5 Dizzo Superb 39 0xc00009f5a0 true [{0xc00009f630 0xc00008d190}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc00009f630 0xc00008d190} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc00009f596}
+2022/08/18 11:13:40 Offer status is  true
+2022/08/18 11:13:40 DB Product: {8 super man Multipurpose watch 15 0xc00009f700 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00009f6f6}
+2022/08/18 11:13:40 Product: {8 super man Multipurpose watch 15 0xc00009f700 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00009f6f6}
+2022/08/18 11:13:40 Offer status is  true
+2022/08/18 11:13:40 DB Product: {9 super man Multipurpose watch 15 0xc00009f830 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00009f826}
+2022/08/18 11:13:40 Color: {6 9 {0xc00009f8c0 0xc00008d3a0} 20}
+2022/08/18 11:13:40 Color: {5 9 {0xc00009f8d0 0xc00008d3d0} 30}
+2022/08/18 11:13:40 Color: {7 9 {0xc00009f8e0 0xc00008d3f0} 25}
+2022/08/18 11:13:40 Product: {9 super man Multipurpose watch 15 0xc00009f830 true [{0xc00009f8c0 0xc00008d3a0} {0xc00009f8d0 0xc00008d3d0} {0xc00009f8e0 0xc00008d3f0}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc00009f8c0 0xc00008d3a0} 20} {5 9 {0xc00009f8d0 0xc00008d3d0} 30} {7 9 {0xc00009f8e0 0xc00008d3f0} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00009f826}
+2022/08/18 11:13:40 Offer status is  true
+2022/08/18 11:13:40 DB Product: {10 bat man Multipurpose watch 25 0xc00009f9d0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00009f9c6}
+2022/08/18 11:13:40 Color: {11 10 {0xc00009fa60 0xc00008d550} 23}
+2022/08/18 11:13:40 Color: {9 10 {0xc00009fa70 0xc00008d580} 22}
+2022/08/18 11:13:40 Color: {10 10 {0xc00009fa80 0xc00008d5a0} 14}
+2022/08/18 11:13:40 Product: {10 bat man Multipurpose watch 25 0xc00009f9d0 true [{0xc00009fa60 0xc00008d550} {0xc00009fa70 0xc00008d580} {0xc00009fa80 0xc00008d5a0}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc00009fa60 0xc00008d550} 23} {9 10 {0xc00009fa70 0xc00008d580} 22} {10 10 {0xc00009fa80 0xc00008d5a0} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00009f9c6}
+2022/08/18 11:13:56 No cookie
+2022/08/18 11:13:56 sqlCondition:  ORDER BY product_id LIMIT $1 OFFSET $2
+2022/08/18 11:13:56 filter: [5 0]
+2022/08/18 11:13:56 Offer status is  true
+2022/08/18 11:13:56 DB Product: {4 G-Shock Powerful watch 49 0xc000292580 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc000292576}
+2022/08/18 11:13:56 Color: {1 4 {0xc000292610 0xc000298220} 10}
+2022/08/18 11:13:56 Product: {4 G-Shock Powerful watch 49 0xc000292580 true [{0xc000292610 0xc000298220}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc000292610 0xc000298220} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc000292576}
+2022/08/18 11:13:56 Offer status is  true
+2022/08/18 11:13:56 DB Product: {5 Dizzo Superb 39 0xc0002926f0 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc0002926e6}
+2022/08/18 11:13:56 Color: {2 5 {0xc000292780 0xc000298360} 10}
+2022/08/18 11:13:56 Product: {5 Dizzo Superb 39 0xc0002926f0 true [{0xc000292780 0xc000298360}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc000292780 0xc000298360} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc0002926e6}
+2022/08/18 11:13:56 Offer status is  true
+2022/08/18 11:13:56 DB Product: {8 super man Multipurpose watch 15 0xc000292850 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000292846}
+2022/08/18 11:13:56 Product: {8 super man Multipurpose watch 15 0xc000292850 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000292846}
+2022/08/18 11:13:56 Offer status is  true
+2022/08/18 11:13:56 DB Product: {9 super man Multipurpose watch 15 0xc000292980 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000292976}
+2022/08/18 11:13:56 Color: {6 9 {0xc000292a10 0xc000298570} 20}
+2022/08/18 11:13:56 Color: {5 9 {0xc000292a20 0xc0002985a0} 30}
+2022/08/18 11:13:56 Color: {7 9 {0xc000292a30 0xc0002985c0} 25}
+2022/08/18 11:13:56 Product: {9 super man Multipurpose watch 15 0xc000292980 true [{0xc000292a10 0xc000298570} {0xc000292a20 0xc0002985a0} {0xc000292a30 0xc0002985c0}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc000292a10 0xc000298570} 20} {5 9 {0xc000292a20 0xc0002985a0} 30} {7 9 {0xc000292a30 0xc0002985c0} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000292976}
+2022/08/18 11:13:56 Offer status is  true
+2022/08/18 11:13:56 DB Product: {10 bat man Multipurpose watch 25 0xc000292b20 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000292b16}
+2022/08/18 11:13:56 Color: {11 10 {0xc000292bb0 0xc000298720} 23}
+2022/08/18 11:13:56 Color: {9 10 {0xc000292bc0 0xc000298750} 22}
+2022/08/18 11:13:56 Color: {10 10 {0xc000292bd0 0xc000298770} 14}
+2022/08/18 11:13:56 Product: {10 bat man Multipurpose watch 25 0xc000292b20 true [{0xc000292bb0 0xc000298720} {0xc000292bc0 0xc000298750} {0xc000292bd0 0xc000298770}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc000292bb0 0xc000298720} 23} {9 10 {0xc000292bc0 0xc000298750} 22} {10 10 {0xc000292bd0 0xc000298770} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000292b16}
+2022/08/18 11:14:20 for loop
+2022/08/18 11:32:47 Error while parsing token
+2022/08/18 11:32:57 Token not found
+2022/08/18 11:33:29 Token not found
+2022/08/18 11:35:45 Token not found
+2022/08/18 11:36:49 Token not found
+2022/08/18 11:36:49 sqlCondition:  ORDER BY product_id LIMIT $1 OFFSET $2
+2022/08/18 11:36:49 filter: [5 0]
+2022/08/18 11:36:51 Offer status is  true
+2022/08/18 11:36:51 DB Product: {4 G-Shock Powerful watch 49 0xc0002089e0 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc0002089d6}
+2022/08/18 11:36:51 Color: {1 4 {0xc00029a1a0 0xc0002a0060} 10}
+2022/08/18 11:36:51 Product: {4 G-Shock Powerful watch 49 0xc0002089e0 true [{0xc00029a1a0 0xc0002a0060}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc00029a1a0 0xc0002a0060} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc0002089d6}
+2022/08/18 11:36:51 Offer status is  true
+2022/08/18 11:36:51 DB Product: {5 Dizzo Superb 39 0xc00029a290 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc00029a286}
+2022/08/18 11:36:51 Color: {2 5 {0xc00029a320 0xc0002a01a0} 10}
+2022/08/18 11:36:51 Product: {5 Dizzo Superb 39 0xc00029a290 true [{0xc00029a320 0xc0002a01a0}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc00029a320 0xc0002a01a0} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc00029a286}
+2022/08/18 11:36:51 Offer status is  true
+2022/08/18 11:36:51 DB Product: {8 super man Multipurpose watch 15 0xc00029a3f0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00029a3e6}
+2022/08/18 11:36:51 Product: {8 super man Multipurpose watch 15 0xc00029a3f0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00029a3e6}
+2022/08/18 11:36:51 Offer status is  true
+2022/08/18 11:36:51 DB Product: {9 super man Multipurpose watch 15 0xc00029a520 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00029a516}
+2022/08/18 11:36:51 Color: {6 9 {0xc00029a5b0 0xc0002a03b0} 20}
+2022/08/18 11:36:51 Color: {5 9 {0xc00029a5c0 0xc0002a03e0} 30}
+2022/08/18 11:36:51 Color: {7 9 {0xc00029a5d0 0xc0002a0400} 25}
+2022/08/18 11:36:51 Product: {9 super man Multipurpose watch 15 0xc00029a520 true [{0xc00029a5b0 0xc0002a03b0} {0xc00029a5c0 0xc0002a03e0} {0xc00029a5d0 0xc0002a0400}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc00029a5b0 0xc0002a03b0} 20} {5 9 {0xc00029a5c0 0xc0002a03e0} 30} {7 9 {0xc00029a5d0 0xc0002a0400} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00029a516}
+2022/08/18 11:36:51 Offer status is  true
+2022/08/18 11:36:51 DB Product: {10 bat man Multipurpose watch 25 0xc00029a6c0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00029a6b6}
+2022/08/18 11:36:51 Color: {11 10 {0xc00029a750 0xc0002a0560} 23}
+2022/08/18 11:36:51 Color: {9 10 {0xc00029a760 0xc0002a0590} 22}
+2022/08/18 11:36:51 Color: {10 10 {0xc00029a770 0xc0002a05b0} 14}
+2022/08/18 11:36:51 Product: {10 bat man Multipurpose watch 25 0xc00029a6c0 true [{0xc00029a750 0xc0002a0560} {0xc00029a760 0xc0002a0590} {0xc00029a770 0xc0002a05b0}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc00029a750 0xc0002a0560} 23} {9 10 {0xc00029a760 0xc0002a0590} 22} {10 10 {0xc00029a770 0xc0002a05b0} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00029a6b6}
+2022/08/18 11:38:03 Error occured while parsing token
+2022/08/18 11:41:10 Token not found
+2022/08/18 11:41:10 sqlCondition:  ORDER BY product_id LIMIT $1 OFFSET $2
+2022/08/18 11:41:10 filter: [5 0]
+2022/08/18 11:41:11 Offer status is  true
+2022/08/18 11:41:11 DB Product: {4 G-Shock Powerful watch 49 0xc0001a9c90 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc0001a9c86}
+2022/08/18 11:41:11 Color: {1 4 {0xc00027a0d0 0xc000185300} 10}
+2022/08/18 11:41:11 Product: {4 G-Shock Powerful watch 49 0xc0001a9c90 true [{0xc00027a0d0 0xc000185300}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc00027a0d0 0xc000185300} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc0001a9c86}
+2022/08/18 11:41:11 Offer status is  true
+2022/08/18 11:41:11 DB Product: {5 Dizzo Superb 39 0xc00027a1b0 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc00027a1a6}
+2022/08/18 11:41:11 Color: {2 5 {0xc00027a240 0xc000185440} 10}
+2022/08/18 11:41:11 Product: {5 Dizzo Superb 39 0xc00027a1b0 true [{0xc00027a240 0xc000185440}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc00027a240 0xc000185440} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc00027a1a6}
+2022/08/18 11:41:11 Offer status is  true
+2022/08/18 11:41:11 DB Product: {8 super man Multipurpose watch 15 0xc00027a310 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00027a306}
+2022/08/18 11:41:11 Product: {8 super man Multipurpose watch 15 0xc00027a310 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00027a306}
+2022/08/18 11:41:11 Offer status is  true
+2022/08/18 11:41:11 DB Product: {9 super man Multipurpose watch 15 0xc00027a440 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00027a436}
+2022/08/18 11:41:11 Color: {6 9 {0xc00027a4d0 0xc000185650} 20}
+2022/08/18 11:41:11 Color: {5 9 {0xc00027a4e0 0xc000185680} 30}
+2022/08/18 11:41:11 Color: {7 9 {0xc00027a4f0 0xc0001856a0} 25}
+2022/08/18 11:41:11 Product: {9 super man Multipurpose watch 15 0xc00027a440 true [{0xc00027a4d0 0xc000185650} {0xc00027a4e0 0xc000185680} {0xc00027a4f0 0xc0001856a0}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc00027a4d0 0xc000185650} 20} {5 9 {0xc00027a4e0 0xc000185680} 30} {7 9 {0xc00027a4f0 0xc0001856a0} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00027a436}
+2022/08/18 11:41:11 Offer status is  true
+2022/08/18 11:41:11 DB Product: {10 bat man Multipurpose watch 25 0xc00027a5e0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00027a5d6}
+2022/08/18 11:41:11 Color: {11 10 {0xc00027a670 0xc000185800} 23}
+2022/08/18 11:41:11 Color: {9 10 {0xc00027a680 0xc000185830} 22}
+2022/08/18 11:41:11 Color: {10 10 {0xc00027a690 0xc000185850} 14}
+2022/08/18 11:41:11 Product: {10 bat man Multipurpose watch 25 0xc00027a5e0 true [{0xc00027a670 0xc000185800} {0xc00027a680 0xc000185830} {0xc00027a690 0xc000185850}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc00027a670 0xc000185800} 23} {9 10 {0xc00027a680 0xc000185830} 22} {10 10 {0xc00027a690 0xc000185850} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00027a5d6}
+2022/08/18 11:41:19 sqlCondition:  ORDER BY product_id LIMIT $2 OFFSET $3
+2022/08/18 11:41:19 filter: [12 5 0]
+2022/08/18 11:41:19 Offer status is  true
+2022/08/18 11:41:19 DB Product: {4 G-Shock Powerful watch 49 0xc00027b860 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc00027b856}
+2022/08/18 11:41:19 Color: {1 4 {0xc00027b8f0 0xc00034e220} 10}
+2022/08/18 11:41:19 Product: {4 G-Shock Powerful watch 49 0xc00027b860 true [{0xc00027b8f0 0xc00034e220}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc00027b8f0 0xc00034e220} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc00027b856}
+2022/08/18 11:41:19 Offer status is  true
+2022/08/18 11:41:19 DB Product: {5 Dizzo Superb 39 0xc00027b9d0 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc00027b9c6}
+2022/08/18 11:41:19 Color: {2 5 {0xc00027ba60 0xc00034e360} 10}
+2022/08/18 11:41:19 Product: {5 Dizzo Superb 39 0xc00027b9d0 true [{0xc00027ba60 0xc00034e360}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc00027ba60 0xc00034e360} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc00027b9c6}
+2022/08/18 11:41:19 Offer status is  true
+2022/08/18 11:41:19 DB Product: {8 super man Multipurpose watch 15 0xc00027bb30 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00027bb26}
+2022/08/18 11:41:19 Product: {8 super man Multipurpose watch 15 0xc00027bb30 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00027bb26}
+2022/08/18 11:41:19 Offer status is  true
+2022/08/18 11:41:19 DB Product: {9 super man Multipurpose watch 15 0xc00027bc60 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00027bc56}
+2022/08/18 11:41:19 Color: {6 9 {0xc00027bcf0 0xc00034e570} 20}
+2022/08/18 11:41:19 Color: {5 9 {0xc00027bd00 0xc00034e5a0} 30}
+2022/08/18 11:41:19 Color: {7 9 {0xc00027bd10 0xc00034e5c0} 25}
+2022/08/18 11:41:19 Product: {9 super man Multipurpose watch 15 0xc00027bc60 true [{0xc00027bcf0 0xc00034e570} {0xc00027bd00 0xc00034e5a0} {0xc00027bd10 0xc00034e5c0}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc00027bcf0 0xc00034e570} 20} {5 9 {0xc00027bd00 0xc00034e5a0} 30} {7 9 {0xc00027bd10 0xc00034e5c0} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00027bc56}
+2022/08/18 11:41:19 Offer status is  true
+2022/08/18 11:41:19 DB Product: {10 bat man Multipurpose watch 25 0xc00027be00 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00027bdf6}
+2022/08/18 11:41:19 Color: {11 10 {0xc00027be90 0xc00034e720} 23}
+2022/08/18 11:41:19 Color: {9 10 {0xc00027bea0 0xc00034e750} 22}
+2022/08/18 11:41:19 Color: {10 10 {0xc00027beb0 0xc00034e770} 14}
+2022/08/18 11:41:19 Product: {10 bat man Multipurpose watch 25 0xc00027be00 true [{0xc00027be90 0xc00034e720} {0xc00027bea0 0xc00034e750} {0xc00027beb0 0xc00034e770}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc00027be90 0xc00034e720} 23} {9 10 {0xc00027bea0 0xc00034e750} 22} {10 10 {0xc00027beb0 0xc00034e770} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00027bdf6}
+2022/08/18 11:47:47 open ./congig/.env: The system cannot find the path specified.
+2022/08/18 11:47:47 Token generated..Redirecting to Home...
+2022/08/18 11:48:10 
+2022/08/18 11:48:16 sqlCondition:  ORDER BY product_id LIMIT $2 OFFSET $3
+2022/08/18 11:48:16 filter: [12 5 0]
+2022/08/18 11:48:16 Offer status is  true
+2022/08/18 11:48:16 DB Product: {4 G-Shock Powerful watch 49 0xc000099980 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc000099976}
+2022/08/18 11:48:16 Color: {1 4 {0xc00018a690 0xc000184410} 10}
+2022/08/18 11:48:16 Product: {4 G-Shock Powerful watch 49 0xc000099980 true [{0xc00018a690 0xc000184410}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc00018a690 0xc000184410} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc000099976}
+2022/08/18 11:48:16 Offer status is  true
+2022/08/18 11:48:16 DB Product: {5 Dizzo Superb 39 0xc00018a770 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc00018a766}
+2022/08/18 11:48:16 Color: {2 5 {0xc00018a800 0xc000184550} 10}
+2022/08/18 11:48:16 Product: {5 Dizzo Superb 39 0xc00018a770 true [{0xc00018a800 0xc000184550}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc00018a800 0xc000184550} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc00018a766}
+2022/08/18 11:48:16 Offer status is  true
+2022/08/18 11:48:16 DB Product: {8 super man Multipurpose watch 15 0xc00018a8d0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00018a8c6}
+2022/08/18 11:48:16 Product: {8 super man Multipurpose watch 15 0xc00018a8d0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00018a8c6}
+2022/08/18 11:48:16 Offer status is  true
+2022/08/18 11:48:16 DB Product: {9 super man Multipurpose watch 15 0xc00018aa00 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00018a9f6}
+2022/08/18 11:48:16 Color: {6 9 {0xc00018aa90 0xc000184760} 20}
+2022/08/18 11:48:16 Color: {5 9 {0xc00018aaa0 0xc000184790} 30}
+2022/08/18 11:48:16 Color: {7 9 {0xc00018aab0 0xc0001847b0} 25}
+2022/08/18 11:48:16 Product: {9 super man Multipurpose watch 15 0xc00018aa00 true [{0xc00018aa90 0xc000184760} {0xc00018aaa0 0xc000184790} {0xc00018aab0 0xc0001847b0}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc00018aa90 0xc000184760} 20} {5 9 {0xc00018aaa0 0xc000184790} 30} {7 9 {0xc00018aab0 0xc0001847b0} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00018a9f6}
+2022/08/18 11:48:16 Offer status is  true
+2022/08/18 11:48:16 DB Product: {10 bat man Multipurpose watch 25 0xc00018aba0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00018ab96}
+2022/08/18 11:48:16 Color: {11 10 {0xc00018ac30 0xc000184910} 23}
+2022/08/18 11:48:16 Color: {9 10 {0xc00018ac40 0xc000184940} 22}
+2022/08/18 11:48:16 Color: {10 10 {0xc00018ac50 0xc000184960} 14}
+2022/08/18 11:48:16 Product: {10 bat man Multipurpose watch 25 0xc00018aba0 true [{0xc00018ac30 0xc000184910} {0xc00018ac40 0xc000184940} {0xc00018ac50 0xc000184960}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc00018ac30 0xc000184910} 23} {9 10 {0xc00018ac40 0xc000184940} 22} {10 10 {0xc00018ac50 0xc000184960} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00018ab96}
+2022/08/18 11:48:32 Token not found
+2022/08/18 11:48:32 sqlCondition:  ORDER BY product_id LIMIT $1 OFFSET $2
+2022/08/18 11:48:32 filter: [5 0]
+2022/08/18 11:48:32 Offer status is  true
+2022/08/18 11:48:32 DB Product: {4 G-Shock Powerful watch 49 0xc000015540 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc000015536}
+2022/08/18 11:48:32 Color: {1 4 {0xc0000155d0 0xc00004f3d0} 10}
+2022/08/18 11:48:32 Product: {4 G-Shock Powerful watch 49 0xc000015540 true [{0xc0000155d0 0xc00004f3d0}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc0000155d0 0xc00004f3d0} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc000015536}
+2022/08/18 11:48:32 Offer status is  true
+2022/08/18 11:48:32 DB Product: {5 Dizzo Superb 39 0xc0000156b0 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc0000156a6}
+2022/08/18 11:48:32 Color: {2 5 {0xc000015740 0xc00004f510} 10}
+2022/08/18 11:48:32 Product: {5 Dizzo Superb 39 0xc0000156b0 true [{0xc000015740 0xc00004f510}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc000015740 0xc00004f510} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc0000156a6}
+2022/08/18 11:48:32 Offer status is  true
+2022/08/18 11:48:32 DB Product: {8 super man Multipurpose watch 15 0xc000015810 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000015806}
+2022/08/18 11:48:32 Product: {8 super man Multipurpose watch 15 0xc000015810 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000015806}
+2022/08/18 11:48:32 Offer status is  true
+2022/08/18 11:48:32 DB Product: {9 super man Multipurpose watch 15 0xc000015940 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000015936}
+2022/08/18 11:48:32 Color: {6 9 {0xc0000159d0 0xc00004f720} 20}
+2022/08/18 11:48:32 Color: {5 9 {0xc0000159e0 0xc00004f750} 30}
+2022/08/18 11:48:32 Color: {7 9 {0xc0000159f0 0xc00004f770} 25}
+2022/08/18 11:48:32 Product: {9 super man Multipurpose watch 15 0xc000015940 true [{0xc0000159d0 0xc00004f720} {0xc0000159e0 0xc00004f750} {0xc0000159f0 0xc00004f770}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc0000159d0 0xc00004f720} 20} {5 9 {0xc0000159e0 0xc00004f750} 30} {7 9 {0xc0000159f0 0xc00004f770} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000015936}
+2022/08/18 11:48:32 Offer status is  true
+2022/08/18 11:48:32 DB Product: {10 bat man Multipurpose watch 25 0xc000015ae0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000015ad6}
+2022/08/18 11:48:32 Color: {11 10 {0xc000015b70 0xc00004f8d0} 23}
+2022/08/18 11:48:32 Color: {9 10 {0xc000015b80 0xc00004f900} 22}
+2022/08/18 11:48:32 Color: {10 10 {0xc000015b90 0xc00004f920} 14}
+2022/08/18 11:48:32 Product: {10 bat man Multipurpose watch 25 0xc000015ae0 true [{0xc000015b70 0xc00004f8d0} {0xc000015b80 0xc00004f900} {0xc000015b90 0xc00004f920}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc000015b70 0xc00004f8d0} 23} {9 10 {0xc000015b80 0xc00004f900} 22} {10 10 {0xc000015b90 0xc00004f920} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000015ad6}
+2022/08/18 11:49:14 
+2022/08/18 11:49:18 Token not found
+2022/08/18 11:49:18 sqlCondition:  ORDER BY product_id LIMIT $1 OFFSET $2
+2022/08/18 11:49:18 filter: [5 0]
+2022/08/18 11:49:18 Offer status is  true
+2022/08/18 11:49:18 DB Product: {4 G-Shock Powerful watch 49 0xc00018bce0 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc00018bcd6}
+2022/08/18 11:49:18 Color: {1 4 {0xc00018bd70 0xc0001850c0} 10}
+2022/08/18 11:49:18 Product: {4 G-Shock Powerful watch 49 0xc00018bce0 true [{0xc00018bd70 0xc0001850c0}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc00018bd70 0xc0001850c0} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc00018bcd6}
+2022/08/18 11:49:18 Offer status is  true
+2022/08/18 11:49:18 DB Product: {5 Dizzo Superb 39 0xc00018be50 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc00018be46}
+2022/08/18 11:49:18 Color: {2 5 {0xc00018bee0 0xc000185200} 10}
+2022/08/18 11:49:18 Product: {5 Dizzo Superb 39 0xc00018be50 true [{0xc00018bee0 0xc000185200}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc00018bee0 0xc000185200} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc00018be46}
+2022/08/18 11:49:18 Offer status is  true
+2022/08/18 11:49:18 DB Product: {8 super man Multipurpose watch 15 0xc00018bfb0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00018bfa6}
+2022/08/18 11:49:18 Product: {8 super man Multipurpose watch 15 0xc00018bfb0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00018bfa6}
+2022/08/18 11:49:18 Offer status is  true
+2022/08/18 11:49:18 DB Product: {9 super man Multipurpose watch 15 0xc0002ec0e0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0002ec0d6}
+2022/08/18 11:49:18 Color: {6 9 {0xc0002ec170 0xc000185410} 20}
+2022/08/18 11:49:18 Color: {5 9 {0xc0002ec180 0xc000185440} 30}
+2022/08/18 11:49:18 Color: {7 9 {0xc0002ec190 0xc000185460} 25}
+2022/08/18 11:49:18 Product: {9 super man Multipurpose watch 15 0xc0002ec0e0 true [{0xc0002ec170 0xc000185410} {0xc0002ec180 0xc000185440} {0xc0002ec190 0xc000185460}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc0002ec170 0xc000185410} 20} {5 9 {0xc0002ec180 0xc000185440} 30} {7 9 {0xc0002ec190 0xc000185460} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0002ec0d6}
+2022/08/18 11:49:18 Offer status is  true
+2022/08/18 11:49:18 DB Product: {10 bat man Multipurpose watch 25 0xc0002ec280 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0002ec276}
+2022/08/18 11:49:18 Color: {11 10 {0xc0002ec310 0xc0001855c0} 23}
+2022/08/18 11:49:18 Color: {9 10 {0xc0002ec320 0xc0001855f0} 22}
+2022/08/18 11:49:18 Color: {10 10 {0xc0002ec330 0xc000185610} 14}
+2022/08/18 11:49:18 Product: {10 bat man Multipurpose watch 25 0xc0002ec280 true [{0xc0002ec310 0xc0001855c0} {0xc0002ec320 0xc0001855f0} {0xc0002ec330 0xc000185610}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc0002ec310 0xc0001855c0} 23} {9 10 {0xc0002ec320 0xc0001855f0} 22} {10 10 {0xc0002ec330 0xc000185610} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0002ec276}
+2022/08/18 11:49:25 sqlCondition:  ORDER BY product_id LIMIT $2 OFFSET $3
+2022/08/18 11:49:25 filter: [12 5 0]
+2022/08/18 11:49:25 Offer status is  true
+2022/08/18 11:49:25 DB Product: {4 G-Shock Powerful watch 49 0xc0002ec9d0 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc0002ec9c6}
+2022/08/18 11:49:25 Color: {1 4 {0xc0002eca60 0xc000185ab0} 10}
+2022/08/18 11:49:25 Product: {4 G-Shock Powerful watch 49 0xc0002ec9d0 true [{0xc0002eca60 0xc000185ab0}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc0002eca60 0xc000185ab0} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc0002ec9c6}
+2022/08/18 11:49:25 Offer status is  true
+2022/08/18 11:49:25 DB Product: {5 Dizzo Superb 39 0xc0002ecb40 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc0002ecb36}
+2022/08/18 11:49:25 Color: {2 5 {0xc0002ecbd0 0xc000185bf0} 10}
+2022/08/18 11:49:25 Product: {5 Dizzo Superb 39 0xc0002ecb40 true [{0xc0002ecbd0 0xc000185bf0}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc0002ecbd0 0xc000185bf0} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc0002ecb36}
+2022/08/18 11:49:25 Offer status is  true
+2022/08/18 11:49:25 DB Product: {8 super man Multipurpose watch 15 0xc0002ecca0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0002ecc96}
+2022/08/18 11:49:25 Product: {8 super man Multipurpose watch 15 0xc0002ecca0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0002ecc96}
+2022/08/18 11:49:25 Offer status is  true
+2022/08/18 11:49:25 DB Product: {9 super man Multipurpose watch 15 0xc0002ecdd0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0002ecdc6}
+2022/08/18 11:49:25 Color: {6 9 {0xc0002ece60 0xc000185e00} 20}
+2022/08/18 11:49:25 Color: {5 9 {0xc0002ece70 0xc000185e30} 30}
+2022/08/18 11:49:25 Color: {7 9 {0xc0002ece80 0xc000185e50} 25}
+2022/08/18 11:49:25 Product: {9 super man Multipurpose watch 15 0xc0002ecdd0 true [{0xc0002ece60 0xc000185e00} {0xc0002ece70 0xc000185e30} {0xc0002ece80 0xc000185e50}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc0002ece60 0xc000185e00} 20} {5 9 {0xc0002ece70 0xc000185e30} 30} {7 9 {0xc0002ece80 0xc000185e50} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0002ecdc6}
+2022/08/18 11:49:25 Offer status is  true
+2022/08/18 11:49:25 DB Product: {10 bat man Multipurpose watch 25 0xc0002ecf70 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0002ecf66}
+2022/08/18 11:49:25 Color: {11 10 {0xc0002ed000 0xc000185fb0} 23}
+2022/08/18 11:49:25 Color: {9 10 {0xc0002ed010 0xc000185fe0} 22}
+2022/08/18 11:49:25 Color: {10 10 {0xc0002ed020 0xc0002fa000} 14}
+2022/08/18 11:49:25 Product: {10 bat man Multipurpose watch 25 0xc0002ecf70 true [{0xc0002ed000 0xc000185fb0} {0xc0002ed010 0xc000185fe0} {0xc0002ed020 0xc0002fa000}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc0002ed000 0xc000185fb0} 23} {9 10 {0xc0002ed010 0xc000185fe0} 22} {10 10 {0xc0002ed020 0xc0002fa000} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0002ecf66}
+2022/08/18 11:51:20 open ./congig/.env: The system cannot find the path specified.
+2022/08/18 11:51:20 Token generated..Redirecting to Home...
+2022/08/18 11:51:47 sqlCondition:  ORDER BY product_id LIMIT $2 OFFSET $3
+2022/08/18 11:51:47 filter: [12 5 0]
+2022/08/18 11:51:47 Offer status is  true
+2022/08/18 11:51:47 DB Product: {4 G-Shock Powerful watch 49 0xc000191ff0 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc000191fe6}
+2022/08/18 11:51:47 Color: {1 4 {0xc000316430 0xc000185890} 10}
+2022/08/18 11:51:47 Product: {4 G-Shock Powerful watch 49 0xc000191ff0 true [{0xc000316430 0xc000185890}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc000316430 0xc000185890} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc000191fe6}
+2022/08/18 11:51:47 Offer status is  true
+2022/08/18 11:51:47 DB Product: {5 Dizzo Superb 39 0xc000316510 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc000316506}
+2022/08/18 11:51:47 Color: {2 5 {0xc0003165a0 0xc0001859d0} 10}
+2022/08/18 11:51:47 Product: {5 Dizzo Superb 39 0xc000316510 true [{0xc0003165a0 0xc0001859d0}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc0003165a0 0xc0001859d0} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc000316506}
+2022/08/18 11:51:47 Offer status is  true
+2022/08/18 11:51:47 DB Product: {8 super man Multipurpose watch 15 0xc000316670 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000316666}
+2022/08/18 11:51:47 Product: {8 super man Multipurpose watch 15 0xc000316670 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000316666}
+2022/08/18 11:51:47 Offer status is  true
+2022/08/18 11:51:47 DB Product: {9 super man Multipurpose watch 15 0xc0003167a0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000316796}
+2022/08/18 11:51:47 Color: {6 9 {0xc000316830 0xc000185be0} 20}
+2022/08/18 11:51:47 Color: {5 9 {0xc000316840 0xc000185c10} 30}
+2022/08/18 11:51:47 Color: {7 9 {0xc000316850 0xc000185c30} 25}
+2022/08/18 11:51:47 Product: {9 super man Multipurpose watch 15 0xc0003167a0 true [{0xc000316830 0xc000185be0} {0xc000316840 0xc000185c10} {0xc000316850 0xc000185c30}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc000316830 0xc000185be0} 20} {5 9 {0xc000316840 0xc000185c10} 30} {7 9 {0xc000316850 0xc000185c30} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000316796}
+2022/08/18 11:51:47 Offer status is  true
+2022/08/18 11:51:47 DB Product: {10 bat man Multipurpose watch 25 0xc000316940 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000316936}
+2022/08/18 11:51:47 Color: {11 10 {0xc0003169d0 0xc000185d90} 23}
+2022/08/18 11:51:47 Color: {9 10 {0xc0003169e0 0xc000185dc0} 22}
+2022/08/18 11:51:47 Color: {10 10 {0xc0003169f0 0xc000185de0} 14}
+2022/08/18 11:51:47 Product: {10 bat man Multipurpose watch 25 0xc000316940 true [{0xc0003169d0 0xc000185d90} {0xc0003169e0 0xc000185dc0} {0xc0003169f0 0xc000185de0}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc0003169d0 0xc000185d90} 23} {9 10 {0xc0003169e0 0xc000185dc0} 22} {10 10 {0xc0003169f0 0xc000185de0} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000316936}
+2022/08/18 11:52:50 Error occured while parsing token
+2022/08/18 11:57:02 open ./congig/.env: The system cannot find the path specified.
+2022/08/18 11:57:02 Token generated..Redirecting to Home...
+2022/08/18 11:57:18 sqlCondition:  ORDER BY product_id LIMIT $2 OFFSET $3
+2022/08/18 11:57:18 filter: [12 5 0]
+2022/08/18 11:57:18 Offer status is  true
+2022/08/18 11:57:18 DB Product: {4 G-Shock Powerful watch 49 0xc00018aa90 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc00018aa86}
+2022/08/18 11:57:18 Color: {1 4 {0xc000014f10 0xc00004ef40} 10}
+2022/08/18 11:57:18 Product: {4 G-Shock Powerful watch 49 0xc00018aa90 true [{0xc000014f10 0xc00004ef40}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc000014f10 0xc00004ef40} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc00018aa86}
+2022/08/18 11:57:18 Offer status is  true
+2022/08/18 11:57:18 DB Product: {5 Dizzo Superb 39 0xc000015000 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc000014ff6}
+2022/08/18 11:57:18 Color: {2 5 {0xc000015090 0xc00004f080} 10}
+2022/08/18 11:57:18 Product: {5 Dizzo Superb 39 0xc000015000 true [{0xc000015090 0xc00004f080}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc000015090 0xc00004f080} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc000014ff6}
+2022/08/18 11:57:18 Offer status is  true
+2022/08/18 11:57:18 DB Product: {8 super man Multipurpose watch 15 0xc000015160 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000015156}
+2022/08/18 11:57:18 Product: {8 super man Multipurpose watch 15 0xc000015160 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000015156}
+2022/08/18 11:57:18 Offer status is  true
+2022/08/18 11:57:18 DB Product: {9 super man Multipurpose watch 15 0xc000015290 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000015286}
+2022/08/18 11:57:18 Color: {6 9 {0xc000015320 0xc00004f290} 20}
+2022/08/18 11:57:18 Color: {5 9 {0xc000015330 0xc00004f2c0} 30}
+2022/08/18 11:57:18 Color: {7 9 {0xc000015340 0xc00004f2e0} 25}
+2022/08/18 11:57:18 Product: {9 super man Multipurpose watch 15 0xc000015290 true [{0xc000015320 0xc00004f290} {0xc000015330 0xc00004f2c0} {0xc000015340 0xc00004f2e0}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc000015320 0xc00004f290} 20} {5 9 {0xc000015330 0xc00004f2c0} 30} {7 9 {0xc000015340 0xc00004f2e0} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000015286}
+2022/08/18 11:57:18 Offer status is  true
+2022/08/18 11:57:18 DB Product: {10 bat man Multipurpose watch 25 0xc000015430 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000015426}
+2022/08/18 11:57:18 Color: {11 10 {0xc0000154c0 0xc00004f440} 23}
+2022/08/18 11:57:18 Color: {9 10 {0xc0000154d0 0xc00004f470} 22}
+2022/08/18 11:57:18 Color: {10 10 {0xc0000154e0 0xc00004f490} 14}
+2022/08/18 11:57:18 Product: {10 bat man Multipurpose watch 25 0xc000015430 true [{0xc0000154c0 0xc00004f440} {0xc0000154d0 0xc00004f470} {0xc0000154e0 0xc00004f490}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc0000154c0 0xc00004f440} 23} {9 10 {0xc0000154d0 0xc00004f470} 22} {10 10 {0xc0000154e0 0xc00004f490} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000015426}
+2022/08/18 11:57:44 
+2022/08/18 11:57:49 sqlCondition:  ORDER BY product_id LIMIT $2 OFFSET $3
+2022/08/18 11:57:49 filter: [12 5 0]
+2022/08/18 11:57:49 Offer status is  true
+2022/08/18 11:57:49 DB Product: {4 G-Shock Powerful watch 49 0xc00031a690 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc00031a686}
+2022/08/18 11:57:49 Color: {1 4 {0xc00031a720 0xc00004fdf0} 10}
+2022/08/18 11:57:49 Product: {4 G-Shock Powerful watch 49 0xc00031a690 true [{0xc00031a720 0xc00004fdf0}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc00031a720 0xc00004fdf0} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc00031a686}
+2022/08/18 11:57:49 Offer status is  true
+2022/08/18 11:57:49 DB Product: {5 Dizzo Superb 39 0xc00031a800 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc00031a7f6}
+2022/08/18 11:57:49 Color: {2 5 {0xc00031a890 0xc00004ff30} 10}
+2022/08/18 11:57:49 Product: {5 Dizzo Superb 39 0xc00031a800 true [{0xc00031a890 0xc00004ff30}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc00031a890 0xc00004ff30} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc00031a7f6}
+2022/08/18 11:57:49 Offer status is  true
+2022/08/18 11:57:49 DB Product: {8 super man Multipurpose watch 15 0xc00031a960 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00031a956}
+2022/08/18 11:57:49 Product: {8 super man Multipurpose watch 15 0xc00031a960 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00031a956}
+2022/08/18 11:57:49 Offer status is  true
+2022/08/18 11:57:49 DB Product: {9 super man Multipurpose watch 15 0xc00031aa90 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00031aa86}
+2022/08/18 11:57:49 Color: {6 9 {0xc00031ab20 0xc000340140} 20}
+2022/08/18 11:57:49 Color: {5 9 {0xc00031ab30 0xc000340170} 30}
+2022/08/18 11:57:49 Color: {7 9 {0xc00031ab40 0xc000340190} 25}
+2022/08/18 11:57:49 Product: {9 super man Multipurpose watch 15 0xc00031aa90 true [{0xc00031ab20 0xc000340140} {0xc00031ab30 0xc000340170} {0xc00031ab40 0xc000340190}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc00031ab20 0xc000340140} 20} {5 9 {0xc00031ab30 0xc000340170} 30} {7 9 {0xc00031ab40 0xc000340190} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00031aa86}
+2022/08/18 11:57:49 Offer status is  true
+2022/08/18 11:57:49 DB Product: {10 bat man Multipurpose watch 25 0xc00031ac30 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00031ac26}
+2022/08/18 11:57:49 Color: {11 10 {0xc00031acc0 0xc0003402f0} 23}
+2022/08/18 11:57:49 Color: {9 10 {0xc00031acd0 0xc000340320} 22}
+2022/08/18 11:57:49 Color: {10 10 {0xc00031ace0 0xc000340340} 14}
+2022/08/18 11:57:49 Product: {10 bat man Multipurpose watch 25 0xc00031ac30 true [{0xc00031acc0 0xc0003402f0} {0xc00031acd0 0xc000340320} {0xc00031ace0 0xc000340340}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc00031acc0 0xc0003402f0} 23} {9 10 {0xc00031acd0 0xc000340320} 22} {10 10 {0xc00031ace0 0xc000340340} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00031ac26}
+2022/08/18 12:22:56 Error occured while parsing token
+2022/08/18 12:23:08 Token not found
+2022/08/18 12:23:08 sqlCondition:  ORDER BY product_id LIMIT $1 OFFSET $2
+2022/08/18 12:23:08 filter: [5 0]
+2022/08/18 12:23:10 Offer status is  true
+2022/08/18 12:23:10 DB Product: {4 G-Shock Powerful watch 49 0xc000208db0 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc000208da6}
+2022/08/18 12:23:10 Color: {1 4 {0xc000015560 0xc00004f100} 10}
+2022/08/18 12:23:10 Product: {4 G-Shock Powerful watch 49 0xc000208db0 true [{0xc000015560 0xc00004f100}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc000015560 0xc00004f100} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc000208da6}
+2022/08/18 12:23:10 Offer status is  true
+2022/08/18 12:23:10 DB Product: {5 Dizzo Superb 39 0xc000015640 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc000015636}
+2022/08/18 12:23:10 Color: {2 5 {0xc0000156d0 0xc00004f240} 10}
+2022/08/18 12:23:10 Product: {5 Dizzo Superb 39 0xc000015640 true [{0xc0000156d0 0xc00004f240}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc0000156d0 0xc00004f240} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc000015636}
+2022/08/18 12:23:10 Offer status is  true
+2022/08/18 12:23:10 DB Product: {8 super man Multipurpose watch 15 0xc0000157a0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000015796}
+2022/08/18 12:23:10 Product: {8 super man Multipurpose watch 15 0xc0000157a0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000015796}
+2022/08/18 12:23:10 Offer status is  true
+2022/08/18 12:23:10 DB Product: {9 super man Multipurpose watch 15 0xc0000158d0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0000158c6}
+2022/08/18 12:23:10 Color: {6 9 {0xc000015960 0xc00004f450} 20}
+2022/08/18 12:23:10 Color: {5 9 {0xc000015970 0xc00004f480} 30}
+2022/08/18 12:23:10 Color: {7 9 {0xc000015980 0xc00004f4a0} 25}
+2022/08/18 12:23:10 Product: {9 super man Multipurpose watch 15 0xc0000158d0 true [{0xc000015960 0xc00004f450} {0xc000015970 0xc00004f480} {0xc000015980 0xc00004f4a0}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc000015960 0xc00004f450} 20} {5 9 {0xc000015970 0xc00004f480} 30} {7 9 {0xc000015980 0xc00004f4a0} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0000158c6}
+2022/08/18 12:23:10 Offer status is  true
+2022/08/18 12:23:10 DB Product: {10 bat man Multipurpose watch 25 0xc000015a70 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000015a66}
+2022/08/18 12:23:10 Color: {11 10 {0xc000015b00 0xc00004f600} 23}
+2022/08/18 12:23:10 Color: {9 10 {0xc000015b10 0xc00004f630} 22}
+2022/08/18 12:23:10 Color: {10 10 {0xc000015b20 0xc00004f650} 14}
+2022/08/18 12:23:10 Product: {10 bat man Multipurpose watch 25 0xc000015a70 true [{0xc000015b00 0xc00004f600} {0xc000015b10 0xc00004f630} {0xc000015b20 0xc00004f650}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc000015b00 0xc00004f600} 23} {9 10 {0xc000015b10 0xc00004f630} 22} {10 10 {0xc000015b20 0xc00004f650} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000015a66}
+2022/08/18 12:25:19 Token not found
+2022/08/18 12:25:19 sqlCondition:  ORDER BY product_id LIMIT $1 OFFSET $2
+2022/08/18 12:25:19 filter: [5 0]
+2022/08/18 12:25:21 Offer status is  true
+2022/08/18 12:25:21 DB Product: {4 G-Shock Powerful watch 49 0xc00029a330 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc00029a326}
+2022/08/18 12:25:21 Color: {1 4 {0xc000014f20 0xc00004ef50} 10}
+2022/08/18 12:25:21 Product: {4 G-Shock Powerful watch 49 0xc00029a330 true [{0xc000014f20 0xc00004ef50}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc000014f20 0xc00004ef50} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc00029a326}
+2022/08/18 12:25:21 Offer status is  true
+2022/08/18 12:25:21 DB Product: {5 Dizzo Superb 39 0xc000015010 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc000015006}
+2022/08/18 12:25:21 Color: {2 5 {0xc0000150a0 0xc00004f090} 10}
+2022/08/18 12:25:21 Product: {5 Dizzo Superb 39 0xc000015010 true [{0xc0000150a0 0xc00004f090}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc0000150a0 0xc00004f090} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc000015006}
+2022/08/18 12:25:21 Offer status is  true
+2022/08/18 12:25:21 DB Product: {8 super man Multipurpose watch 15 0xc000015170 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000015166}
+2022/08/18 12:25:21 Product: {8 super man Multipurpose watch 15 0xc000015170 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000015166}
+2022/08/18 12:25:21 Offer status is  true
+2022/08/18 12:25:21 DB Product: {9 super man Multipurpose watch 15 0xc0000152a0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000015296}
+2022/08/18 12:25:21 Color: {6 9 {0xc000015330 0xc00004f2a0} 20}
+2022/08/18 12:25:21 Color: {5 9 {0xc000015340 0xc00004f2d0} 30}
+2022/08/18 12:25:21 Color: {7 9 {0xc000015350 0xc00004f2f0} 25}
+2022/08/18 12:25:21 Product: {9 super man Multipurpose watch 15 0xc0000152a0 true [{0xc000015330 0xc00004f2a0} {0xc000015340 0xc00004f2d0} {0xc000015350 0xc00004f2f0}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc000015330 0xc00004f2a0} 20} {5 9 {0xc000015340 0xc00004f2d0} 30} {7 9 {0xc000015350 0xc00004f2f0} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000015296}
+2022/08/18 12:25:21 Offer status is  true
+2022/08/18 12:25:21 DB Product: {10 bat man Multipurpose watch 25 0xc000015440 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000015436}
+2022/08/18 12:25:21 Color: {11 10 {0xc0000154d0 0xc00004f450} 23}
+2022/08/18 12:25:21 Color: {9 10 {0xc0000154e0 0xc00004f480} 22}
+2022/08/18 12:25:21 Color: {10 10 {0xc0000154f0 0xc00004f4a0} 14}
+2022/08/18 12:25:21 Product: {10 bat man Multipurpose watch 25 0xc000015440 true [{0xc0000154d0 0xc00004f450} {0xc0000154e0 0xc00004f480} {0xc0000154f0 0xc00004f4a0}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc0000154d0 0xc00004f450} 23} {9 10 {0xc0000154e0 0xc00004f480} 22} {10 10 {0xc0000154f0 0xc00004f4a0} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000015436}
+2022/08/18 12:25:28 {0 niyas@gmail.com 31323334d41d8cd98f00b204e9800998ecf8427e}
+2022/08/18 12:25:28 user repo: {12 niyas@gmail.com 31323334d41d8cd98f00b204e9800998ecf8427e}
+2022/08/18 12:25:28 Login user: {12 niyas@gmail.com 31323334d41d8cd98f00b204e9800998ecf8427e}
+2022/08/18 12:25:28 open ./congig/.env: The system cannot find the path specified.
+2022/08/18 12:25:28 Token generated..Redirecting to Home...
+2022/08/18 12:25:44 sqlCondition:  ORDER BY product_id LIMIT $2 OFFSET $3
+2022/08/18 12:25:44 filter: [12 5 0]
+2022/08/18 12:25:44 Offer status is  true
+2022/08/18 12:25:44 DB Product: {4 G-Shock Powerful watch 49 0xc00029ac20 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc00029ac16}
+2022/08/18 12:25:44 Color: {1 4 {0xc00029acb0 0xc0002a6470} 10}
+2022/08/18 12:25:44 Product: {4 G-Shock Powerful watch 49 0xc00029ac20 true [{0xc00029acb0 0xc0002a6470}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc00029acb0 0xc0002a6470} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc00029ac16}
+2022/08/18 12:25:44 Offer status is  true
+2022/08/18 12:25:44 DB Product: {5 Dizzo Superb 39 0xc00029ad90 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc00029ad86}
+2022/08/18 12:25:44 Color: {2 5 {0xc00029ae20 0xc0002a65b0} 10}
+2022/08/18 12:25:44 Product: {5 Dizzo Superb 39 0xc00029ad90 true [{0xc00029ae20 0xc0002a65b0}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc00029ae20 0xc0002a65b0} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc00029ad86}
+2022/08/18 12:25:44 Offer status is  true
+2022/08/18 12:25:44 DB Product: {8 super man Multipurpose watch 15 0xc00029aef0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00029aee6}
+2022/08/18 12:25:44 Product: {8 super man Multipurpose watch 15 0xc00029aef0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00029aee6}
+2022/08/18 12:25:44 Offer status is  true
+2022/08/18 12:25:44 DB Product: {9 super man Multipurpose watch 15 0xc00029b020 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00029b016}
+2022/08/18 12:25:44 Color: {6 9 {0xc00029b0b0 0xc0002a67c0} 20}
+2022/08/18 12:25:44 Color: {5 9 {0xc00029b0c0 0xc0002a67f0} 30}
+2022/08/18 12:25:44 Color: {7 9 {0xc00029b0d0 0xc0002a6810} 25}
+2022/08/18 12:25:44 Product: {9 super man Multipurpose watch 15 0xc00029b020 true [{0xc00029b0b0 0xc0002a67c0} {0xc00029b0c0 0xc0002a67f0} {0xc00029b0d0 0xc0002a6810}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc00029b0b0 0xc0002a67c0} 20} {5 9 {0xc00029b0c0 0xc0002a67f0} 30} {7 9 {0xc00029b0d0 0xc0002a6810} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00029b016}
+2022/08/18 12:25:44 Offer status is  true
+2022/08/18 12:25:44 DB Product: {10 bat man Multipurpose watch 25 0xc00029b1c0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00029b1b6}
+2022/08/18 12:25:44 Color: {11 10 {0xc00029b250 0xc0002a6970} 23}
+2022/08/18 12:25:44 Color: {9 10 {0xc00029b260 0xc0002a69a0} 22}
+2022/08/18 12:25:44 Color: {10 10 {0xc00029b270 0xc0002a69c0} 14}
+2022/08/18 12:25:44 Product: {10 bat man Multipurpose watch 25 0xc00029b1c0 true [{0xc00029b250 0xc0002a6970} {0xc00029b260 0xc0002a69a0} {0xc00029b270 0xc0002a69c0}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc00029b250 0xc0002a6970} 23} {9 10 {0xc00029b260 0xc0002a69a0} 22} {10 10 {0xc00029b270 0xc0002a69c0} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00029b1b6}
+2022/08/18 12:26:08 sqlCondition:  ORDER BY product_id LIMIT $2 OFFSET $3
+2022/08/18 12:26:08 filter: [12 5 0]
+2022/08/18 12:26:08 Offer status is  true
+2022/08/18 12:26:08 DB Product: {4 G-Shock Powerful watch 49 0xc00029b920 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc00029b916}
+2022/08/18 12:26:08 Color: {1 4 {0xc00029b9b0 0xc0002a6e60} 10}
+2022/08/18 12:26:08 Product: {4 G-Shock Powerful watch 49 0xc00029b920 true [{0xc00029b9b0 0xc0002a6e60}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc00029b9b0 0xc0002a6e60} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc00029b916}
+2022/08/18 12:26:08 Offer status is  true
+2022/08/18 12:26:08 DB Product: {5 Dizzo Superb 39 0xc00029ba90 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc00029ba86}
+2022/08/18 12:26:08 Color: {2 5 {0xc00029bb20 0xc0002a6fa0} 10}
+2022/08/18 12:26:08 Product: {5 Dizzo Superb 39 0xc00029ba90 true [{0xc00029bb20 0xc0002a6fa0}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc00029bb20 0xc0002a6fa0} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc00029ba86}
+2022/08/18 12:26:08 Offer status is  true
+2022/08/18 12:26:08 DB Product: {8 super man Multipurpose watch 15 0xc00029bbf0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00029bbe6}
+2022/08/18 12:26:08 Product: {8 super man Multipurpose watch 15 0xc00029bbf0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00029bbe6}
+2022/08/18 12:26:08 Offer status is  true
+2022/08/18 12:26:08 DB Product: {9 super man Multipurpose watch 15 0xc00029bd20 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00029bd16}
+2022/08/18 12:26:08 Color: {6 9 {0xc00029bdb0 0xc0002a71b0} 20}
+2022/08/18 12:26:08 Color: {5 9 {0xc00029bdc0 0xc0002a71e0} 30}
+2022/08/18 12:26:08 Color: {7 9 {0xc00029bdd0 0xc0002a7200} 25}
+2022/08/18 12:26:08 Product: {9 super man Multipurpose watch 15 0xc00029bd20 true [{0xc00029bdb0 0xc0002a71b0} {0xc00029bdc0 0xc0002a71e0} {0xc00029bdd0 0xc0002a7200}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc00029bdb0 0xc0002a71b0} 20} {5 9 {0xc00029bdc0 0xc0002a71e0} 30} {7 9 {0xc00029bdd0 0xc0002a7200} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00029bd16}
+2022/08/18 12:26:08 Offer status is  true
+2022/08/18 12:26:08 DB Product: {10 bat man Multipurpose watch 25 0xc00029bec0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00029beb6}
+2022/08/18 12:26:08 Color: {11 10 {0xc00029bf50 0xc0002a7360} 23}
+2022/08/18 12:26:08 Color: {9 10 {0xc00029bf60 0xc0002a7390} 22}
+2022/08/18 12:26:08 Color: {10 10 {0xc00029bf70 0xc0002a73b0} 14}
+2022/08/18 12:26:08 Product: {10 bat man Multipurpose watch 25 0xc00029bec0 true [{0xc00029bf50 0xc0002a7360} {0xc00029bf60 0xc0002a7390} {0xc00029bf70 0xc0002a73b0}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc00029bf50 0xc0002a7360} 23} {9 10 {0xc00029bf60 0xc0002a7390} 22} {10 10 {0xc00029bf70 0xc0002a73b0} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00029beb6}
+2022/08/18 12:29:03 open ./congig/.env: The system cannot find the path specified.
+2022/08/18 12:29:03 Token generated..Redirecting to Home...
+2022/08/18 12:29:12 sqlCondition:  ORDER BY product_id LIMIT $2 OFFSET $3
+2022/08/18 12:29:12 filter: [12 5 0]
+2022/08/18 12:29:12 Offer status is  true
+2022/08/18 12:29:12 DB Product: {4 G-Shock Powerful watch 49 0xc0000ab670 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc0000ab666}
+2022/08/18 12:29:12 Color: {1 4 {0xc0000abab0 0xc000089650} 10}
+2022/08/18 12:29:12 Product: {4 G-Shock Powerful watch 49 0xc0000ab670 true [{0xc0000abab0 0xc000089650}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc0000abab0 0xc000089650} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc0000ab666}
+2022/08/18 12:29:12 Offer status is  true
+2022/08/18 12:29:12 DB Product: {5 Dizzo Superb 39 0xc0000abb90 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc0000abb86}
+2022/08/18 12:29:12 Color: {2 5 {0xc0000abc20 0xc000089790} 10}
+2022/08/18 12:29:12 Product: {5 Dizzo Superb 39 0xc0000abb90 true [{0xc0000abc20 0xc000089790}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc0000abc20 0xc000089790} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc0000abb86}
+2022/08/18 12:29:12 Offer status is  true
+2022/08/18 12:29:12 DB Product: {8 super man Multipurpose watch 15 0xc0000abcf0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0000abce6}
+2022/08/18 12:29:12 Product: {8 super man Multipurpose watch 15 0xc0000abcf0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0000abce6}
+2022/08/18 12:29:12 Offer status is  true
+2022/08/18 12:29:12 DB Product: {9 super man Multipurpose watch 15 0xc0000abe20 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0000abe16}
+2022/08/18 12:29:12 Color: {6 9 {0xc0000abeb0 0xc0000899a0} 20}
+2022/08/18 12:29:12 Color: {5 9 {0xc0000abec0 0xc0000899d0} 30}
+2022/08/18 12:29:12 Color: {7 9 {0xc0000abed0 0xc0000899f0} 25}
+2022/08/18 12:29:12 Product: {9 super man Multipurpose watch 15 0xc0000abe20 true [{0xc0000abeb0 0xc0000899a0} {0xc0000abec0 0xc0000899d0} {0xc0000abed0 0xc0000899f0}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc0000abeb0 0xc0000899a0} 20} {5 9 {0xc0000abec0 0xc0000899d0} 30} {7 9 {0xc0000abed0 0xc0000899f0} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0000abe16}
+2022/08/18 12:29:12 Offer status is  true
+2022/08/18 12:29:12 DB Product: {10 bat man Multipurpose watch 25 0xc0000abfc0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0000abfb6}
+2022/08/18 12:29:12 Color: {11 10 {0xc00029e050 0xc000089b50} 23}
+2022/08/18 12:29:12 Color: {9 10 {0xc00029e060 0xc000089b80} 22}
+2022/08/18 12:29:12 Color: {10 10 {0xc00029e070 0xc000089ba0} 14}
+2022/08/18 12:29:12 Product: {10 bat man Multipurpose watch 25 0xc0000abfc0 true [{0xc00029e050 0xc000089b50} {0xc00029e060 0xc000089b80} {0xc00029e070 0xc000089ba0}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc00029e050 0xc000089b50} 23} {9 10 {0xc00029e060 0xc000089b80} 22} {10 10 {0xc00029e070 0xc000089ba0} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0000abfb6}
+2022/08/18 12:29:23 sqlCondition:  ORDER BY product_id LIMIT $2 OFFSET $3
+2022/08/18 12:29:23 filter: [12 5 0]
+2022/08/18 12:29:23 Offer status is  true
+2022/08/18 12:29:23 DB Product: {4 G-Shock Powerful watch 49 0xc00018bd20 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc00018bd16}
+2022/08/18 12:29:23 Color: {1 4 {0xc00018bdb0 0xc0001854a0} 10}
+2022/08/18 12:29:23 Product: {4 G-Shock Powerful watch 49 0xc00018bd20 true [{0xc00018bdb0 0xc0001854a0}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc00018bdb0 0xc0001854a0} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc00018bd16}
+2022/08/18 12:29:23 Offer status is  true
+2022/08/18 12:29:23 DB Product: {5 Dizzo Superb 39 0xc00018be90 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc00018be86}
+2022/08/18 12:29:23 Color: {2 5 {0xc00018bf20 0xc0001855e0} 10}
+2022/08/18 12:29:23 Product: {5 Dizzo Superb 39 0xc00018be90 true [{0xc00018bf20 0xc0001855e0}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc00018bf20 0xc0001855e0} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc00018be86}
+2022/08/18 12:29:23 Offer status is  true
+2022/08/18 12:29:23 DB Product: {8 super man Multipurpose watch 15 0xc00018bff0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00018bfe6}
+2022/08/18 12:29:23 Product: {8 super man Multipurpose watch 15 0xc00018bff0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc00018bfe6}
+2022/08/18 12:29:23 Offer status is  true
+2022/08/18 12:29:23 DB Product: {9 super man Multipurpose watch 15 0xc000266120 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000266116}
+2022/08/18 12:29:23 Color: {6 9 {0xc0002661b0 0xc0001857f0} 20}
+2022/08/18 12:29:23 Color: {5 9 {0xc0002661c0 0xc000185820} 30}
+2022/08/18 12:29:23 Color: {7 9 {0xc0002661d0 0xc000185840} 25}
+2022/08/18 12:29:23 Product: {9 super man Multipurpose watch 15 0xc000266120 true [{0xc0002661b0 0xc0001857f0} {0xc0002661c0 0xc000185820} {0xc0002661d0 0xc000185840}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc0002661b0 0xc0001857f0} 20} {5 9 {0xc0002661c0 0xc000185820} 30} {7 9 {0xc0002661d0 0xc000185840} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000266116}
+2022/08/18 12:29:23 Offer status is  true
+2022/08/18 12:29:23 DB Product: {10 bat man Multipurpose watch 25 0xc0002662c0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0002662b6}
+2022/08/18 12:29:23 Color: {11 10 {0xc000266350 0xc0001859a0} 23}
+2022/08/18 12:29:23 Color: {9 10 {0xc000266360 0xc0001859d0} 22}
+2022/08/18 12:29:23 Color: {10 10 {0xc000266370 0xc0001859f0} 14}
+2022/08/18 12:29:23 Product: {10 bat man Multipurpose watch 25 0xc0002662c0 true [{0xc000266350 0xc0001859a0} {0xc000266360 0xc0001859d0} {0xc000266370 0xc0001859f0}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc000266350 0xc0001859a0} 23} {9 10 {0xc000266360 0xc0001859d0} 22} {10 10 {0xc000266370 0xc0001859f0} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0002662b6}
+2022/08/18 12:29:36 Logout Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjpmYWxzZSwiZXhwIjoxNjYwODA2MjQzLCJpZCI6IjEyIn0.YRoTEE9fnc05JPu_XPsbRaAQDUkwQqLqT-mVMgwMs-0
+
+2022/08/18 15:26:19 Unauthorized token
+2022/08/18 15:26:19 sqlCondition:  ORDER BY product_id LIMIT $1 OFFSET $2
+2022/08/18 15:26:19 filter: [5 0]
+2022/08/18 15:26:21 Offer status is  true
+2022/08/18 15:26:21 DB Product: {4 G-Shock Powerful watch 49 0xc000015770 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc000015766}
+2022/08/18 15:26:21 Color: {1 4 {0xc000181490 0xc000189020} 10}
+2022/08/18 15:26:21 Product: {4 G-Shock Powerful watch 49 0xc000015770 true [{0xc000181490 0xc000189020}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc000181490 0xc000189020} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc000015766}
+2022/08/18 15:26:21 Offer status is  true
+2022/08/18 15:26:21 DB Product: {5 Dizzo Superb 39 0xc000181570 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc000181566}
+2022/08/18 15:26:21 Color: {2 5 {0xc000181600 0xc000189160} 10}
+2022/08/18 15:26:21 Product: {5 Dizzo Superb 39 0xc000181570 true [{0xc000181600 0xc000189160}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc000181600 0xc000189160} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc000181566}
+2022/08/18 15:26:21 Offer status is  true
+2022/08/18 15:26:21 DB Product: {8 super man Multipurpose watch 15 0xc0001816d0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0001816c6}
+2022/08/18 15:26:21 Product: {8 super man Multipurpose watch 15 0xc0001816d0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0001816c6}
+2022/08/18 15:26:21 Offer status is  true
+2022/08/18 15:26:21 DB Product: {9 super man Multipurpose watch 15 0xc000181800 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0001817f6}
+2022/08/18 15:26:21 Color: {6 9 {0xc000181890 0xc000189370} 20}
+2022/08/18 15:26:21 Color: {5 9 {0xc0001818a0 0xc0001893a0} 30}
+2022/08/18 15:26:21 Color: {7 9 {0xc0001818b0 0xc0001893c0} 25}
+2022/08/18 15:26:21 Product: {9 super man Multipurpose watch 15 0xc000181800 true [{0xc000181890 0xc000189370} {0xc0001818a0 0xc0001893a0} {0xc0001818b0 0xc0001893c0}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc000181890 0xc000189370} 20} {5 9 {0xc0001818a0 0xc0001893a0} 30} {7 9 {0xc0001818b0 0xc0001893c0} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc0001817f6}
+2022/08/18 15:26:21 Offer status is  true
+2022/08/18 15:26:21 DB Product: {10 bat man Multipurpose watch 25 0xc0001819a0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000181996}
+2022/08/18 15:26:21 Color: {11 10 {0xc000181a30 0xc000189520} 23}
+2022/08/18 15:26:21 Color: {9 10 {0xc000181a40 0xc000189550} 22}
+2022/08/18 15:26:21 Color: {10 10 {0xc000181a50 0xc000189570} 14}
+2022/08/18 15:26:21 Product: {10 bat man Multipurpose watch 25 0xc0001819a0 true [{0xc000181a30 0xc000189520} {0xc000181a40 0xc000189550} {0xc000181a50 0xc000189570}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc000181a30 0xc000189520} 23} {9 10 {0xc000181a40 0xc000189550} 22} {10 10 {0xc000181a50 0xc000189570} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000181996}
+2022/08/18 15:26:46 Unauthorized token
+2022/08/18 15:26:46 sqlCondition:  ORDER BY product_id LIMIT $1 OFFSET $2
+2022/08/18 15:26:46 filter: [5 0]
+2022/08/18 15:26:46 Offer status is  true
+2022/08/18 15:26:46 DB Product: {4 G-Shock Powerful watch 49 0xc000260bc0 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc000260bb6}
+2022/08/18 15:26:46 Color: {1 4 {0xc000260c50 0xc000189ed0} 10}
+2022/08/18 15:26:46 Product: {4 G-Shock Powerful watch 49 0xc000260bc0 true [{0xc000260c50 0xc000189ed0}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc000260c50 0xc000189ed0} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc000260bb6}
+2022/08/18 15:26:46 Offer status is  true
+2022/08/18 15:26:46 DB Product: {5 Dizzo Superb 39 0xc000260d30 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc000260d26}
+2022/08/18 15:26:46 Color: {2 5 {0xc000260dc0 0xc000320010} 10}
+2022/08/18 15:26:46 Product: {5 Dizzo Superb 39 0xc000260d30 true [{0xc000260dc0 0xc000320010}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc000260dc0 0xc000320010} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc000260d26}
+2022/08/18 15:26:46 Offer status is  true
+2022/08/18 15:26:46 DB Product: {8 super man Multipurpose watch 15 0xc000260e90 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000260e86}
+2022/08/18 15:26:46 Product: {8 super man Multipurpose watch 15 0xc000260e90 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000260e86}
+2022/08/18 15:26:46 Offer status is  true
+2022/08/18 15:26:46 DB Product: {9 super man Multipurpose watch 15 0xc000260fc0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000260fb6}
+2022/08/18 15:26:46 Color: {6 9 {0xc000261050 0xc000320220} 20}
+2022/08/18 15:26:46 Color: {5 9 {0xc000261060 0xc000320250} 30}
+2022/08/18 15:26:46 Color: {7 9 {0xc000261070 0xc000320270} 25}
+2022/08/18 15:26:46 Product: {9 super man Multipurpose watch 15 0xc000260fc0 true [{0xc000261050 0xc000320220} {0xc000261060 0xc000320250} {0xc000261070 0xc000320270}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc000261050 0xc000320220} 20} {5 9 {0xc000261060 0xc000320250} 30} {7 9 {0xc000261070 0xc000320270} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000260fb6}
+2022/08/18 15:26:46 Offer status is  true
+2022/08/18 15:26:46 DB Product: {10 bat man Multipurpose watch 25 0xc000261160 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000261156}
+2022/08/18 15:26:46 Color: {11 10 {0xc0002611f0 0xc0003203d0} 23}
+2022/08/18 15:26:46 Color: {9 10 {0xc000261200 0xc000320400} 22}
+2022/08/18 15:26:46 Color: {10 10 {0xc000261210 0xc000320420} 14}
+2022/08/18 15:26:46 Product: {10 bat man Multipurpose watch 25 0xc000261160 true [{0xc0002611f0 0xc0003203d0} {0xc000261200 0xc000320400} {0xc000261210 0xc000320420}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc0002611f0 0xc0003203d0} 23} {9 10 {0xc000261200 0xc000320400} 22} {10 10 {0xc000261210 0xc000320420} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000261156}
+2022/08/18 15:27:15 Unauthorized token
+2022/08/18 15:27:15 sqlCondition:  ORDER BY product_id LIMIT $1 OFFSET $2
+2022/08/18 15:27:15 filter: [5 0]
+2022/08/18 15:27:15 Offer status is  true
+2022/08/18 15:27:15 DB Product: {4 G-Shock Powerful watch 49 0xc000261850 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc000261846}
+2022/08/18 15:27:15 Color: {1 4 {0xc0002618e0 0xc000320850} 10}
+2022/08/18 15:27:15 Product: {4 G-Shock Powerful watch 49 0xc000261850 true [{0xc0002618e0 0xc000320850}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc0002618e0 0xc000320850} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} 0xc000261846}
+2022/08/18 15:27:15 Offer status is  true
+2022/08/18 15:27:15 DB Product: {5 Dizzo Superb 39 0xc0002619c0 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc0002619b6}
+2022/08/18 15:27:15 Color: {2 5 {0xc000261a50 0xc000320990} 10}
+2022/08/18 15:27:15 Product: {5 Dizzo Superb 39 0xc0002619c0 true [{0xc000261a50 0xc000320990}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc000261a50 0xc000320990} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} 0xc0002619b6}
+2022/08/18 15:27:15 Offer status is  true
+2022/08/18 15:27:15 DB Product: {8 super man Multipurpose watch 15 0xc000261b20 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000261b16}
+2022/08/18 15:27:15 Product: {8 super man Multipurpose watch 15 0xc000261b20 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000261b16}
+2022/08/18 15:27:15 Offer status is  true
+2022/08/18 15:27:15 DB Product: {9 super man Multipurpose watch 15 0xc000261c50 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000261c46}
+2022/08/18 15:27:15 Color: {6 9 {0xc000261ce0 0xc000320ba0} 20}
+2022/08/18 15:27:15 Color: {5 9 {0xc000261cf0 0xc000320bd0} 30}
+2022/08/18 15:27:15 Color: {7 9 {0xc000261d00 0xc000320bf0} 25}
+2022/08/18 15:27:15 Product: {9 super man Multipurpose watch 15 0xc000261c50 true [{0xc000261ce0 0xc000320ba0} {0xc000261cf0 0xc000320bd0} {0xc000261d00 0xc000320bf0}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc000261ce0 0xc000320ba0} 20} {5 9 {0xc000261cf0 0xc000320bd0} 30} {7 9 {0xc000261d00 0xc000320bf0} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000261c46}
+2022/08/18 15:27:15 Offer status is  true
+2022/08/18 15:27:15 DB Product: {10 bat man Multipurpose watch 25 0xc000261df0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000261de6}
+2022/08/18 15:27:15 Color: {11 10 {0xc000261e80 0xc000320d50} 23}
+2022/08/18 15:27:15 Color: {9 10 {0xc000261e90 0xc000320d80} 22}
+2022/08/18 15:27:15 Color: {10 10 {0xc000261ea0 0xc000320da0} 14}
+2022/08/18 15:27:15 Product: {10 bat man Multipurpose watch 25 0xc000261df0 true [{0xc000261e80 0xc000320d50} {0xc000261e90 0xc000320d80} {0xc000261ea0 0xc000320da0}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc000261e80 0xc000320d50} 23} {9 10 {0xc000261e90 0xc000320d80} 22} {10 10 {0xc000261ea0 0xc000320da0} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} 0xc000261de6}
+2022/08/18 15:28:20 Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2NjA5MDMxMDAsImlkIjoiMSJ9.ctEQwK6AZaiFrboafCoR1zmzZ1phszfhbuam4QgSCF4
+2022/08/18 15:28:54 ID: 1
+2022/08/18 15:28:54 Admin: {1 admin 31323334d41d8cd98f00b204e9800998ecf8427e}
+2022/08/18 15:28:54 sqlCondition:  ORDER BY product_id LIMIT $1 OFFSET $2
+2022/08/18 15:28:54 filter: [5 0]
+2022/08/18 15:28:54 Offer status is  true
+2022/08/18 15:28:54 Offer: {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}}
+2022/08/18 15:28:54 Offer Price: 0xc0000a3180
+2022/08/18 15:28:54 Product half: {4 G-Shock Powerful watch 49 0xc0000a3180 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} <nil>}
+2022/08/18 15:28:54 Product ID: 4
+2022/08/18 15:28:54 Products Map: map[]
+2022/08/18 15:28:54 SQL Condition: 
+2022/08/18 15:28:54 Filter 2: [4]
+2022/08/18 15:28:54 Product ID: 4
+2022/08/18 15:28:54 InventoryRows: &{0xc00009c900 0x522540 0xc000398be0 <nil> <nil> {{0 0} 0 0 0 0} false <nil> []}
+2022/08/18 15:28:54 Color: {1 4 {0xc0000a35f0 0xc00008c810} 10}
+2022/08/18 15:28:54 Offer status is  true
+2022/08/18 15:28:54 Offer: {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}}
+2022/08/18 15:28:54 Offer Price: 0xc0000a36b0
+2022/08/18 15:28:54 Product half: {5 Dizzo Superb 39 0xc0000a36b0 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} <nil>}
+2022/08/18 15:28:54 Product ID: 5
+2022/08/18 15:28:54 Products Map: map[4:{4 G-Shock Powerful watch 49 0xc0000a3180 true [{0xc0000a35f0 0xc00008c810}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc0000a35f0 0xc00008c810} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} <nil>}]
+2022/08/18 15:28:54 SQL Condition: 
+2022/08/18 15:28:54 Filter 2: [5]
+2022/08/18 15:28:54 Product ID: 5
+2022/08/18 15:28:54 InventoryRows: &{0xc00009c900 0x522540 0xc000398d20 <nil> <nil> {{0 0} 0 0 0 0} false <nil> []}
+2022/08/18 15:28:54 Color: {2 5 {0xc0000a3790 0xc00008c970} 10}
+2022/08/18 15:28:54 Offer status is  true
+2022/08/18 15:28:54 Offer: {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}}
+2022/08/18 15:28:54 Offer Price: 0xc0000a3840
+2022/08/18 15:28:54 Product half: {8 super man Multipurpose watch 15 0xc0000a3840 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} <nil>}
+2022/08/18 15:28:54 Product ID: 8
+2022/08/18 15:28:54 Products Map: map[4:{4 G-Shock Powerful watch 49 0xc0000a3180 true [{0xc0000a35f0 0xc00008c810}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc0000a35f0 0xc00008c810} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} <nil>} 5:{5 Dizzo Superb 39 0xc0000a36b0 true [{0xc0000a3790 0xc00008c970}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc0000a3790 0xc00008c970} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} <nil>}]
+2022/08/18 15:28:54 SQL Condition: 
+2022/08/18 15:28:54 Filter 2: [8]
+2022/08/18 15:28:54 Product ID: 8
+2022/08/18 15:28:54 InventoryRows: &{0xc00009c900 0x522540 0xc000398e60 <nil> <nil> {{0 0} 0 0 0 0} false <nil> []}
+2022/08/18 15:28:54 No colors
+2022/08/18 15:28:54 Offer status is  true
+2022/08/18 15:28:54 Offer: {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}}
+2022/08/18 15:28:54 Offer Price: 0xc0000a39f0
+2022/08/18 15:28:54 Product half: {9 super man Multipurpose watch 15 0xc0000a39f0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} <nil>}
+2022/08/18 15:28:54 Product ID: 9
+2022/08/18 15:28:54 Products Map: map[4:{4 G-Shock Powerful watch 49 0xc0000a3180 true [{0xc0000a35f0 0xc00008c810}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc0000a35f0 0xc00008c810} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} <nil>} 5:{5 Dizzo Superb 39 0xc0000a36b0 true [{0xc0000a3790 0xc00008c970}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc0000a3790 0xc00008c970} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} <nil>}]
+2022/08/18 15:28:54 SQL Condition: 
+2022/08/18 15:28:54 Filter 2: [9]
+2022/08/18 15:28:54 Product ID: 9
+2022/08/18 15:28:54 InventoryRows: &{0xc00009c900 0x522540 0xc000398fa0 <nil> <nil> {{0 0} 0 0 0 0} false <nil> []}
+2022/08/18 15:28:54 Color: {6 9 {0xc0000a3af0 0xc00008cc20} 20}
+2022/08/18 15:28:54 Offer status is  true
+2022/08/18 15:28:54 Offer: {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}}
+2022/08/18 15:28:54 Offer Price: 0xc0000a3bc0
+2022/08/18 15:28:54 Product half: {10 bat man Multipurpose watch 25 0xc0000a3bc0 true [] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} <nil>}
+2022/08/18 15:28:54 Product ID: 10
+2022/08/18 15:28:54 Products Map: map[4:{4 G-Shock Powerful watch 49 0xc0000a3180 true [{0xc0000a35f0 0xc00008c810}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc0000a35f0 0xc00008c810} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} <nil>} 5:{5 Dizzo Superb 39 0xc0000a36b0 true [{0xc0000a3790 0xc00008c970}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc0000a3790 0xc00008c970} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} <nil>} 9:{9 super man Multipurpose watch 15 0xc0000a39f0 true [{0xc0000a3af0 0xc00008cc20} {0xc0000a3b00 0xc00008cc50} {0xc0000a3b10 0xc00008cc70}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc0000a3af0 0xc00008cc20} 20} {5 9 {0xc0000a3b00 0xc00008cc50} 30} {7 9 {0xc0000a3b10 0xc00008cc70} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} <nil>}]
+2022/08/18 15:28:54 SQL Condition: 
+2022/08/18 15:28:54 Filter 2: [10]
+2022/08/18 15:28:54 Product ID: 10
+2022/08/18 15:28:54 InventoryRows: &{0xc00009c900 0x522540 0xc000399180 <nil> <nil> {{0 0} 0 0 0 0} false <nil> []}
+2022/08/18 15:28:54 Color: {11 10 {0xc0000a3d10 0xc00008ce30} 23}
+2022/08/18 15:28:54 Handler Products: map[4:{4 G-Shock Powerful watch 49 0xc0000a3180 true [{0xc0000a35f0 0xc00008c810}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc0000a35f0 0xc00008c810} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} <nil>} 5:{5 Dizzo Superb 39 0xc0000a36b0 true [{0xc0000a3790 0xc00008c970}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc0000a3790 0xc00008c970} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} <nil>} 9:{9 super man Multipurpose watch 15 0xc0000a39f0 true [{0xc0000a3af0 0xc00008cc20} {0xc0000a3b00 0xc00008cc50} {0xc0000a3b10 0xc00008cc70}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc0000a3af0 0xc00008cc20} 20} {5 9 {0xc0000a3b00 0xc00008cc50} 30} {7 9 {0xc0000a3b10 0xc00008cc70} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} <nil>} 10:{10 bat man Multipurpose watch 25 0xc0000a3bc0 true [{0xc0000a3d10 0xc00008ce30} {0xc0000a3d20 0xc00008ce60} {0xc0000a3d30 0xc00008ce80}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc0000a3d10 0xc00008ce30} 23} {9 10 {0xc0000a3d20 0xc00008ce60} 22} {10 10 {0xc0000a3d30 0xc00008ce80} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} <nil>}]
+2022/08/18 15:29:40 ID: 1
+2022/08/18 15:29:40 Admin: {1 admin 31323334d41d8cd98f00b204e9800998ecf8427e}
+2022/08/18 15:29:40 sqlCondition:  AND product_name ILIKE $1 ORDER BY product_id LIMIT $2 OFFSET $3
+2022/08/18 15:29:40 filter: [%diz% 5 0]
+2022/08/18 15:29:40 Offer status is  true
+2022/08/18 15:29:40 Offer: {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}}
+2022/08/18 15:29:40 Offer Price: 0xc000015c40
+2022/08/18 15:29:40 Product half: {5 Dizzo Superb 39 0xc000015c40 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} <nil>}
+2022/08/18 15:29:40 Product ID: 5
+2022/08/18 15:29:40 Products Map: map[]
+2022/08/18 15:29:40 SQL Condition: 
+2022/08/18 15:29:40 Filter 2: [5]
+2022/08/18 15:29:40 Product ID: 5
+2022/08/18 15:29:40 InventoryRows: &{0xc00009c900 0x522540 0xc000073900 <nil> <nil> {{0 0} 0 0 0 0} false <nil> []}
+2022/08/18 15:29:40 Color: {2 5 {0xc000015d00 0xc00004f370} 10}
+2022/08/18 15:29:40 Handler Products: map[5:{5 Dizzo Superb 39 0xc000015c40 true [{0xc000015d00 0xc00004f370}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc000015d00 0xc00004f370} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} <nil>}]
+2022/08/18 15:29:53 ID: 1
+2022/08/18 15:29:53 Admin: {1 admin 31323334d41d8cd98f00b204e9800998ecf8427e}
+2022/08/18 15:29:53 sqlCondition:  AND product_name ILIKE $1 OR product_name ILIKE $2 ORDER BY product_id LIMIT $3 OFFSET $4
+2022/08/18 15:29:53 filter: [%diz% %g% 5 0]
+2022/08/18 15:29:53 Offer status is  true
+2022/08/18 15:29:53 Offer: {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}}
+2022/08/18 15:29:53 Offer Price: 0xc0003dc4b0
+2022/08/18 15:29:53 Product half: {4 G-Shock Powerful watch 49 0xc0003dc4b0 true [] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} <nil>}
+2022/08/18 15:29:53 Product ID: 4
+2022/08/18 15:29:53 Products Map: map[]
+2022/08/18 15:29:53 SQL Condition: 
+2022/08/18 15:29:53 Filter 2: [4]
+2022/08/18 15:29:53 Product ID: 4
+2022/08/18 15:29:53 InventoryRows: &{0xc00009c900 0x522540 0xc0003997c0 <nil> <nil> {{0 0} 0 0 0 0} false <nil> []}
+2022/08/18 15:29:53 Color: {1 4 {0xc0003dc570 0xc00008d480} 10}
+2022/08/18 15:29:53 Offer status is  true
+2022/08/18 15:29:53 Offer: {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}}
+2022/08/18 15:29:53 Offer Price: 0xc0003dc630
+2022/08/18 15:29:53 Product half: {5 Dizzo Superb 39 0xc0003dc630 true [] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} <nil>}
+2022/08/18 15:29:53 Product ID: 5
+2022/08/18 15:29:53 Products Map: map[4:{4 G-Shock Powerful watch 49 0xc0003dc4b0 true [{0xc0003dc570 0xc00008d480}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc0003dc570 0xc00008d480} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} <nil>}]
+2022/08/18 15:29:53 SQL Condition: 
+2022/08/18 15:29:53 Filter 2: [5]
+2022/08/18 15:29:53 Product ID: 5
+2022/08/18 15:29:53 InventoryRows: &{0xc00009c900 0x522540 0xc000399900 <nil> <nil> {{0 0} 0 0 0 0} false <nil> []}
+2022/08/18 15:29:53 Color: {2 5 {0xc0003dc710 0xc00008d5e0} 10}
+2022/08/18 15:29:53 Handler Products: map[4:{4 G-Shock Powerful watch 49 0xc0003dc4b0 true [{0xc0003dc570 0xc00008d480}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc0003dc570 0xc00008d480} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} <nil>} 5:{5 Dizzo Superb 39 0xc0003dc630 true [{0xc0003dc710 0xc00008d5e0}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc0003dc710 0xc00008d5e0} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} <nil>}]
+2022/08/18 17:42:04 ID: 1
+2022/08/18 17:42:06 Admin: {1 admin 31323334d41d8cd98f00b204e9800998ecf8427e}
+2022/08/18 17:42:06 pq: column "products.product_id" must appear in the GROUP BY clause or be used in an aggregate function
+2022/08/18 17:42:06 Error: pq: column "products.product_id" must appear in the GROUP BY clause or be used in an aggregate function
+2022/08/18 17:42:15 ID: 1
+2022/08/18 17:42:15 Admin: {1 admin 31323334d41d8cd98f00b204e9800998ecf8427e}
+2022/08/18 17:42:15 pq: column "products.product_id" must appear in the GROUP BY clause or be used in an aggregate function
+2022/08/18 17:42:15 Error: pq: column "products.product_id" must appear in the GROUP BY clause or be used in an aggregate function
+2022/08/18 17:48:55 ID: 1
+2022/08/18 17:48:56 Admin: {1 admin 31323334d41d8cd98f00b204e9800998ecf8427e}
+2022/08/18 17:48:56 pq: column "o.offer" must appear in the GROUP BY clause or be used in an aggregate function
+2022/08/18 17:48:56 Error: pq: column "o.offer" must appear in the GROUP BY clause or be used in an aggregate function
+2022/08/18 17:50:48 ID: 1
+2022/08/18 17:50:50 Admin: {1 admin 31323334d41d8cd98f00b204e9800998ecf8427e}
+2022/08/18 17:50:50 Offer status is  true
+2022/08/18 17:50:50 Offer status is  true
+2022/08/18 17:50:50 Offer status is  true
+2022/08/18 17:50:50 No colors
+2022/08/18 17:50:50 Offer status is  true
+2022/08/18 17:50:50 Offer status is  true
+2022/08/18 17:50:50 Handler Products: map[4:{4 G-Shock Powerful watch 49 0xc00028aa20 true [{0xc000014f30 0xc00004ef50}] {1 4 image.jpg} {1 Casio Multinational Brand} {1 Men Men Collections} {1 Digital Watch Digital Watches} [{1 4 {0xc000014f30 0xc00004ef50} 10}] {12 Flash sale 30 08-01-2022 08-31-2022 true {1 Men Men Collections}} <nil>} 5:{5 Dizzo Superb 39 0xc000014ff0 true [{0xc000015080 0xc00004f090}] {2 5 image.jpg} {2 Rolex Premium Brand} {2 Women Women Collections} {2 Analogue Watch Analogue Watches} [{2 5 {0xc000015080 0xc00004f090} 10}] {10 Bumper Offer 50 08-01-2022 08-31-2022 true {2 Women Women Collections}} <nil>} 9:{9 super man Multipurpose watch 15 0xc000015260 true [{0xc0000152e0 0xc00004f2c0} {0xc0000152f0 0xc00004f2f0} {0xc000015300 0xc00004f310}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{6 9 {0xc0000152e0 0xc00004f2c0} 20} {5 9 {0xc0000152f0 0xc00004f2f0} 30} {7 9 {0xc000015300 0xc00004f310} 25}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} <nil>} 10:{10 bat man Multipurpose watch 25 0xc0000153b0 true [{0xc000015430 0xc00004f430} {0xc000015440 0xc00004f460} {0xc000015450 0xc00004f480}] {0 0 } {2 Rolex Premium Brand} {3 Kids Kids Favourite Collections} {3 Sports Watch Sports Watches} [{11 10 {0xc000015430 0xc00004f430} 23} {9 10 {0xc000015440 0xc00004f460} 22} {10 10 {0xc000015450 0xc00004f480} 14}] {11 Super Sale 40 08-01-2022 08-31-2022 true {3 Kids Kids Favourite Collections}} <nil>}]

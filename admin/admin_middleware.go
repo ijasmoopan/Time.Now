@@ -3,20 +3,18 @@ package admin
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"os"
+	"strings"
 
-	// "database/sql"
 	"log"
 	"net/http"
-	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	// "github.com/go-chi/chi/v5"
 	"github.com/ijasmoopan/Time.Now/models"
 	"github.com/ijasmoopan/Time.Now/usecases"
 	"github.com/joho/godotenv"
 )
-
 
 // IsAdminAuthorized for authorizing admin by middleware.
 func (repo *Repo) IsAdminAuthorized(handler http.Handler) http.Handler {
@@ -26,23 +24,31 @@ func (repo *Repo) IsAdminAuthorized(handler http.Handler) http.Handler {
 		if err != nil {
 			panic(err)
 		}
-		key := os.Getenv("SECRETKEY")
+		key := []byte(os.Getenv("SECRETKEY"))
 
 		file := usecases.Logger()
 		log.SetOutput(file)
 
-		cookie, err := r.Cookie("jwt")
-		if err != nil {
+		var reqToken string
+		if r.Header["Authorization"] != nil {
+			reqToken = r.Header.Get("Authorization")
+			splitToken := strings.Split(reqToken, "Bearer ")
+			reqToken = splitToken[1]
+		} else {
+			log.Println("Token not found")
 			w.Header().Add("Content-Type", "application/json")
 			w.WriteHeader(http.StatusBadRequest)
 			message := map[string]interface{}{
-				"msg": "There is no Cookie",
+				"msg": "Token Not Found",
 			}
 			json.NewEncoder(w).Encode(&message)
 			return
 		}
-		token, err := jwt.ParseWithClaims(cookie.Value, &jwt.StandardClaims{}, func(token *jwt.Token)(interface{}, error){
-			return []byte(key), nil
+		token, err := jwt.Parse(reqToken, func(token *jwt.Token)(interface{}, error){
+			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+				return nil, fmt.Errorf("There was an error while parsing")
+			}
+			return key, nil
 		})
 		if err != nil {
 			w.Header().Add("Content-Type", "application/json")
@@ -53,21 +59,32 @@ func (repo *Repo) IsAdminAuthorized(handler http.Handler) http.Handler {
 			json.NewEncoder(w).Encode(&message)
 			return
 		}
-		claims := token.Claims.(*jwt.StandardClaims)
-
-		var admin models.Admin
-		admin, err = repo.admin.DBGetAdminByID(claims.Issuer)
-		if err != nil {
+		if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+			id := claims["id"]
+			log.Println("ID:", id)
+			var admin models.Admin
+			admin, err = repo.admin.DBGetAdminByID(id.(string))
+			if err != nil {
+				w.Header().Add("Content-Type", "application/json")
+				w.WriteHeader(http.StatusBadRequest)
+				message := map[string]interface{}{
+					"msg": "Admin Not Found",
+				}
+				json.NewEncoder(w).Encode(&message)
+				return
+			}
+			log.Println("Admin:", admin)
+			ctx := context.WithValue(r.Context(), models.CtxKey{}, admin)
+			handler.ServeHTTP(w, r.WithContext(ctx))
+		} else {
+			log.Println("Admin not found")
 			w.Header().Add("Content-Type", "application/json")
 			w.WriteHeader(http.StatusBadRequest)
 			message := map[string]interface{}{
 				"msg": "Admin Not Found",
 			}
 			json.NewEncoder(w).Encode(&message)
-			return
 		}
-		ctx := context.WithValue(r.Context(), models.CtxKey{}, admin)
-		handler.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
 
@@ -78,13 +95,17 @@ func (repo *Repo) DeletingJWT(handler http.Handler) http.Handler {
 		file := usecases.Logger()
 		log.SetOutput(file)
 
-		cookie := http.Cookie{
-			Name: "jwt",
-			Value: "",
-			Expires: time.Now().Add(-time.Hour),
-			HttpOnly: true,
+		// cookie := http.Cookie{
+		// 	Name: "jwt",
+		// 	Value: "",
+		// 	Expires: time.Now().Add(-time.Hour),
+		// 	HttpOnly: true,
+		// }
+		// http.SetCookie(w, &cookie)
+
+		if r.Header["Authorization"] != nil || r.Header["Authorization"] == nil {
+			r.Header["Authorization"] = []string{}
 		}
-		http.SetCookie(w, &cookie)
 		
 		handler.ServeHTTP(w, r)
 	})

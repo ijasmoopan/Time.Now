@@ -8,7 +8,6 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/ijasmoopan/Time.Now/models"
@@ -26,6 +25,7 @@ func (repo *Repo) AdminLogin(w http.ResponseWriter, r *http.Request) {
 
 	admin, err := repo.admin.DBGetAdmin(adminLogin)
 	if err != nil {
+		log.Println("Incorrect Name or Password")
 		w.Header().Add("Content-Type", "application/json")
 		w.WriteHeader(http.StatusBadRequest)
 		message := map[string]interface{}{
@@ -37,18 +37,20 @@ func (repo *Repo) AdminLogin(w http.ResponseWriter, r *http.Request) {
 	id := strconv.Itoa(int(admin.ID))
 	token := GeneratingToken(id)
 
-	cookie := http.Cookie{
-		Name:     "jwt",
-		Value:    token,
-		Expires:  time.Now().Add(time.Hour * 24),
-		HttpOnly: true,
-	}
-	http.SetCookie(w, &cookie)
+	log.Println("Token:", token)
+	// cookie := http.Cookie{
+	// 	Name:     "jwt",
+	// 	Value:    token,
+	// 	Expires:  time.Now().Add(time.Hour * 24),
+	// 	HttpOnly: true,
+	// }
+	// http.SetCookie(w, &cookie)
 
 	w.Header().Add("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	message := map[string]interface{}{
 		"msg": "Successfully Logged In",
+		"token": token,
 	}
 	json.NewEncoder(w).Encode(&message)
 }
@@ -68,11 +70,11 @@ func (repo *Repo) AdminLogout(w http.ResponseWriter, r *http.Request) {
 func (repo *Repo) GetAdminByID(w http.ResponseWriter, r *http.Request) {
 
 	log.Println("GetAdminById...")
-	adminID := chi.URLParam(r, "adminID")
+	ID := chi.URLParam(r, "adminID")
 
-	log.Println("Admin Id:", adminID)
+	log.Println("Admin Id:", ID)
 
-	admin, err := repo.admin.DBGetAdminByID(adminID)
+	admin, err := repo.admin.DBGetAdminByID(ID)
 	if err != nil {
 		log.Println("Error in DBGetAdminById: ", err)
 		w.Header().Add("Content-Type", "application/json")
@@ -112,9 +114,12 @@ func (repo *Repo) AdminHome(w http.ResponseWriter, r *http.Request) {
 func (repo *Repo) GetUsers(w http.ResponseWriter, r *http.Request) {
 
 	var userRequest models.UserRequest
+	userRequest.UserID = r.URL.Query().Get("user")
+	userRequest.Email = r.URL.Query().Get("email")
+	userRequest.Gender = r.URL.Query().Get("gender")
+	userRequest.Status = r.URL.Query().Get("status")
 
-	json.NewDecoder(r.Body).Decode(&userRequest)
-	defer r.Body.Close()
+	log.Println("user request:", userRequest)
 
 	users, err := repo.users.DBGetUsers(userRequest)
 	if err != nil {
@@ -218,10 +223,20 @@ func (repo *Repo) DeleteUser(w http.ResponseWriter, r *http.Request) {
 func (repo *Repo) GetProducts(w http.ResponseWriter, r *http.Request) {
 
 	var request models.AdminProductRequest
-	json.NewDecoder(r.Body).Decode(&request)
-	defer r.Body.Close()
 
-	products, err := repo.products.DBGetProducts(request)
+	request.Product = r.URL.Query().Get("product")
+	request.Category = r.URL.Query().Get("category")
+	request.Subcategory = r.URL.Query().Get("subcategory")
+	request.Brand = r.URL.Query().Get("brand")
+	request.Color = r.URL.Query().Get("color")
+	request.Status = r.URL.Query().Get("status")
+	request.PriceMin = r.URL.Query().Get("pricemin")
+	request.PriceMax = r.URL.Query().Get("pricemax")
+	request.Quantity = r.URL.Query().Get("quantity")
+	request.Page = r.URL.Query().Get("page")
+	request.Offer = r.URL.Query().Get("offer")
+
+	products, totalProducts, err := repo.products.DBGetProducts(request)
 	if err != nil {
 		log.Println("Error:", err)
 		w.Header().Add("Content-type", "application/json")
@@ -237,6 +252,7 @@ func (repo *Repo) GetProducts(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	message := map[string]interface{}{
 		"Product": products,
+		"total_products": totalProducts,
 	}
 	json.NewEncoder(w).Encode(&message)
 }
@@ -244,7 +260,9 @@ func (repo *Repo) GetProducts(w http.ResponseWriter, r *http.Request) {
 // AddProducts for adding products into database.
 func (repo *Repo) AddProducts(w http.ResponseWriter, r *http.Request) {
 
-	var newProduct models.ProductWithInventory
+	// var newProduct models.ProductWithInventory
+	var newProduct models.AddProduct
+
 	json.NewDecoder(r.Body).Decode(&newProduct)
 	defer r.Body.Close()
 

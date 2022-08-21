@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"time"
+	"strings"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/ijasmoopan/Time.Now/models"
@@ -16,7 +16,7 @@ import (
 
 //IsUserAuthorized for checking jwt token.
 func (repo *Repo) IsUserAuthorized(handler http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
 		file := usecases.Logger()
 		log.SetOutput(file)
@@ -25,107 +25,144 @@ func (repo *Repo) IsUserAuthorized(handler http.Handler) http.Handler {
 		if err != nil {
 			log.Println("Can't access env file")
 		}
-		key := os.Getenv("SECRETKEY")
+		key := []byte(os.Getenv("USERSECRETKEY"))
 
-		cookie, err := r.Cookie("jwt")
-		if err != nil {
+		var reqToken string
+		if r.Header["Authorization"] != nil {
+			reqToken = r.Header.Get("Authorization")
+			splitToken := strings.Split(reqToken, "Bearer ")
+			reqToken = splitToken[1]
+		} else {
 			w.Header().Add("Content-Type", "application/json")
-			w.WriteHeader(http.StatusOK)
+			w.WriteHeader(http.StatusBadRequest)
 			message := map[string]interface{}{
-				"msg": "Please Login",
-				"error": err,
+				"msg": "Token not found",
 			}
 			json.NewEncoder(w).Encode(&message)
 			return
 		}
-		token, err := jwt.ParseWithClaims(cookie.Value, &jwt.StandardClaims{}, func(token *jwt.Token)(interface{}, error){
-			return []byte(key), nil
+		token, err := jwt.Parse(reqToken, func(token *jwt.Token) (interface{}, error) {
+			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+				log.Println("Error in token method")
+			}
+			return key, nil
 		})
 		if err != nil {
 			w.Header().Add("Content-Type", "application/json")
 			w.WriteHeader(http.StatusOK)
 			message := map[string]interface{}{
-				"msg": "Please Login",
+				"msg":   "Unauthorized token",
 				"error": err,
 			}
 			json.NewEncoder(w).Encode(&message)
 			return
 		}
-		claims := token.Claims.(*jwt.StandardClaims)
-
-		user, err := repo.user.DBAuthUser(claims.Issuer)
-		if err != nil {
-			w.Header().Add("Content-Type", "application/json")
-			w.WriteHeader(http.StatusOK)
-			message := map[string]interface{}{
-				"msg": "Please Login",
-				"error": err,
+		if claims, ok := token.Claims.(jwt.MapClaims); ok {
+			id := claims["id"]
+			user, err := repo.user.DBAuthUser(id.(string))
+			if err != nil {
+				log.Println("Error:", err)
+				w.Header().Add("Content-Type", "application/json")
+				w.WriteHeader(http.StatusOK)
+				message := map[string]interface{}{
+					"response": "Please Login",
+				}
+				json.NewEncoder(w).Encode(&message)
+				return
 			}
-			json.NewEncoder(w).Encode(&message)
-			return
-		}	
-
-		// type CtxKey struct {}
-			log.Println("User ID in middleware:", user.ID)
-
-		ctx := context.WithValue(r.Context(), models.CtxKey{}, user) //nolint
-		handler.ServeHTTP(w, r.WithContext(ctx))
+			ctx := context.WithValue(r.Context(), models.CtxKey{}, user)
+			handler.ServeHTTP(w, r.WithContext(ctx))
+		}
 	})
 }
 
 // IsHomeUserAuthorized method for authorizing user from home.
-func (repo *Repo) IsHomeUserAuthorized(handler http.Handler)http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+func (repo *Repo) IsHomeUserAuthorized(handler http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
 		file := usecases.Logger()
 		log.SetOutput(file)
-		
+
 		err := godotenv.Load("./config/.env")
 		if err != nil {
 			log.Println("Can't fetch env file")
 		}
-		key := os.Getenv("SECRETKEY")
+		key := []byte(os.Getenv("USERSECRETKEY"))
 
-		cookie, err := r.Cookie("jwt")
-		if err != nil {
-			log.Println("No cookie")
+		var reqToken string
+		if r.Header["Authorization"] != nil {
+			reqToken = r.Header.Get("Authorization")
+			splitToken := strings.Split(reqToken, "Bearer ")
+			reqToken = splitToken[1]
+		} else {
+			log.Println("Token not found")
 			handler.ServeHTTP(w, r)
 			return
 		}
-		token, err := jwt.ParseWithClaims(cookie.Value, &jwt.StandardClaims{}, func(token *jwt.Token)(interface{}, error){
-			return []byte(key), nil
+
+		token, err := jwt.Parse(reqToken, func(token *jwt.Token) (interface{}, error) {
+			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+				log.Println("Error in token method")
+			}
+			return key, nil
 		})
 		if err != nil {
-			log.Println("Can't decode token")
+			log.Println("Unauthorized token")
 			handler.ServeHTTP(w, r)
 			return
 		}
-		claims := token.Claims.(*jwt.StandardClaims)
-
-		user, err := repo.user.DBAuthUser(claims.Issuer)
-		if err != nil {
-			log.Println("Incorrect user")
-			handler.ServeHTTP(w, r)
-			return
+		if claims, ok := token.Claims.(jwt.MapClaims); ok {
+			id := claims["id"]
+			user, err := repo.user.DBAuthUser(id.(string))
+			if err != nil {
+				log.Println("Incorrect user")
+				handler.ServeHTTP(w, r)
+				return
+			}
+			ctx := context.WithValue(r.Context(), models.CtxKey{}, user)
+			handler.ServeHTTP(w, r.WithContext(ctx))
 		}
-		log.Println("In middleware.. UserID:", user.ID)
-		ctx := context.WithValue(r.Context(), models.CtxKey{}, user)
-		handler.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
 
 // DeleteToken for deleting jwt token when user logging out.
 func (repo *Repo) DeleteToken(handler http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
-		log.Println()
-		cookie := http.Cookie {
-			Name: "jwt",
-			Value: "",
-			Expires: time.Now().Add(-time.Hour),
-			HttpOnly: true,
+		// cookie := http.Cookie{
+		// 	Name:     "jwt",
+		// 	Value:    "",
+		// 	Expires:  time.Now().Add(-time.Hour),
+		// 	HttpOnly: true,
+		// }
+		// http.SetCookie(w, &cookie)
+		err := godotenv.Load("./config/.env")
+		if err != nil {
+			log.Println("Can't access env file")
 		}
-		http.SetCookie(w, &cookie)
+		key := []byte(os.Getenv("USERSECRETKEY"))
+
+		var reqToken string
+		if r.Header["Authorization"] != nil {
+			reqToken = r.Header.Get("Authorization")
+			splitToken := strings.Split(reqToken, "Bearer ")
+			reqToken = splitToken[1]
+		}
+		token, err := jwt.Parse(reqToken, func (token *jwt.Token)(interface{}, error){
+			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+				log.Println("Error in token method")
+			}
+			return key, nil
+		})
+		if claims, ok := token.Claims.(jwt.MapClaims); ok {
+			claims["authorized"] = false
+		}
+		// tokenString, err := token.SignedString(key)
+		// if err != nil {
+		// 	log.Fatalln("Error in deleting token")
+		// }
+		// log.Println("Logout Token:", tokenString)
+
 		handler.ServeHTTP(w, r)
 	})
 }

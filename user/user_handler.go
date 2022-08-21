@@ -8,7 +8,6 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"
@@ -21,7 +20,8 @@ import (
 func (repo *Repo) GetProducts(w http.ResponseWriter, r *http.Request){
 
 	var request models.ProductRequest
-	json.NewDecoder(r.Body).Decode(&request)
+	// json.NewDecoder(r.Body).Decode(&request)
+	
 
 	ctx := r.Context()
 	var user int
@@ -127,7 +127,6 @@ func (repo *Repo) HomeSingleProduct(w http.ResponseWriter, r *http.Request){
 }
 
 
-
 // ---------------------User-------------------------------
 
 // UserLogin describes login for user.
@@ -137,7 +136,6 @@ func (repo *Repo) UserLogin(w http.ResponseWriter, r *http.Request){
 	json.NewDecoder(r.Body).Decode(&loginUser)
 	defer r.Body.Close()
 
-	log.Println("Login user:", loginUser)
 	loginUser.Password = hex.EncodeToString(md5.New().Sum([]byte(loginUser.Password)))
 	log.Println(loginUser)
 	
@@ -147,11 +145,25 @@ func (repo *Repo) UserLogin(w http.ResponseWriter, r *http.Request){
 	}
 	if user.Password != loginUser.Password {
 		message := map[string]interface{}{
-			"response": http.StatusBadRequest,
+			"response": http.StatusOK,
 			"msg": "Incorrect Username or Password",
 		}
 		w.Header().Add("Content-Type", "application/json")
-		w.WriteHeader(http.StatusBadRequest)
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(&message)
+		return
+	}
+	log.Println("Login user:", user)
+
+	err = repo.user.DBCheckUserStatus(user)
+	if err != nil {
+		log.Println("User status error:", err)
+		message := map[string]interface{}{
+			"response": http.StatusOK,
+			"msg": "User is blocked by admin.",
+		}
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(&message)
 		return
 	}
@@ -159,19 +171,20 @@ func (repo *Repo) UserLogin(w http.ResponseWriter, r *http.Request){
 	id := strconv.Itoa(user.ID)
 	token := GeneratingToken(id)
 	
-	cookie := http.Cookie{
-		Name: "jwt",
-		Value: token,
-		Expires: time.Now().Add(time.Hour * 24),
-		HttpOnly: true,
-	}
-	http.SetCookie(w, &cookie)
+	// cookie := http.Cookie{
+	// 	Name: "jwt",
+	// 	Value: token,
+	// 	Expires: time.Now().Add(time.Hour * 24),
+	// 	HttpOnly: true,
+	// }
+	// http.SetCookie(w, &cookie)
 	log.Println("Token generated..Redirecting to Home...")
 
 	message := map[string]interface{}{
 		"response": http.StatusOK,
 		"msg": "User Validated",
 		"user": user.Email,
+		"token": token,
 	}
 	w.Header().Add("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)

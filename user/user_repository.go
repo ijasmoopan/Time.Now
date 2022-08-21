@@ -671,7 +671,26 @@ func (user Model) DBValidateUser(loginUser models.UserLogin) (models.UserLogin, 
 		log.Println(err)
 		return usr, err
 	}
+	log.Println("user repo:", usr)
 	return usr, nil
+}
+
+// DBCheckUserStatus method for checking if the user is blocked by admin or not.
+func (user Model) DBCheckUserStatus(usr models.UserLogin)(error) {
+	var checkStatus bool
+
+	row := user.DB.QueryRow(`SELECT user_status 
+								FROM users
+								WHERE user_id = $1`, usr.ID)
+	err := row.Scan(&checkStatus)
+	if err != nil {
+		return err
+	}
+	if !checkStatus {
+		return err
+	} else {
+		return nil
+	}
 }
 
 // DBUserRegistration method for registering a new user.
@@ -693,7 +712,8 @@ func (user Model) DBUserRegistration(newUser models.UserRegister) error {
 								$5,
 								$6,
 								$7, 
-								$8);`, newUser.FirstName,
+								$8);`, 
+		newUser.FirstName,
 		newUser.SecondName,
 		newUser.Password,
 		newUser.Phone,

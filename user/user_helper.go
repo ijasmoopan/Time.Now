@@ -13,6 +13,7 @@ type Repo struct {
 		DBGetUser(string)(models.User, error)
 		DBAuthUser(string)(models.UserLogin, error)
 		DBValidateUser(models.UserLogin)(models.UserLogin, error)
+		DBCheckUserStatus(models.UserLogin)(error)
 		DBUserRegistration(models.UserRegister)(error)
 		DBUpdateUser(models.User)(error)
 		DBDeleteUser(string)(error)

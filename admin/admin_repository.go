@@ -5,6 +5,8 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"strconv"
+	"strings"
 	"time"
 
 	"github.com/ijasmoopan/Time.Now/models"
@@ -63,10 +65,10 @@ func (admin Model) DBGetAdminByID(ID string) (models.Admin, error) {
 func (admin Model) DBGetUsers(request models.UserRequest) ([]models.User, error) {
 
 	var users []models.User
-	var sqlCondition string
-	var param interface{}
+	var param []interface{}
 	var rows *sql.Rows
 	var err error
+	var count = 1
 
 	sqlString := `SELECT user_id, 
 						user_firstname, 
@@ -75,35 +77,32 @@ func (admin Model) DBGetUsers(request models.UserRequest) ([]models.User, error)
 						user_phone, 
 						user_status, 
 						user_gender
-					FROM users `
+					FROM users 
+					WHERE deleted_at IS NULL`
 
-	if request.UserID != nil {
-		param = request.UserID
-		sqlCondition = `WHERE user_id = $1;`
-
-	} else if request.Email != nil {
-		param = request.Email
-		sqlCondition = `WHERE user_email = $1;`
-
-	} else if request.Gender != nil {
-		param = request.Gender
-		sqlCondition = `WHERE user_gender = $1;`
-
-	} else if request.Status != nil {
-		param = request.Status
-		sqlCondition = `WHERE user_status = $1;`
-
-	} else {
-		sqlCondition = `;`
+	if request.UserID != "" {
+		param = append(param, request.UserID)
+		sqlString = fmt.Sprint(sqlString, ` AND user_id = $`, count)
+		count++
 	}
-
-	if param != nil {
-		rows, err = admin.DB.Query(fmt.Sprint(sqlString, sqlCondition), param)
-	} else {
-		rows, err = admin.DB.Query(fmt.Sprint(sqlString, sqlCondition))
+	if request.Email != "" {
+		param = append(param, request.Email)
+		sqlString = fmt.Sprint(sqlString, ` AND user_email = $`, count)
+		count++
 	}
+	if request.Gender != "" {
+		param = append(param, request.Gender)
+		sqlString = fmt.Sprint(sqlString, ` AND user_gender = $`, count)
+		count++
+	}
+	if request.Status != "" {
+		param = append(param, request.Status)
+		sqlString = fmt.Sprint(sqlString, ` AND user_status = $`, count)
+		count++
+	}
+	rows, err = admin.DB.Query(sqlString, param...)
+
 	if err != nil {
-		log.Println("Query wrote...", err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -271,7 +270,7 @@ func (admin Model) DBDeleteProducts(product models.ProductDeleteRequest) error {
 // ----------------------- DB Get Product Full Details --------------------------
 
 // DBGetProducts for accessing products with respect to reqeust params.
-func (admin Model) DBGetProducts(request models.AdminProductRequest) (map[int]models.ProductWithInventory, error) {
+func (admin Model) DBGetProducts(request models.AdminProductRequest) (map[int]models.ProductWithInventory, int, error) {
 
 	var products = make(map[int]models.ProductWithInventory)
 	filter := make([]interface{}, 0, 10)
@@ -297,7 +296,6 @@ func (admin Model) DBGetProducts(request models.AdminProductRequest) (map[int]mo
 										subcategory_desc,
 										brand_name,
 										brand_desc,
-										
 										offer_id,
 										offer_name,
 										offer,
@@ -323,7 +321,6 @@ func (admin Model) DBGetProducts(request models.AdminProductRequest) (map[int]mo
 											s.subcategory_desc,
 											b.brand_name,
 											b.brand_desc,
-
 											o.id,
 											o.name,
 											o.offer,
@@ -356,81 +353,112 @@ func (admin Model) DBGetProducts(request models.AdminProductRequest) (map[int]mo
 									FROM cte_getproducts
 									WHERE product_deleted_at IS NULL`
 
+	// sqlCount := `WITH cte_totalproducts (count)
+	// 						AS (SELECT COUNT(1)
+	// 					FROM   products p
+	// 						INNER JOIN categories c
+	// 							ON p.product_category_id = c.category_id
+	// 						INNER JOIN subcategories s
+	// 							ON p.product_subcategory_id = s.subcategory_id
+	// 						INNER JOIN brands b
+	// 							ON p.product_brand_id = b.brand_id
+	// 						LEFT JOIN images i
+	// 							ON p.product_id = i.product_id
+
+	// 						LEFT JOIN category_offers o
+	// 							ON o.category_id = p.product_category_id
+	// 					WHERE  p.product_deleted_at IS NULL
+	// 						ORDER BY offer) 
+							
+	// 			SELECT * 
+	// 				FROM cte_totalproducts
+	// 				WHERE product_deleted_at IS NULL` 
+
+	// sqlCount = `SELECT COUNT(1) 
+	// 				FROM products
+	// 				WHERE product_deleted_at IS NULL`
+
 	// -------------------------------------------------------------------------
 
-	if request.Product != nil {
-		for idx, value := range request.Product {
+	if request.Product != "" {
+		splitProduct := strings.Split(request.Product, " ")
+		for idx, value := range splitProduct {
 			if idx == 0 {
-				filter = append(filter, fmt.Sprint("%", *value, "%"))
+				filter = append(filter, fmt.Sprint("%", value, "%"))
 				sqlCondition = fmt.Sprint(` AND product_name ILIKE $`, count)
+				// sqlCount = fmt.Sprint(sqlCount, ` AND product_name ILIKE $`, count)
 				count++
 			} else {
-				filter = append(filter, fmt.Sprint("%", *value, "%"))
+				filter = append(filter, fmt.Sprint("%", value, "%"))
 				sqlCondition = fmt.Sprint(sqlCondition, ` OR product_name ILIKE $`, count)
 				count++
 			}
 		}
 	}
-	if request.Category != nil {
-		for idx, value := range request.Category {
+	if request.Category != "" {
+		splitCategory := strings.Split(request.Category, " ")
+		for idx, value := range splitCategory {
 			if idx == 0 {
-				filter = append(filter, fmt.Sprint("%", *value, "%"))
+				filter = append(filter, fmt.Sprint("%", value, "%"))
 				sqlCondition = fmt.Sprint(sqlCondition, ` AND category_name ILIKE $`, count)
 				count++
 			} else {
-				filter = append(filter, fmt.Sprint("%", *value, "%"))
+				filter = append(filter, fmt.Sprint("%", value, "%"))
 				sqlCondition = fmt.Sprint(sqlCondition, ` OR category_name ILIKE $`, count)
 				count++
 			}
 		}
 	}
-	if request.Subcategory != nil {
-		for idx, value := range request.Subcategory {
+	if request.Subcategory != "" {
+		splitSubcategory := strings.Split(request.Subcategory, " ")
+		for idx, value := range splitSubcategory {
 			if idx == 0 {
-				filter = append(filter, fmt.Sprint("%", *value, "%"))
+				filter = append(filter, fmt.Sprint("%", value, "%"))
 				sqlCondition = fmt.Sprint(sqlCondition, ` AND subcategory_name ILIKE $`, count)
 				count++
 			} else {
-				filter = append(filter, fmt.Sprint("%", *value, "%"))
+				filter = append(filter, fmt.Sprint("%", value, "%"))
 				sqlCondition = fmt.Sprint(sqlCondition, ` OR subcategory_name ILIKE $`, count)
 				count++
 			}
 		}
 	}
-	if request.Brand != nil {
-		for idx, value := range request.Brand {
+	if request.Brand != "" {
+		splitBrand := strings.Split(request.Brand, " ")
+		for idx, value := range splitBrand {
 			if idx == 0 {
-				filter = append(filter, fmt.Sprint("%", *value, "%"))
+				filter = append(filter, fmt.Sprint("%", value, "%"))
 				sqlCondition = fmt.Sprint(sqlCondition, ` AND brand_name ILIKE $`, count)
 				count++
 			} else {
-				filter = append(filter, fmt.Sprint("%", *value, "%"))
+				filter = append(filter, fmt.Sprint("%", value, "%"))
 				sqlCondition = fmt.Sprint(sqlCondition, ` OR brand_name ILIKE $`, count)
 				count++
 			}
 		}
 	}
-	if request.PriceMin != nil {
-		filter = append(filter, *request.PriceMin)
+	if request.PriceMin != "" {
+		filter = append(filter, request.PriceMin)
 		sqlCondition = fmt.Sprint(sqlCondition, ` AND product_price >= $`, count)
 		count++
 	}
-	if request.PriceMax != nil {
-		filter = append(filter, *request.PriceMax)
+	if request.PriceMax != "" {
+		filter = append(filter, request.PriceMax)
 		sqlCondition = fmt.Sprint(sqlCondition, ` AND product_price <= $`, count)
 		count++
 	}
-	if request.Status != nil {
-		filter = append(filter, *request.Status)
+	if request.Status != "" {
+		filter = append(filter, request.Status)
 		sqlCondition = fmt.Sprint(sqlCondition, ` AND product_status = $`, count)
 		count++
 	}
 
 	var limit = 5
 	sqlCondition = fmt.Sprint(sqlCondition, ` ORDER BY product_id`)
-	if request.Page != nil {
-		*request.Page = (*request.Page - 1) * 5
-		filter = append(filter, limit, *request.Page)
+	if request.Page != "" {
+		page, _ := strconv.Atoi(request.Page)
+		page = (page - 1) * 5
+		filter = append(filter, limit, page)
 		sqlCondition = fmt.Sprint(sqlCondition, ` LIMIT $`, count)
 		count++
 		sqlCondition = fmt.Sprint(sqlCondition, ` OFFSET $`, count)
@@ -443,14 +471,22 @@ func (admin Model) DBGetProducts(request models.AdminProductRequest) (map[int]mo
 		count++
 	}
 
-	log.Println("sqlCondition:", sqlCondition)
-	log.Println("filter:", filter)
+	// log.Println("sqlCondition:", sqlCondition)
+	// log.Println("filter:", filter)
+
+	var totalProducts = 35
+	// row := admin.DB.QueryRow(fmt.Sprint(sqlCount, sqlCondition), filter...)
+	// err = row.Scan(&totalProducts)
+	// if err != nil {
+	// 	log.Println(err)
+	// 	return products, totalProducts, err
+	// }
 
 	rows, err = admin.DB.Query(fmt.Sprint(sqlString, sqlCondition), filter...)
 
 	if err != nil {
 		log.Println(err)
-		return products, err
+		return products, totalProducts, err
 	}
 	defer rows.Close()
 	for rows.Next() {
@@ -523,13 +559,13 @@ func (admin Model) DBGetProducts(request models.AdminProductRequest) (map[int]mo
 		}
 		if err != nil {
 			log.Println("Error while getting products", err)
-			return products, err
+			return products, totalProducts, err
 		}
-		log.Println("Offer:", product.Offer)
-		log.Println("Offer Price:", product.OfferPrice)
-		log.Println("Product half:", product)
-		log.Println("Product ID:", product.ID)
-		log.Println("Products Map:", products)
+		// log.Println("Offer:", product.Offer)
+		// log.Println("Offer Price:", product.OfferPrice)
+		// log.Println("Product half:", product)
+		// log.Println("Product ID:", product.ID)
+		// log.Println("Products Map:", products)
 
 		var colors []models.Colors
 		var inventories []models.Inventories
@@ -548,35 +584,35 @@ func (admin Model) DBGetProducts(request models.AdminProductRequest) (map[int]mo
 						WHERE i.inventory_deleted_at IS NULL
 							AND i.product_id = $1`
 
-		if request.Quantity != nil {
+		if request.Quantity != "" {
 			count2++
-			filter2 = append(filter2, *request.Quantity)
+			filter2 = append(filter2, request.Quantity)
 			sqlCondition2 = fmt.Sprint(sqlCondition2, ` AND i.product_quantity <= $`, count2)
 		}
-		if request.Color != nil {
+		if request.Color != "" {
 			for idx, value := range request.Color {
 				if idx == 0 {
 					count2++
-					filter2 = append(filter2, fmt.Sprint("%", *value, "%"))
+					filter2 = append(filter2, fmt.Sprint("%", value, "%"))
 					sqlCondition2 = fmt.Sprint(sqlCondition2, ` AND c.color ILIKE $`, count2)
 				} else {
 					count2++
-					filter2 = append(filter2, fmt.Sprint("%", *value, "%"))
+					filter2 = append(filter2, fmt.Sprint("%", value, "%"))
 					sqlCondition2 = fmt.Sprint(sqlCondition2, ` OR c.color ILIKE $`, count2)
 				}
 			}
 		}
-		log.Println("SQL Condition:", sqlCondition2)
-		log.Println("Filter 2:", filter2)
-		log.Println("Product ID:", product.ID)
+		// log.Println("SQL Condition:", sqlCondition2)
+		// log.Println("Filter 2:", filter2)
+		// log.Println("Product ID:", product.ID)
 		inventoryRows, err2 := admin.DB.Query(fmt.Sprint(sqlString2, sqlCondition2), filter2...)
-		log.Println("InventoryRows:", inventoryRows)
+		// log.Println("InventoryRows:", inventoryRows)
 		if err2 == sql.ErrNoRows {
 			log.Println("No rows returned", err2)
 		}
 		if err2 != nil {
 			log.Println("Error2:", err2)
-			return nil, err2
+			return nil, totalProducts, err2
 		}
 		defer inventoryRows.Close()
 		if inventoryRows.Next() {
@@ -588,10 +624,10 @@ func (admin Model) DBGetProducts(request models.AdminProductRequest) (map[int]mo
 				&inventory.Color.Color,
 				&inventory.Quantity)
 			if err != nil {
-				log.Println("for loop:", err)
-				return products, err
+				// log.Println("for loop:", err)
+				return products, totalProducts, err
 			}
-			log.Println("Color:", inventory)
+			// log.Println("Color:", inventory)
 			color.ID = inventory.Color.ID
 			color.Color = inventory.Color.Color
 			colors = append(colors, color)
@@ -604,7 +640,7 @@ func (admin Model) DBGetProducts(request models.AdminProductRequest) (map[int]mo
 					&inventory.Quantity)
 				if err != nil {
 					log.Println("for loop:", err)
-					return products, err
+					return products, totalProducts, err
 				}
 				color.ID = inventory.Color.ID
 				color.Color = inventory.Color.Color
@@ -623,11 +659,12 @@ func (admin Model) DBGetProducts(request models.AdminProductRequest) (map[int]mo
 			products[product.ID] = product
 		}
 	}
-	return products, nil
+	return products, totalProducts, nil
 }
 
 // DBAddProducts for adding product to database
-func (admin Model) DBAddProducts(product models.ProductWithInventory) error {
+func (admin Model) DBAddProducts(product models.AddProduct) error {
+
 	row := admin.DB.QueryRow(`INSERT INTO products (product_name,
 												product_price,
 												product_desc,
@@ -640,9 +677,9 @@ func (admin Model) DBAddProducts(product models.ProductWithInventory) error {
 		product.Price,
 		product.Description,
 		time.Now(),
-		product.Brand.ID,
-		product.Category.ID,
-		product.Subcategory.ID,
+		product.BrandID,
+		product.CategoryID,
+		product.SubcategoryID,
 		true)
 	err := row.Scan(&product.ID)
 	if err != nil {
@@ -651,65 +688,44 @@ func (admin Model) DBAddProducts(product models.ProductWithInventory) error {
 	}
 	log.Println("ProductID:", product.ID)
 
-	if len(product.Color) == len(product.Inventory) {
+	inventories := strings.Split(product.Inventories, ",")
 
-		for idx, value := range product.Color {
-
-			if value.Color != nil && value.ID == nil {
-				row = admin.DB.QueryRow(`INSERT INTO colors (color)
-												VALUES ($1)
-												RETURNING color_id;`, value.Color)
-				err = row.Scan(&value.ID)
-				log.Println("Color:", *value.ID, value.Color)
-				if err != nil {
-					log.Println(err)
-					return err
-				}
-			}
-			log.Println("Color:", *value.ID, value.Color)
-			_, err = admin.DB.Exec(`INSERT INTO inventories (product_id,
-															color_id,
-															product_quantity,
-															inventory_created_at)
-													VALUES ($1, $2, $3, $4);`, product.ID,
-				*value.ID,
-				product.Inventory[idx].Quantity,
-				time.Now(),
-			)
-			log.Println("Color:", *value.ID, value.Color)
-			if err != nil {
-				log.Println(err)
-				return err
-			}
-
+	for i := 0; i < len(inventories); i++ {
+		var colorID int
+		row := admin.DB.QueryRow(`INSERT INTO colors (color)
+										VALUES ($1)
+										RETURNING color_id;`, inventories[i])
+		err = row.Scan(&colorID)
+		if err != nil {
+			log.Println(err)
+			return err
+		}
+		i++
+		_, err = admin.DB.Exec(`INSERT INTO inventories (product_id,
+														color_id,
+														product_quantity,
+														inventory_created_at)
+												VALUES ($1, $2, $3, $4);`, product.ID,
+						colorID,
+						inventories[i],
+						time.Now(),
+						)
+		if err != nil {
+			log.Println(err)
+			return err
 		}
 	}
 
-	// for _, value := range product.Inventory {
-	// 	_, err = admin.DB.Exec(`INSERT INTO inventories (product_id,
-	// 													color_id,
-	// 													product_quantity,
-	// 													inventory_created_at)
-	// 											VALUES ($1, $2, $3, $4);`, product.ID,
-	// 		value.Color.ID,
-	// 		value.Quantity,
-	// 		time.Now())
-	// 	if err != nil {
-	// 		log.Println(err)
-	// 		return err
-	// 	}
-	// }
-
-	log.Println("Before, Image:", product.Image.Image)
+	log.Println("Before, Image:", product.Image)
 	_, err = admin.DB.Exec(`INSERT INTO images (product_id,
 												product_image)
 										VALUES ($1, $2);`, product.ID,
-		product.Image.Image)
+		product.Image)
 	if err != nil {
 		log.Println(err)
 		return err
 	}
-	log.Println("After, Image:", product.Image.Image)
+	log.Println("After, Image:", product.Image)
 	return nil
 }
 
