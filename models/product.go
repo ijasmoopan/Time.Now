@@ -40,6 +40,20 @@ type ProductWithInventory struct {
 	Wishlist    *bool         `json:"wishlist"`
 }
 
+// AddProduct struct for adding a product.
+type AddProduct struct {
+	ID            int
+	Name          string
+	Description   string
+	Price         float64
+	Status        bool
+	Inventories   string
+	Image         string
+	CategoryID    int
+	BrandID       int
+	SubcategoryID int
+}
+
 // Products describes details of products.
 type Products struct {
 	ID          int           `json:"productID"`
@@ -168,20 +182,6 @@ type ListProduct struct {
 	Category    Categories
 	Subcategory Subcategories
 	// Product_color       Colors
-}
-
-// AddProduct struct for adding a product.
-type AddProduct struct {
-	ID            int
-	Name          string
-	CategoryID    int
-	BrandID       int
-	SubcategoryID int
-	Price         float64
-	Description   string
-	Status        bool
-	Quantity      int
-	Color         string
 }
 
 // SampleProduct struct describing basic details of products.

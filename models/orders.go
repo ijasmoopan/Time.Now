@@ -22,8 +22,8 @@ type PlaceOrder struct {
 	AddressID   int     `json:"addressID"`
 	ProductID   []int   `json:"productID"`
 	InventoryID []int   `json:"inventoryID"`
-	Quantity    []int   `json:"quantity"`
-	CartID      []int   `json:"cartID"`
+	Quantity    int     `json:"quantity"`
+	CartID      int     `json:"cartID"`
 	TotalPrice  float64 `json:"totalPrice"`
 	PaymentID   int     `json:"paymentID"`
 }
@@ -40,16 +40,16 @@ type RazorPay struct {
 
 // Orders model for describing order details of a user.
 type Orders struct {
-	ID            int     `json:"orderID"`
-	UserID        int     `json:"userID"`
-	Product       Product `json:"product"`
-	Quantity      int     `json:"quantity"`
-	Payment       Payment `json:"payment"`
-	TotalPrice    float64 `json:"totalPrice"`
-	Status        string  `json:"status"`
-	CartID        int     `json:"cartID"`
-	OrderedAt     string  `json:"orderedAt"`
-	DeliveredAt   string  `json:"deliveredAt"`
+	ID          int     `json:"orderID"`
+	UserID      int     `json:"userID"`
+	Product     Product `json:"product"`
+	Quantity    int     `json:"quantity"`
+	Payment     Payment `json:"payment"`
+	TotalPrice  float64 `json:"totalPrice"`
+	Status      string  `json:"status"`
+	CartID      int     `json:"cartID"`
+	OrderedAt   string  `json:"orderedAt"`
+	DeliveredAt string  `json:"deliveredAt"`
 }
 
 // Payment model for payments

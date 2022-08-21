@@ -1,0 +1,145 @@
+version: '3.8'
+
+services:
+  db: 
+    container_name: pg_container
+    image: postgres
+    restart: always
+    environment: 
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: test_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - C:/Users/ijasm/OneDrive/Desktop/PostgreSql-Snippets/infile:/infile
+      - pg_data:C:/Program Files/PostgreSQL/14/data
+      # - $HOME/Desktop/PostgreSql-Snippets/infile:/infile
+      # - pg_data:/var/lib/postgresql/data/
+
+volumes:
+  pg_data:
+
+
+
+
+
+
+
+# # Specify the version for docker-compose.yml
+# version: '3.8'
+
+# services: 
+#   postgres:
+#     container_name: postgres
+#     image: postgres
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: ijasmoopan
+#       POSTGRES_DB: timenow
+#       DATABASE_HOST: database
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - dbdata:/var/lib/postgresql/data
+    
+#   go:
+#     container_name: go
+#     build:
+#       context: .
+#     depends_on:
+#       - "postgres"
+
+#   # goose: 
+#   #   container_name: goose
+
+
+# volumes:
+#   dbdata: 
+
+
+
+
+
+# services:
+#   db:
+#     image: postgres
+#     restart: always
+#     environment:
+#       - POSTGRES_USER=postgres
+#       - POSTGRES_PASSWORD=password
+#     ports:
+#       - '5432:5432'
+#     volumes:
+#       - db:/var/lib/postgresql/data
+
+# volumes:
+#   db:
+#     driver: local
+
+# Add the services needed (postgres, go)
+# services: 
+#   app: 
+#     container_name: full-app
+#     build: .
+#     ports: 
+#       - 8080:8080
+#     restart: on-failure
+#     volumes:
+#       - api:/usr/src/app/
+#     depends_on: 
+#       - dbpostgres
+#     networks:
+#       - myapp
+
+#   dbpostgres:
+#     container_name: postgres
+#     image: postgres
+#     environment: 
+#       - POSTGRES_USER=postgres
+#       - POSTGRES_PASSWORD=ijasmoopan  
+#       # Optional: Give a name to the database, otherwise
+#       # use the default value POSTGRES_USER as a database name (user in this case.)
+#       - POSTGRES_DB=timenow
+#       - DATABASE_HOST=database
+#     ports: 
+#       - 5432:5432
+#     volumes: 
+#       - database_postgres:/var/lib/postgresql/data
+#     networks:
+#       - myapp
+
+#   pgadmin:
+#     image: dbpage/pgadmin4
+#     container_name: pgadmin_container
+#     environment:
+#       PGADMIN_DEFAULT_EMAIL: ijasmoopan46@gmail.com
+#       PGADMIN_DEFAULT_PASSWORD: ijasmoopan
+#     depends_on: 
+#       - dbpostgres
+#     ports:
+#       - "5050:80"
+#     networks:
+#       - myapp
+#     restart: unless-stopped
+
+#   go:
+#     container_name: go
+#     # Build the Dockerfile, alternatively use an image.
+#     build: 
+#       context: .
+#       dockerfile: Dockerfile
+#     depends_on:
+#       - dbpostgres
+#     networks:
+#       - myapp
+
+# volumes:
+#   # create the volume for persisting data.
+#   api: 
+#   database_postgres:
+
+# # Networks to be created to facilitate communication between containers
+# networks: 
+#   myapp:
+#     driver: bridge

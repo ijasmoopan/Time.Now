@@ -22,8 +22,10 @@ type Repo struct {
 	}
 
 	products interface {
-		DBGetProducts(models.AdminProductRequest)(map[int]models.ProductWithInventory, error)
-		DBAddProducts(models.ProductWithInventory)(error)
+		DBGetProducts(models.AdminProductRequest)(map[int]models.ProductWithInventory, int, error)
+		// DBAddProducts(models.ProductWithInventory)(error)
+		DBAddProducts(models.AddProduct)(error)
+
 		DBUpdateProducts(models.ProductWithInventory)(error)
 		DBDeleteProducts(models.ProductDeleteRequest)(error)
 		DBUpdateProductStatus(models.Product)(error)

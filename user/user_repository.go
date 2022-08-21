@@ -208,7 +208,7 @@ func (user Model) DBGetProducts(request models.ProductRequest) ([]models.Product
 	var limit = 5
 	sqlCondition = fmt.Sprint(sqlCondition, ` ORDER BY product_id`)
 	if request.Page != nil {
-		*request.Page = (*request.Page - 1) * 5 
+		*request.Page = (*request.Page - 1) * 5
 		filter = append(filter, limit, *request.Page)
 		sqlCondition = fmt.Sprint(sqlCondition, ` LIMIT $`, count)
 		count++
@@ -257,14 +257,12 @@ func (user Model) DBGetProducts(request models.ProductRequest) ([]models.Product
 			&product.Subcategory.Description,
 			&product.Brand.Name,
 			&product.Brand.Description,
-
 			&offerID,
 			&offerName,
 			&offer,
 			&offerFrom,
 			&offerTo,
 			&offerStatus,
-
 			&offerPrice,
 			&product.Wishlist,
 		)
@@ -311,7 +309,7 @@ func (user Model) DBGetProducts(request models.ProductRequest) ([]models.Product
 		var inventories []models.Inventories
 		filter2 := make([]interface{}, 0, 10)
 		count2 := 0
-		var sqlCondition2 string 
+		var sqlCondition2 string
 		inventoryrows, err := user.DB.Query(`SELECT i.inventory_id, 
 													i.product_id, 
 													c.color_id,
@@ -673,7 +671,26 @@ func (user Model) DBValidateUser(loginUser models.UserLogin) (models.UserLogin, 
 		log.Println(err)
 		return usr, err
 	}
+	log.Println("user repo:", usr)
 	return usr, nil
+}
+
+// DBCheckUserStatus method for checking if the user is blocked by admin or not.
+func (user Model) DBCheckUserStatus(usr models.UserLogin)(error) {
+	var checkStatus bool
+
+	row := user.DB.QueryRow(`SELECT user_status 
+								FROM users
+								WHERE user_id = $1`, usr.ID)
+	err := row.Scan(&checkStatus)
+	if err != nil {
+		return err
+	}
+	if !checkStatus {
+		return err
+	} else {
+		return nil
+	}
 }
 
 // DBUserRegistration method for registering a new user.
@@ -695,7 +712,8 @@ func (user Model) DBUserRegistration(newUser models.UserRegister) error {
 								$5,
 								$6,
 								$7, 
-								$8);`, newUser.FirstName,
+								$8);`, 
+		newUser.FirstName,
 		newUser.SecondName,
 		newUser.Password,
 		newUser.Phone,
@@ -997,7 +1015,7 @@ func (user Model) DBAddCart(cartProduct models.Cart) error {
 		return err
 	}
 	// Reduce product quantity in inventories
-	// _, err = user.DB.Exec(`UPDATE inventories 
+	// _, err = user.DB.Exec(`UPDATE inventories
 	// 							SET product_quantity = product_quantity - $1
 	// 							WHERE inventory_id = $2;`, cartProduct.Quantity,
 	// 		cartProduct.Product.Inventory.ID,
@@ -1011,21 +1029,21 @@ func (user Model) DBAddCart(cartProduct models.Cart) error {
 	// 	log.Println("After 15 minutes... ")
 	// 	// Buisness logic
 	// 	log.Println("Checking order_id is in order table or not")
-	// 	row := user.DB.QueryRow(`SELECT order_id 
-	// 								FROM orders 
+	// 	row := user.DB.QueryRow(`SELECT order_id
+	// 								FROM orders
 	// 								WHERE cart_id = $1;`, cartProduct.ID)
 	// 	err = row.Scan(&cartProduct.ID)
 	// 	if err == sql.ErrNoRows {
 	// 		log.Println("Checking cart_id is still in cart table or not")
-	// 		row = user.DB.QueryRow(`SELECT cart_id 
-	// 									FROM cart 
+	// 		row = user.DB.QueryRow(`SELECT cart_id
+	// 									FROM cart
 	// 									WHERE cart_id = $1
 	// 										AND deleted_at IS NULL;`, cartProduct.ID)
 	// 		err = row.Scan(&cartProduct.ID)
 	// 		if err == sql.ErrNoRows {
 	// 		// Increase product quantity in inventories
 	// 		log.Println("No rows.. so increasing quantity in inventories")
-	// 		_, err = user.DB.Exec(`UPDATE inventories 
+	// 		_, err = user.DB.Exec(`UPDATE inventories
 	// 								SET product_quantity = product_quantity + $1
 	// 								WHERE inventory_id = $2;`, cartProduct.Quantity,
 	// 				cartProduct.Product.Inventory.ID,
@@ -1034,7 +1052,7 @@ func (user Model) DBAddCart(cartProduct models.Cart) error {
 	// 	}
 	// 	if err != nil {
 	// 		log.Println("Err", err)
-	// 		return 
+	// 		return
 	// 	}
 	// }
 	// timer := time.AfterFunc(durationOfTime, f)
@@ -1048,29 +1066,29 @@ func (user Model) DBUpdateCart(cart models.Cart) error {
 
 	// var quantity int
 	// log.Println("Checking cart_id is still in cart table or not")
-	// row := user.DB.QueryRow(`SELECT quantity 
-	// 							FROM cart 
+	// row := user.DB.QueryRow(`SELECT quantity
+	// 							FROM cart
 	// 							WHERE cart_id = $1
 	// 								AND deleted_at IS NULL;`, cart.ID)
 	// err := row.Scan(&quantity)
 	// if cart.Quantity == quantity {
-		_, err := user.DB.Exec(`UPDATE cart
+	_, err := user.DB.Exec(`UPDATE cart
 										SET inventory_id = $1,
 										quantity = $2,
 										updated_at = $3
 									WHERE cart_id = $4;`, cart.Product.Inventory.ID,
-			cart.Quantity,
-			time.Now(),
-			cart.ID,
-		)
+		cart.Quantity,
+		time.Now(),
+		cart.ID,
+	)
 	// }
-// ----------------------------------------------------------------------------------------------------
-		// _, err = user.DB.Exec(`UPDATE inventories 
-		// 						SET product_quantity = product_quantity + $1
-		// 						WHERE inventory_id = $2;`, cart.Quantity,
-		// 				cart.Product.Inventory.ID,
-		// 			)
-	
+	// ----------------------------------------------------------------------------------------------------
+	// _, err = user.DB.Exec(`UPDATE inventories
+	// 						SET product_quantity = product_quantity + $1
+	// 						WHERE inventory_id = $2;`, cart.Quantity,
+	// 				cart.Product.Inventory.ID,
+	// 			)
+
 	if err != nil {
 		return err
 	}
@@ -1081,9 +1099,9 @@ func (user Model) DBUpdateCart(cart models.Cart) error {
 func (user Model) DBDeleteCart(cartID int) error {
 	_, err := user.DB.Exec(`UPDATE cart 
 								SET deleted_at = $1
-								WHERE cart_id = $2;`, time.Now(), 
-			cartID,
-		)
+								WHERE cart_id = $2;`, time.Now(),
+		cartID,
+	)
 	if err != nil {
 		return err
 	}
@@ -1298,36 +1316,36 @@ func (user Model) DBCartCheckout(userID int) (models.CartCheckout, int, float64,
 		var offerPrice sql.NullFloat64
 
 		err := rows.Scan(&cartProduct.Product.ID,
-				&cartProduct.Product.Name,
-				&cartProduct.Product.Price,
-				&cartProduct.Product.Description,
-				&cartProduct.Product.Status,
-				&cartProduct.Product.Brand.ID,
-				&cartProduct.Product.Category.ID,
-				&cartProduct.Product.Subcategory.ID,
-				&productImageID,
-				&productImage,
-				&cartProduct.Product.Category.Name,
-				&cartProduct.Product.Category.Description,
-				&cartProduct.Product.Subcategory.Name,
-				&cartProduct.Product.Subcategory.Description,
-				&cartProduct.Product.Brand.Name,
-				&cartProduct.Product.Brand.Description,
-				&cartProduct.Product.Inventory.ID,
-				&cartProduct.Product.Inventory.Quantity,
-				&cartProduct.Product.Inventory.Color.ID,
-				&cartProduct.Product.Inventory.Color.Color,
-				&cartProduct.ID,
-				&cartProduct.Quantity,
-				&cartProduct.UserID,
-				&offerID,
-				&offerName,
-				&offer,
-				&offerFrom,
-				&offerTo,
-				&offerStatus,
-				&offerPrice,
-			)
+			&cartProduct.Product.Name,
+			&cartProduct.Product.Price,
+			&cartProduct.Product.Description,
+			&cartProduct.Product.Status,
+			&cartProduct.Product.Brand.ID,
+			&cartProduct.Product.Category.ID,
+			&cartProduct.Product.Subcategory.ID,
+			&productImageID,
+			&productImage,
+			&cartProduct.Product.Category.Name,
+			&cartProduct.Product.Category.Description,
+			&cartProduct.Product.Subcategory.Name,
+			&cartProduct.Product.Subcategory.Description,
+			&cartProduct.Product.Brand.Name,
+			&cartProduct.Product.Brand.Description,
+			&cartProduct.Product.Inventory.ID,
+			&cartProduct.Product.Inventory.Quantity,
+			&cartProduct.Product.Inventory.Color.ID,
+			&cartProduct.Product.Inventory.Color.Color,
+			&cartProduct.ID,
+			&cartProduct.Quantity,
+			&cartProduct.UserID,
+			&offerID,
+			&offerName,
+			&offer,
+			&offerFrom,
+			&offerTo,
+			&offerStatus,
+			&offerPrice,
+		)
 		if productImageID.Valid {
 			cartProduct.Product.Image.ID = int(productImageID.Int32)
 		}
@@ -1395,7 +1413,7 @@ func (user Model) DBCartCheckout(userID int) (models.CartCheckout, int, float64,
 	var address models.Address
 	var description sql.NullString
 
-	if rows.Next(){
+	if rows.Next() {
 		err = rows.Scan(&address.ID,
 			&address.UserID,
 			&address.Name,
@@ -1567,7 +1585,7 @@ func (user Model) DBProductCheckout(productCheckout models.ProductCheckout) (mod
 // ------------------------------- Placing Order ------------------------------------
 
 // DBGetPayment method for cash on delivery
-func (user Model) DBGetPayment(request models.PaymentRequest)(models.PaymentResponse, error){
+func (user Model) DBGetPayment(request models.PaymentRequest) (models.PaymentResponse, error) {
 
 	var payment models.PaymentResponse
 	payment.UserID = *request.UserID
@@ -1617,31 +1635,31 @@ func (user Model) DBGetPayment(request models.PaymentRequest)(models.PaymentResp
 		return payment, err
 	}
 	defer rows.Close()
-	for rows.Next(){
+	for rows.Next() {
 
 		var offerStatus bool
 		var offerPrice sql.NullFloat64
 		var productPrice float64
 		var productQuantity int
-		
+
 		if request.ProductID != nil {
 			err = rows.Scan(&productPrice,
-					&offerStatus,
-					&offerPrice,
-				)
+				&offerStatus,
+				&offerPrice,
+			)
 			productQuantity = 1
 		} else {
 			err = rows.Scan(&productPrice,
-					&productQuantity,
-					&payment.UserID,
-					&offerStatus,
-					&offerPrice,
-				)
+				&productQuantity,
+				&payment.UserID,
+				&offerStatus,
+				&offerPrice,
+			)
 		}
 		if offerStatus != false {
 			if offerPrice.Valid {
 				payment.TotalPrice = payment.TotalPrice + (productPrice * float64(productQuantity))
-	
+
 				payment.OfferPrice = payment.OfferPrice + (offerPrice.Float64 * float64(productQuantity))
 
 				payment.Savings = payment.Savings + (productPrice - offerPrice.Float64)
@@ -1650,7 +1668,7 @@ func (user Model) DBGetPayment(request models.PaymentRequest)(models.PaymentResp
 		} else {
 			payment.TotalPrice = payment.TotalPrice + (productPrice * float64(productQuantity))
 
-			payment.OfferPrice = payment.OfferPrice + productPrice * float64(productQuantity)
+			payment.OfferPrice = payment.OfferPrice + productPrice*float64(productQuantity)
 		}
 		if err != nil {
 			log.Println(err)
@@ -1662,10 +1680,10 @@ func (user Model) DBGetPayment(request models.PaymentRequest)(models.PaymentResp
 }
 
 // DBPayPayment for paying payment
-func (user Model) DBPayPayment(payment models.Payment)(models.Payment, error){
+func (user Model) DBPayPayment(payment models.Payment) (models.Payment, error) {
 
 	if *payment.PaymentType == "COD" {
-		// insert into payment table 
+		// insert into payment table
 		err := user.DB.QueryRow(`INSERT INTO payments (user_id,
 													total_price,
 													payment_type,
@@ -1674,11 +1692,11 @@ func (user Model) DBPayPayment(payment models.Payment)(models.Payment, error){
 										VALUES ($1, $2, $3, $4, $5) 
 										RETURNING payment_id, 
 												payment_status `, payment.UserID,
-				payment.Amount,
-				payment.PaymentType,
-				false,
-				time.Now()).Scan(&payment.ID, 
-					&payment.PaymentStatus)
+			payment.Amount,
+			payment.PaymentType,
+			false,
+			time.Now()).Scan(&payment.ID,
+			&payment.PaymentStatus)
 		if err != nil {
 			log.Println(err)
 			return payment, err
@@ -1694,12 +1712,12 @@ func (user Model) DBPayPayment(payment models.Payment)(models.Payment, error){
 										VALUES ($1, $2, $3, $4, $5, $6) 
 										RETURNING payment_id, 
 												payment_status`, payment.UserID,
-				payment.Amount,
-				payment.PaymentType,
-				true,
-				time.Now(),
-				time.Now()).Scan(&payment.ID,
-					&payment.PaymentStatus)
+			payment.Amount,
+			payment.PaymentType,
+			true,
+			time.Now(),
+			time.Now()).Scan(&payment.ID,
+			&payment.PaymentStatus)
 		if err != nil {
 			log.Println(err)
 			return payment, err
@@ -1719,41 +1737,76 @@ func (user Model) DBPlaceOrder(placeOrder models.PlaceOrder) error {
 		log.Println(err)
 		return err
 	}
+
 	for i := 0; i < len(placeOrder.ProductID); i++ {
 
-		if placeOrder.CartID != nil {
-			// var timeStatus time.Time
-			// var currentTime = time.Now()
-			// row := tx.QueryRow(`SELECT CASE WHEN updated_at IS NOT NULL THEN updated_at
-			// 								WHEN updated_at IS NULL THEN created_at
-			// 							END AS status
-			// 						FROM cart
-			// 						WHERE cart_id = $1
-			// 							AND deleted_at IS NULL; `, placeOrder.CartID[i])
-			// err = row.Scan(&timeStatus)
-			// if err != nil {
-			// 	tx.Rollback()
-			// 	return err
-			// }
-			// duration := currentTime.Sub(timeStatus)
-			// if duration > 15 {
-				// Reduce product quantity in inventories
+		var cartID, quantity sql.NullInt32
+		row := tx.QueryRow(`SELECT cart_id,
+									quantity 
+								FROM cart 
+								WHERE user_id = $1 
+									AND inventory_id = $2;`, placeOrder.UserID,
+			placeOrder.InventoryID)
 
-			_, err = tx.Exec(`UPDATE inventories 
-										SET product_quantity = product_quantity - $1
-										WHERE inventory_id = $2;`, placeOrder.Quantity[i],
-					placeOrder.InventoryID[i],
-				)
-			// } 
-			// If it is else case, then no need to reduce product quantity in inventories
-		} else {
+		err := row.Scan(&cartID,
+			&quantity)
+
+		if err == sql.ErrNoRows {
 			// Reduce product quantity in inventories
 			_, err = tx.Exec(`UPDATE inventories 
-										SET product_quantity = product_quantity - $1
-										WHERE inventory_id = $2;`, placeOrder.Quantity[i],
-					placeOrder.InventoryID[i],
-				)
+									SET product_quantity = product_quantity - $1
+								WHERE inventory_id = $2;`, placeOrder.Quantity,
+				placeOrder.InventoryID[i],
+			)
+		} else if err != nil {
+			tx.Rollback()
+			return err
 		}
+		if cartID.Valid && quantity.Valid {
+			placeOrder.CartID = int(cartID.Int32)
+			placeOrder.Quantity = int(quantity.Int32)
+			// Reduce product quantity in inventories
+			_, err = tx.Exec(`UPDATE inventories 
+									SET product_quantity = product_quantity - $1
+								WHERE inventory_id = $2;`, placeOrder.Quantity,
+				placeOrder.InventoryID[i],
+			)
+
+		}
+
+		// if placeOrder.CartID != nil {
+		// var timeStatus time.Time
+		// var currentTime = time.Now()
+		// row := tx.QueryRow(`SELECT CASE WHEN updated_at IS NOT NULL THEN updated_at
+		// 								WHEN updated_at IS NULL THEN created_at
+		// 							END AS status
+		// 						FROM cart
+		// 						WHERE cart_id = $1
+		// 							AND deleted_at IS NULL; `, placeOrder.CartID[i])
+		// err = row.Scan(&timeStatus)
+		// if err != nil {
+		// 	tx.Rollback()
+		// 	return err
+		// }
+		// duration := currentTime.Sub(timeStatus)
+		// if duration > 15 {
+		// Reduce product quantity in inventories
+		// _, err = tx.Exec(`UPDATE inventories
+		// 							SET product_quantity = product_quantity - $1
+		// 							WHERE inventory_id = $2;`, placeOrder.Quantity,
+		// 	placeOrder.InventoryID[i],
+		// )
+		// }
+		// If it is else case, then no need to reduce product quantity in inventories
+		// } else {
+		// 	// Reduce product quantity in inventories
+		// 	_, err = tx.Exec(`UPDATE inventories
+		// 								SET product_quantity = product_quantity - $1
+		// 								WHERE inventory_id = $2;`, placeOrder.Quantity,
+		// 		placeOrder.InventoryID[i],
+		// 	)
+		// }
+
 		if err != nil {
 			tx.Rollback()
 			return err
@@ -1792,7 +1845,7 @@ func (user Model) DBPlaceOrder(placeOrder models.PlaceOrder) error {
 			placeOrder.AddressID,
 			placeOrder.ProductID[i],
 			placeOrder.InventoryID[i],
-			placeOrder.Quantity[i],
+			placeOrder.Quantity,
 			placeOrder.PaymentID,
 			time.Now(),
 		)
@@ -1800,8 +1853,9 @@ func (user Model) DBPlaceOrder(placeOrder models.PlaceOrder) error {
 			tx.Rollback()
 			return err
 		}
+
 		// // I wanna write this above -----------------------------------------------------
-		// _, err = tx.ExecContext(ctx, `UPDATE inventories 
+		// _, err = tx.ExecContext(ctx, `UPDATE inventories
 		// 								SET product_quantity = product_quantity - $1
 		// 								WHERE inventory_id = $2;`, placeOrder.Quantity[i],
 		// 	placeOrder.InventoryID[i],
@@ -1810,8 +1864,9 @@ func (user Model) DBPlaceOrder(placeOrder models.PlaceOrder) error {
 		// 	tx.Rollback()
 		// 	return err
 		// }
+
 		_, err = tx.ExecContext(ctx, `DELETE FROM cart 
-											WHERE inventory_id = $1;`, placeOrder.InventoryID[i],
+											WHERE cart_id = $1;`, placeOrder.CartID,
 		)
 		if err != nil {
 			tx.Rollback()
