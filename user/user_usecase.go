@@ -16,7 +16,7 @@ func GeneratingToken(id string) string {
 	file := usecases.Logger()
 	log.SetOutput(file)
 
-	err := godotenv.Load("./congig/.env")
+	err := godotenv.Load("./.gitignore/.env")
 	if err != nil {
 		log.Println(err)
 	}
