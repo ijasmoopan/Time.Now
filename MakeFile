@@ -1,9 +1,31 @@
-hello:
-	echo "Hello"
-
 run:
 	go run main.go
 
+goosestatus: 
+	goose -dir=migrations postgres postgres://ijas:mypassword@localhost:5434/timenow?sslmode=disable status
 
-goose status: 
-	goose -dir=migrations postgres postgres://postgres:ijasmoopan@localhost:5432/timenow?sslmode=disable status
+goosecreate: 
+	goose -dir=migrations postgres postgres://ijas:mypassword@localhost:5434/timenow?sslmode=disable create orders sql
+
+gooseup: 
+	goose -dir=migrations postgres postgres://ijas:mypassword@localhost:5434/timenow?sslmode=disable up
+
+goosedown: 
+	goose -dir=migrations postgres postgres://ijas:mypassword@localhost:5434/timenow?sslmode=disable down
+
+dockercomposeup:
+	docker-compose --env-file ./.gitignore/.env up -d --build
+
+dockercomposedown:
+	docker-compose --env-file ./.gitignore/.env down
+
+dockerlogsgo:
+	docker logs -f go_container
+
+dockerlogspostgres:
+	docker logs -f db_container
+
+.PHONY: run goosestatus goosecreate gooseup goosedown dockercomposeup dockercomposedown dockerlogsgo dockerlogspostgres
+
+
+

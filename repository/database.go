@@ -15,7 +15,7 @@ import (
 // ConnectDB method
 func ConnectDB() *sql.DB {
 
-	err := godotenv.Load("./config/.env")
+	err := godotenv.Load("./.gitignore/.env")
 	if err != nil {
 		log.Println("Can't open env file.")
 	}
