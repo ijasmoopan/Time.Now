@@ -12,7 +12,7 @@ import (
 // GeneratingToken function is for generating token.
 func GeneratingToken(id string) string {
 
-	err := godotenv.Load("./.gitignore/.env")
+	err := godotenv.Load("./config/.env")
 	if err != nil {
 		panic(err)
 	}

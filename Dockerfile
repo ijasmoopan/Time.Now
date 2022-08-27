@@ -10,7 +10,7 @@ COPY go.sum .
 RUN go mod download
 
 COPY . .
-COPY ./.gitignore/.env .
+COPY ./config/.env .
 
 RUN go get -d -v ./...
 RUN go install -v ./...

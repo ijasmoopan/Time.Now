@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   postgres:
-    container_name: db_container
+    container_name: ${DB_CONTAINER}
     image: postgres:latest
     environment:
       POSTGRES_USER: ${DB_USER}
@@ -14,6 +14,11 @@ services:
 
   go:
     container_name: go_container
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+      DATABASE_PORT: ${DB_CONTAINER_PORT}
     build:
       context: .
     ports:

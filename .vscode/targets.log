@@ -8,12 +8,10 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Aug 21 17:35:40 2022
+# Make data base, printed on Sat Aug 27 23:06:36 2022
 
 # Variables
 
-# environment
-FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
 SYSTEMDRIVE = C:
 # environment
@@ -43,11 +41,7 @@ GOPATH = C:\Users\ijasm\go
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_24840_FPZGRILVJGTTFBKF
-# environment
-CLOUDSDK_METRICS_ENVIRONMENT_VERSION = 1.20.1
-# environment
-FPS_BROWSER_USER_PROFILE_STRING = Default
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_35612_AKLNYEAEHIQDPFNS
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -77,7 +71,7 @@ ONEDRIVE = C:\Users\ijasm\OneDrive
 # makefile
 CURDIR := c:/Users/ijasm/OneDrive/Desktop/Time.Now
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # automatic
 *D = $(patsubst %/,%,$(patsubst %\,%,$(dir $*)))
 # environment
@@ -95,7 +89,7 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 24840
+VSCODE_PID = 35612
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # automatic
@@ -127,7 +121,7 @@ MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = C:\Users\ijasm\AppData\Local\cloud-code\installer\google-cloud-sdk\bin;C:\Python310\Scripts\;C:\Python310\;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\PostgreSQL\11\bin\;C:\Program Files\PostgreSQL\14\bin\;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\Go\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Users\ijasm\AppData\Local\Microsoft\WindowsApps;C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;C:\Users\ijasm\AppData\Local\Programs\Microsoft VS Code\bin;C:\xampp\php;C:\Users\ijasm\AppData\Roaming\npm;C:\Users\ijasm\go\bin;C:\Users\ijasm\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin;C:\Program Files\Google\Cloud SDK\google-cloud-sdk\bin
+PATH = C:\Python310\Scripts\;C:\Python310\;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\PostgreSQL\11\bin\;C:\Program Files\PostgreSQL\14\bin\;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\Go\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Amazon\AWSCLIV2\;C:\Users\ijasm\scoop\shims;C:\Users\ijasm\AppData\Local\Microsoft\WindowsApps;C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;C:\Users\ijasm\AppData\Local\Programs\Microsoft VS Code\bin;C:\xampp\php;C:\Users\ijasm\AppData\Roaming\npm;C:\Users\ijasm\go\bin
 # environment
 COMPUTERNAME = IJAS
 # default
@@ -161,7 +155,7 @@ GNUMAKEFLAGS :=
 # environment
 OS = Windows_NT
 # makefile
-.DEFAULT_GOAL := hello
+.DEFAULT_GOAL := run
 # default
 MAKE_VERSION := 4.3
 # environment
@@ -204,16 +198,15 @@ SUFFIXES :=
 ALLUSERSPROFILE = C:\ProgramData
 # environment
 SESSIONNAME = Console
-# environment
-CLOUDSDK_METRICS_ENVIRONMENT = cloudcode.vscode
 # default
-.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync load
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell  
+nocomment grouped-target extra-prereqs archives jobserver output-sync load
 # environment
 PROCESSOR_REVISION = a502
 # environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 165 Stepping 2, GenuineIntel
 # variable set hash-table stats:
-# Load=100/1024=10%, Rehash=0, Collisions=9/127=7%
+# Load=96/1024=9%, Rehash=0, Collisions=8/123=7%
 
 # Pattern-specific Variable Values
 
@@ -221,7 +214,7 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 165 Stepping 2, GenuineIntel
 
 # Directories
 
-# . (key c:/Users/ijasm/OneDrive/Desktop/Time.Now, mtime 1659696454): 24 files, no impossibilities.
+# . (key c:/Users/ijasm/OneDrive/Desktop/Time.Now, mtime 1661502880): 24 files, no impossibilities.
 
 # 24 files, no impossibilities in 1 directories.
 
@@ -231,19 +224,53 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 165 Stepping 2, GenuineIntel
 
 # Files
 
+dockerlogspostgres:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 28):
+	docker logs -f db_container
+
+dockerlogsgo:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 25):
+	docker logs -f go_container
+
+gooseup:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 13):
+	goose -dir=migrations postgres postgres://ijas:mypassword@localhost:5432/timenow?sslmode=disable up
+
+goosestatus:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 5):
+	goose -dir=migrations postgres postgresql://ijas:mypassword@localhost:5432/timenow?sslmode=disable status
+									
+
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-26 22:04:13
+#  Last modified 2022-08-27 21:12:33
 #  File has been updated.
 #  Successfully updated.
 
-goose:
+goosecreate:
+#  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
-#  Modification time never checked.
+#  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 9):
-	goose -dir=migrations postgres postgres://postgres:ijasmoopan@localhost:5432/timenow?sslmode=disable status
+#  recipe to execute (from 'Makefile', line 10):
+	goose -dir=migrations postgres postgres://ijas:mypassword@localhost:5432/timenow?sslmode=disable create orders sql
 
 # Not a target:
 .DEFAULT:
@@ -259,40 +286,56 @@ all:
 #  File has not been updated.
 
 run:
+#  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'Makefile', line 5):
-	go run main.go
-
-hello:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
+#  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 2):
-	echo "Hello"
+	go run main.go
 
-status:
+dockercomposedown:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 22):
+	docker-compose --env-file ./config/.env down
+
+goosedown:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 16):
+	goose -dir=migrations postgres postgres://ijas:mypassword@localhost:5432/timenow?sslmode=disable down
+
+dockercomposeup:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 19):
+	docker-compose --env-file ./config/.env up -d --build
+
+.PHONY: run goosestatus goosecreate gooseup goosedown dockercomposeup dockercomposedown dockerlogsgo dockerlogspostgres
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 9):
-	goose -dir=migrations postgres postgres://postgres:ijasmoopan@localhost:5432/timenow?sslmode=disable status
 
 # files hash-table stats:
-# Load=8/1024=1%, Rehash=0, Collisions=0/18=0%
+# Load=14/1024=1%, Rehash=0, Collisions=0/33=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 31 / storage = 249 B / avg = 8 B
-# current buf: size = 8174 B / used = 249 B / count = 31 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 37 / storage = 338 B / avg = 9 B
+# current buf: size = 8174 B / used = 338 B / count = 37 / avg = 9 B
 
-# strcache performance: lookups = 39 / hit rate = 20%
+# strcache performance: lookups = 60 / hit rate = 38%
 # hash-table stats:
-# Load=31/8192=0%, Rehash=0, Collisions=0/39=0%
-# Finished Make data base on Sun Aug 21 17:35:40 2022
+# Load=37/8192=0%, Rehash=0, Collisions=0/60=0%
+# Finished Make data base on Sat Aug 27 23:06:36 2022
 
  
