@@ -9,6 +9,7 @@ Before doing this project, I thought which project I will choose. That time I as
 The very beginning of my project I understood that making an E-commerce website is not easy, it should take a lot of time. But I didn't consider anything, I only concentrate on my E-commerce project. For doing this project I didn't follow any project tutorials, and I have done my project alone, So this is my confidence and arrogance as well.
 
 Talking about the features of my project, first I wanna say about the architecture which I used. Code Architecture is the main thing in a big project, because we all know, in a company we don't make a project alone. So for a teamwork we should use a better architecture. And here I followed the MVC architecture.
+Now my project is completely running by docker containers. I have used one dockerfile and docker-compose for making that happen. Currently I have 2 containers, One for my App and another one is for Database, in my case it is PostgreSQL.
 
 The second one, I used Golint package. Talking about Golint, it is a linter maintained by the Go developers. It is intended to enforce the coding conventions described in the Effective Go and CodeReviewComments. These same conventions are used in the open-source Go project and at Google also.
 
