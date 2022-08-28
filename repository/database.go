@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"log"
 	"os"
-	// "time"
+	"strconv"
+	"time"
 
 	_ "github.com/pressly/goose/v3"
 	// "github.com/ijasmoopan/Time.Now/usecases"
@@ -22,34 +23,28 @@ func ConnectDB() *sql.DB {
 	}
 	driver := os.Getenv("DB_DRIVER")
 	host := os.Getenv("DB_HOST")
-	// host := os.Getenv("DB_CONTAINER")
-	port := os.Getenv("DB_LOCAL_PORT")
+	port, _ := strconv.Atoi(os.Getenv("DB_LOCAL_PORT"))
 	user := os.Getenv("DB_USER")
 	dbname := os.Getenv("DB_NAME")
 	password := os.Getenv("DB_PASS")
-
-	connString := fmt.Sprintf("%v://%v:%v@%v:%v/%v?sslmode=disable", "postgresql", user, password, host, port, dbname)
-
-	db, err := sql.Open(driver, connString)
+	// fmt.Println("Connecting..")
+	
+	postgresInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+	
+	db, err := sql.Open(driver, postgresInfo)
 	if err != nil {
-		fmt.Println(err)
+		panic(err)
 	}
-	if err = db.Ping(); err != nil {
-		fmt.Println("DB String: ", connString)
-		fmt.Println("Failed to connect database:", err)
-		return nil
+	defer db.Close()
+
+	start := time.Now()
+	for db.Ping() != nil {
+		if start.After(start.Add(10 * time.Second)) {
+			fmt.Println("Failed to connect after 10 secs.")
+			break
+		}
 	}
-
-	// start := time.Now()
-	// for db.Ping() != nil {
-	// 	if start.After(start.Add(10 * time.Second)) {
-	// 		log.Fatalln("Failed to connect db after 10 secs.")
-	// 		break
-	// 	}
-	// }
-	fmt.Println("Database connection: ", db.Ping() == nil)
-
-	// defer db.Close()
+	fmt.Println("Connected:", db.Ping() == nil)
 
 	return db
 }

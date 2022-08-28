@@ -2,18 +2,16 @@ run:
 	go run main.go
 
 goosestatus: 
-	goose -dir=migrations postgres postgresql://ijas:mypassword@localhost:5432/timenow?sslmode=disable status
+	goose -dir=migrations postgres postgresql://postgres:mypassword@localhost:5444/timenow?sslmode=disable status
 									
-# postgres://dijas:mypassword@localhost:5432/timenow?sslmode=disable
-
 goosecreate: 
-	goose -dir=migrations postgres postgres://ijas:mypassword@localhost:5432/timenow?sslmode=disable create orders sql
+	goose -dir=migrations postgres postgresql://postgres:mypassword@localhost:5444/timenow?sslmode=disable create orders sql
 
 gooseup: 
-	goose -dir=migrations postgres postgres://ijas:mypassword@localhost:5432/timenow?sslmode=disable up
+	goose -dir=migrations postgres postgresql://postgres:mypassword@localhost:5444/timenow?sslmode=disable up
 
 goosedown: 
-	goose -dir=migrations postgres postgres://ijas:mypassword@localhost:5432/timenow?sslmode=disable down
+	goose -dir=migrations postgres postgresql://postgres:mypassword@localhost:5444/timenow?sslmode=disable down
 
 dockercomposeup:
 	docker-compose --env-file ./config/.env up -d --build
@@ -28,6 +26,3 @@ dockerlogspostgres:
 	docker logs -f db_container
 
 .PHONY: run goosestatus goosecreate gooseup goosedown dockercomposeup dockercomposedown dockerlogsgo dockerlogspostgres
-
-
-
