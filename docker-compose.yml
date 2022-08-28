@@ -1,25 +1,31 @@
+# Specify the version for docker-compose.yml
 version: "3.9"
-services:
+
+# Add the sevices needed (postgres, go)
+services: 
   postgres:
-    container_name: db_container
+    container_name: postgres
     image: postgres:latest
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASS}
+      # Optional: Give a name to the database, otherwise use the default 
+      # value POSTGRES_USER as a database name (user in this case.)
       POSTGRES_DB: ${DB_NAME}
-    ports:
-      - "${DB_LOCAL_PORT}:${DB_CONTAINER_PORT}"
+    ports: 
+      - "5444:5432"
     volumes:
       - dbdata:/var/lib/postgresql/data
-
-  go:
-    container_name: go_container
+  
+  go: 
+    container_name: go
+    # build the Dockerfile, alternatively use an image.
     build:
       context: .
     ports:
       - 8080:8080
     depends_on:
-      - "db_container"
+      - "postgres"
 
 volumes:
-  dbdata: 
+  dbdata: # create the volume for persisting data.
