@@ -1,1 +1,4 @@
 config/.env
+app.env
+result.log
+.vscode

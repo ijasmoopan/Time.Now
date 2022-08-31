@@ -20,9 +20,36 @@ dockercomposedown:
 	docker-compose --env-file ./config/.env down
 
 dockerlogsgo:
-	docker logs -f go_container
+	docker logs --env-file ./config/.env -f go
+
+dockercomposelogsgo:
+	docker-compose --env-file ./config/.env logs -f go
 
 dockerlogspostgres:
 	docker logs -f db_container
 
-.PHONY: run goosestatus goosecreate gooseup goosedown dockercomposeup dockercomposedown dockerlogsgo dockerlogspostgres
+.PHONY: run goosestatus goosecreate gooseup goosedown dockercomposeup dockercomposedown dockerlogsgo dockerlogspostgres dockercomposelogsgo
+
+pullpostgres:
+	docker pull postgres:alpine
+
+postgresrun:
+	docker run --name db -p 5445:5432 -e POSTGRES_USER=sampleuser -e POSTGRES_PASSWORD=secret -d postgres:alpine
+
+migratedownload:
+	curl -L https://github.com/golang-migrate/migrate/releases/download/v4.15.2/migrate.linux-amd64.tar.gz | tar xvz
+
+createdb:
+	docker exec -i db createdb --username=sampleuser timenow
+
+dropdb:
+	docker exec -i db dropdb --username=sampleuser timenow
+
+createschema:
+	migrate create -ext sql -dir db/migration -seq init_schema 
+
+migrateup:
+	migrate -path db/migration -database "postgresql://sampleuser:secret@localhost:5445/timenow?sslmode=disable" -verbose up
+
+migratedown:
+	migrate -path db/migration -database "postgresql://sampleuser:secret@localhost:5445/timenow?sslmode=disable" -verbose down

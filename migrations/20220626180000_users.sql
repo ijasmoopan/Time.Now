@@ -10,7 +10,7 @@ CREATE TABLE users (
     user_secondname VARCHAR(100) NOT NULL,
     user_password VARCHAR(100) NOT NULL,
     user_phone phone_number NOT NULL,
-    user_email email NOT NULL UNIQUE,
+    user_email email NOT NULL,
     user_gender gender NOT NULL,
     user_status BOOLEAN DEFAULT TRUE,
     user_referral UUID DEFAULT gen_random_uuid() NOT NULL,
@@ -25,8 +25,8 @@ CREATE TABLE users (
 
 -- +goose Down
 -- +goose StatementBegin
-ALTER TABLE users DROP CONSTRAINT unique_email;
-ALTER TABLE users DROP CONSTRAINT unique_phone;
+-- ALTER TABLE users DROP CONSTRAINT unique_email;
+-- ALTER TABLE users DROP CONSTRAINT unique_phone;
 DROP TABLE users CASCADE;
 DROP DOMAIN IF EXISTS gender CASCADE; 
 DROP DOMAIN IF EXISTS phone_number CASCADE;

@@ -30,6 +30,8 @@ func (repo *Repo) AdminLogin(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		message := map[string]interface{}{
 			"msg": "Incorrect Name or Password",
+			"Admin": admin,
+			"Error": err,
 		}
 		json.NewEncoder(w).Encode(&message)
 		return
