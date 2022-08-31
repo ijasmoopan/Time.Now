@@ -19,7 +19,12 @@ __Database migrations written in Go. Use as [CLI](#cli-usage) or import as [libr
 
 Forked from [mattes/migrate](https://github.com/mattes/migrate)
 
+
 ## Databases
+
+Talking about the features of my project, first I wanna say about the architecture which I used. Code Architecture is the main thing in a big project, because we all know, in a company we don't make a project alone. So for a teamwork we should use a better architecture. And here I followed the MVC architecture.
+Now my project is completely running by docker containers. I have used one dockerfile and docker-compose for making that happen. Currently I have 2 containers, One for my App and another one is for Database, in my case it is PostgreSQL.
+
 
 Database drivers run migrations. [Add a new database?](database/driver.go)
 
