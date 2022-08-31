@@ -21,7 +21,7 @@ func (repo *Repo) IsUserAuthorized(handler http.Handler) http.Handler {
 		file := usecases.Logger()
 		log.SetOutput(file)
 
-		err := godotenv.Load("./config/.env")
+		err := godotenv.Load("app.env")
 		if err != nil {
 			log.Println("Can't access env file")
 		}
@@ -83,7 +83,7 @@ func (repo *Repo) IsHomeUserAuthorized(handler http.Handler) http.Handler {
 		file := usecases.Logger()
 		log.SetOutput(file)
 
-		err := godotenv.Load("./config/.env")
+		err := godotenv.Load("app.env")
 		if err != nil {
 			log.Println("Can't fetch env file")
 		}
@@ -136,7 +136,7 @@ func (repo *Repo) DeleteToken(handler http.Handler) http.Handler {
 		// 	HttpOnly: true,
 		// }
 		// http.SetCookie(w, &cookie)
-		err := godotenv.Load("./config/.env")
+		err := godotenv.Load("app.env")
 		if err != nil {
 			log.Println("Can't access env file")
 		}

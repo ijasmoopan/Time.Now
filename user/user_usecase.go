@@ -16,7 +16,7 @@ func GeneratingToken(id string) string {
 	file := usecases.Logger()
 	log.SetOutput(file)
 
-	err := godotenv.Load("./config/.env")
+	err := godotenv.Load("app.env")
 	if err != nil {
 		log.Println(err)
 	}

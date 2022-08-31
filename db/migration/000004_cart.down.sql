@@ -1,0 +1,2 @@
+-- Cart
+DROP TABLE cart CASCADE;

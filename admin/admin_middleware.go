@@ -20,7 +20,7 @@ import (
 func (repo *Repo) IsAdminAuthorized(handler http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
 
-		err := godotenv.Load("./config/.env")
+		err := godotenv.Load("app.env")
 		if err != nil {
 			panic(err)
 		}
