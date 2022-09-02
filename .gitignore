@@ -1,4 +1,3 @@
-config/.env
-app.env
+# app.env
 result.log
 .vscode
